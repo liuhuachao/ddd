@@ -10,6 +10,3 @@
 ## 4. Digest认证
 
 ## 5. Token+Sign认证
-
-## 6. Create a branch dev
-

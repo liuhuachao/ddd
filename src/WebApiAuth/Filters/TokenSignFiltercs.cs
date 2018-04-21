@@ -42,12 +42,29 @@ namespace WebApiAuth.Filters
                 signature = HttpUtility.UrlDecode(request.Headers.GetValues("signature").FirstOrDefault());
             }
 
-            // 判断请求头中是否包含所有验证参数
+            // 判断请求头中是否包含以下所有验证参数
             if (string.IsNullOrEmpty(timestamp) || string.IsNullOrEmpty(nonce) || string.IsNullOrEmpty(token) || string.IsNullOrEmpty(signature))
             {
                 resultMsg = new ResultMsg();
                 resultMsg.StatusCode = (int)StatusCodeEnum.ParameterError;
                 resultMsg.Info = EnumHelper.GetEnumDescription(StatusCodeEnum.ParameterError);
+                resultMsg.Data = "";
+                actionContext.Response = ResponseHelper.ObjToResponse(resultMsg);
+                base.OnActionExecuting(actionContext);
+                return;
+            }
+
+            //判断timespan是否有效
+            double ts1 = 0;
+            double ts2 = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;
+            bool timespanvalidate = double.TryParse(timestamp, out ts1);
+            double ts = ts2 - ts1;
+            bool falg = ts > int.Parse(AppSettings.GetSetting("UrlExpireTime")) * 1000;
+            if (falg || (!timespanvalidate))
+            {
+                resultMsg = new ResultMsg();
+                resultMsg.StatusCode = (int)StatusCodeEnum.URLExpireError;
+                resultMsg.Info = EnumHelper.GetEnumDescription(StatusCodeEnum.URLExpireError);
                 resultMsg.Data = "";
                 actionContext.Response = ResponseHelper.ObjToResponse(resultMsg);
                 base.OnActionExecuting(actionContext);

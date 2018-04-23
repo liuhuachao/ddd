@@ -12,9 +12,11 @@ using WebApiAuth.Common;
 using WebApiAuth.Enums;
 
 namespace WebApiAuth.Filters
-{
+{    
     public class TokenSignFiltercs : ActionFilterAttribute
     {
+        public const int OVERTIME = 100;
+
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             Models.ResultMsg resultMsg = null;
@@ -59,7 +61,7 @@ namespace WebApiAuth.Filters
             double ts2 = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;
             bool timespanvalidate = double.TryParse(timestamp, out ts1);
             double ts = ts2 - ts1;
-            bool falg = ts > int.Parse(AppSettings.GetSetting("UrlExpireTime")) * 1000;
+            bool falg = ts > OVERTIME * 1000;
             if (falg || (!timespanvalidate))
             {
                 resultMsg = new ResultMsg();

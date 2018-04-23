@@ -35,7 +35,7 @@ namespace WebApiAuth
             }
 
             app.UseMvc();
-            WebApiAuth.Common.AppSettings.SetAppSetting(Configuration.GetSection("AppSetting"));
+            
         }
     }
 }

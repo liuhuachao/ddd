@@ -20,7 +20,7 @@ namespace WebApiAuth.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return (id*10).ToString();
         }
 
         // POST api/values

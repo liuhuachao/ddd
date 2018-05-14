@@ -9,4 +9,3 @@
 
 ## 4. Digest认证
 
-## 5. Token+Sign认证

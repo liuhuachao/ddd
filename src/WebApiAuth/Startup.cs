@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,13 @@ namespace WebApiAuth
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+            //修改Mvc的配置来添加xml格式
+            //.AddMvcOptions(options =>
+            // {
+            //     options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+            // })
+            ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

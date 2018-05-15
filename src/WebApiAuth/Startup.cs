@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using NLog.Extensions.Logging;
 using WebApiAuth.Entities;
 using WebApiAuth.Interfaces;
+using WebApiAuth.Repositories;
 using WebApiAuth.Services;
 
 namespace WebApiAuth
@@ -43,19 +44,13 @@ namespace WebApiAuth
             #endif
 
             // 注册EF DbContext
-            var connectionString = @"Server=.;Database=ProductDB;Trusted_Connection=True";
+            //var connectionString = @"Server=.;Database=ProductDB;Trusted_Connection=True";
+            var connectionString = Configuration["connectionStrings:productionInfoDbConnectionString"];
             services.AddDbContext<MyDbContext>(o => o.UseSqlServer(connectionString));
+
+            // 注册Repository
+            services.AddScoped<IProductRepository, ProductRepository>();
         }
-
-        //public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        //{
-        //    if (env.IsDevelopment())
-        //    {
-        //        app.UseDeveloperExceptionPage();
-        //    }
-
-        //    app.UseMvc();            
-        //}
 
         /// <summary>
         /// 注入NLog

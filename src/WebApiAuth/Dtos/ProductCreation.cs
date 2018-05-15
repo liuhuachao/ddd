@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApiAuth.Models
+namespace WebApiAuth.Dtos
 {
-    public class ProductsCreation
+    public class ProductCreation
     {
         [Display(Name = "产品名称")]
         [Required(ErrorMessage = "{0}是必填项")]

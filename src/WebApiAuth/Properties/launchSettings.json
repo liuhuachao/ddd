@@ -11,15 +11,16 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/products",
+      "launchUrl": "v1/product",
       "environmentVariables": {
+        "appSettings.Production.json": "",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Server": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/products",
+      "launchUrl": "v1/product",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

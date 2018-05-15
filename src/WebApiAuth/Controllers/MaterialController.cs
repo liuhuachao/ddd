@@ -8,10 +8,11 @@ using WebApiAuth.Services;
 
 namespace WebApiAuth.Controllers
 {
-    [Route("api/products")] // 和主Model的Controller前缀一样
-    public class MaterialsController : Controller
+    // 和主Model的Controller前缀一样
+    [Route("v1/product")] 
+    public class MaterialController : Controller
     {
-        [HttpGet("{productId}/materials")]
+        [HttpGet("{productId}/material")]
         public IActionResult GetMaterials(int productId)
         {
             var product = ProductService.Current.Products.SingleOrDefault(x => x.Id == productId);
@@ -22,7 +23,7 @@ namespace WebApiAuth.Controllers
             return Ok(product.Materials);
         }
 
-        [HttpGet("{productId}/materials/{id}")]
+        [HttpGet("{productId}/material/{id}")]
         public IActionResult GetMaterial(int productId, int id)
         {
             var product = ProductService.Current.Products.SingleOrDefault(x => x.Id == productId);

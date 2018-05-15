@@ -4,15 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WebApiAuth.Dtos;
+using WebApiAuth.Interfaces;
 using WebApiAuth.Models;
 using WebApiAuth.Services;
 
 namespace WebApiAuth.Controllers
 {
-    [Route("api/[controller]")]
-    public class ProductsController : Controller
+    [Route("v1/[controller]")]
+    public class ProductController : Controller
     {
+        /// <summary>
+        /// 注入Logger
+        /// </summary>
+        private readonly ILogger<ProductController> _logger;
+        private readonly IMailService _mail;
+        public ProductController(ILogger<ProductController> logger,IMailService mail)
+        {
+            _logger = logger;
+            _mail = mail;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -22,16 +35,26 @@ namespace WebApiAuth.Controllers
         [Route("{id}", Name = "GetProduct")]
         public IActionResult GetProduct(int id)
         {
-            var product = ProductService.Current.Products.SingleOrDefault(x => x.Id == id);
-            if (product == null)
+            try
             {
-                return NotFound();
+                throw new Exception("抛个异常！");
+                var product = ProductService.Current.Products.SingleOrDefault(x => x.Id == id);
+                if (product == null)
+                {
+                    this._logger.LogInformation($"Id为{id}的产品没有找到！");
+                    return NotFound();
+                }
+                return Ok(product);
             }
-            return Ok(product);
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"查找Id为{id}的产品出现了异常!",ex);
+                return StatusCode(500, "处理请求的时候发生了错误！");
+            }            
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] ProductsCreation product)
+        public IActionResult Post([FromBody] ProductCreation product)
         {
             if (product == null)
             {
@@ -144,6 +167,7 @@ namespace WebApiAuth.Controllers
                 return NotFound();
             }
             ProductService.Current.Products.Remove(model);
+            _mail.Send("Product Deleted", $"Id为{id}的产品被删除了");
             return NoContent();
         }
     }

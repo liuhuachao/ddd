@@ -8,20 +8,20 @@ using WebApiAuth.Interfaces;
 
 namespace WebApiAuth.Services
 {
-    public class CloundMailService : IMailService
+    public class CloudMailService : IMailService
     {
         private string _mailTo = Startup.Configuration["mailSettings:mailToAddress"];
         private string _mailFrom = Startup.Configuration["mailSettings:mailFromAddress"];
-        private readonly ILogger<CloundMailService> _logger;
+        private readonly ILogger<CloudMailService> _logger;
 
-        public CloundMailService(ILogger<CloundMailService> logger)
+        public CloudMailService(ILogger<CloudMailService> logger)
         {
             this._logger = logger;
         }
 
         public void Send(string subject, string msg)
         {
-            _logger.LogInformation($"从{_mailFrom}给{_mailTo}通过{nameof(CloundMailService)}发送了邮件");
+            _logger.LogInformation($"从{_mailFrom}给{_mailTo}通过{nameof(CloudMailService)}发送了邮件");
         }
     }
 }

@@ -43,12 +43,11 @@ namespace WebApiAuth
             services.AddTransient<IMailService, CloudMailService>();
             #endif
 
-            // 注册EF DbContext
-            //var connectionString = @"Server=.;Database=ProductDB;Trusted_Connection=True";
+            // 注册 DbContext
             var connectionString = Configuration["connectionStrings:productionInfoDbConnectionString"];
             services.AddDbContext<MyDbContext>(o => o.UseSqlServer(connectionString));
 
-            // 注册Repository
+            // 注册 Repository
             services.AddScoped<IProductRepository, ProductRepository>();
         }
 

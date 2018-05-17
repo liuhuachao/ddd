@@ -52,7 +52,9 @@ namespace WebApi
             services.AddDbContext<ProductsContext>(o => o.UseSqlServer(productsConnectionString));
 
             // 配置 PigeonsDbContext
+            var isEncrypt = Configuration["IsEncrypt"];
             var pigeonsConnectionString = Configuration["ConnectionStrings:PigeonsDbConnectionString"];
+            pigeonsConnectionString = isEncrypt == "true" ? Common.AESHelper.AESDecrypt(pigeonsConnectionString) : pigeonsConnectionString;
             services.AddDbContext<PigeonsContext>(o => o.UseSqlServer(pigeonsConnectionString));
 
             // 配置 Repository

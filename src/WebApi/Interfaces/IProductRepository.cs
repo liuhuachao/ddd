@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Entities;
 
-namespace WebApi.Repositories
+namespace WebApi.Interfaces
 {
     public interface IProductRepository
     {

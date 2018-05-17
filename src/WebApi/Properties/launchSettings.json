@@ -13,7 +13,7 @@
       "launchBrowser": true,
       "launchUrl": "v1/product",
       "environmentVariables": {
-        "appSettings.Production.json": "",
+        "ConnectionStrings:PigeonsDbConnectionString": "Server=data.chsgw.com;Database=Pigeons_Test;User ID=sa;password=Chsgw@chsgw.com;Persist Security Info=True;",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },

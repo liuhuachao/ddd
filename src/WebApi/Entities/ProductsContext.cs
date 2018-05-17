@@ -6,11 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Entities
 {
-    public class MyDbContext : DbContext
+    public class ProductsContext : DbContext
     {      
-        public MyDbContext(DbContextOptions<MyDbContext> options): base(options)
+        public ProductsContext(DbContextOptions<ProductsContext> options): base(options)
         {
-            //Database.EnsureCreated();
             Database.Migrate();
         }
 

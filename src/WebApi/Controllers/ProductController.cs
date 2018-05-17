@@ -15,11 +15,9 @@ namespace WebApi.Controllers
     [Route("v1/[controller]")]
     public class ProductController : Controller
     {
-        /// <summary>
-        /// 注入Logger
-        /// </summary>
         private readonly ILogger<ProductController> _logger;
         private readonly IMailService _mail;
+
         public ProductController(ILogger<ProductController> logger,IMailService mail)
         {
             _logger = logger;

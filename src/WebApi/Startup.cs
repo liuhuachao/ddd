@@ -26,6 +26,10 @@ namespace WebApi
             Configuration = configuration;
         }
         
+        /// <summary>
+        /// 配置服务
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
@@ -37,28 +41,34 @@ namespace WebApi
             ;
 
             // 分别注册本地和远程日志服务
-            #if DEBUG
+#if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
-            #else
+#else
             services.AddTransient<IMailService, CloudMailService>();
-            #endif
+#endif
 
-            // 注册 DbContext
-            var connectionString = Configuration["connectionStrings:productionInfoDbConnectionString"];
-            services.AddDbContext<MyDbContext>(o => o.UseSqlServer(connectionString));
+            // 配置 ProductsDbContext
+            var productsConnectionString = Configuration["ConnectionStrings:ProductsDbConnectionString"];
+            services.AddDbContext<ProductsContext>(o => o.UseSqlServer(productsConnectionString));
 
-            // 注册 Repository
+            // 配置 PigeonsDbContext
+            var pigeonsConnectionString = Configuration["ConnectionStrings:PigeonsDbConnectionString"];
+            services.AddDbContext<PigeonsContext>(o => o.UseSqlServer(pigeonsConnectionString));
+
+            // 配置 Repository
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICmsContentsRespository, CmsContentsRepository>();
         }
 
         /// <summary>
-        /// 注入NLog
+        /// 配置
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
         /// <param name="loggerFactory"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            // 配置 NLog
             loggerFactory.AddNLog();
 
             if (env.IsDevelopment())

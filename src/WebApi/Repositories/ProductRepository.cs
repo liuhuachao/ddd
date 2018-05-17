@@ -4,14 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
+using WebApi.Interfaces;
 
 namespace WebApi.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly MyDbContext _MyDbContext;
+        private readonly ProductsContext _MyDbContext;
 
-        public ProductRepository(MyDbContext MyDbContext)
+        public ProductRepository(ProductsContext MyDbContext)
         {
             _MyDbContext = MyDbContext;
         }

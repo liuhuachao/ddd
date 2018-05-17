@@ -4,29 +4,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Entities;
+using WebApi.Interfaces;
+using WebApi.Repositories;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApi.Controllers
 {
-    [Route("v1/[controller]")]
-    public class EFController : Controller
+    //[Route("v1/[controller]")]
+    [Route("v1/news")]
+    public class CmsContentsController : Controller
     {
-        private MyDbContext _dbcontext;
-        public EFController(MyDbContext context)
-        {
-            _dbcontext = context;
-        }
+        private readonly ICmsContentsRespository _cms;
 
+        public CmsContentsController(ICmsContentsRespository cms)
+        {
+            _cms = cms;
+        }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            return Ok("1");
         }
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return (id*10).ToString();
+            Entities.CmsContents content = this._cms.GetCmsContents(id);
+            return Ok(content);
         }
 
         [HttpPost]
@@ -43,6 +49,5 @@ namespace WebApi.Controllers
         public void Delete(int id)
         {
         }
-
     }
 }

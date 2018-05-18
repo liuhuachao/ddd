@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NLog.Extensions.Logging;
-using WebApi.Entities;
+using WebApi.Models;
 using WebApi.Interfaces;
 using WebApi.Repositories;
 using WebApi.Services;
@@ -25,9 +25,9 @@ namespace WebApi
         {
             Configuration = configuration;
         }
-        
+
         /// <summary>
-        /// 配置服务
+        /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
@@ -63,7 +63,7 @@ namespace WebApi
         }
 
         /// <summary>
-        /// 配置Http请求管道
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>

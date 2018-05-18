@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace WebApi.Entities
+namespace WebApi.Models
 {
     public class PigeonsContext : DbContext
     {

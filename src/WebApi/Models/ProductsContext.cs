@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApi.Entities
+namespace WebApi.Models
 {
     public class ProductsContext : DbContext
     {      

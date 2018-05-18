@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebApi.Entities
+namespace WebApi.Models
 {
     public partial class CmsAuthor
     {

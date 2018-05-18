@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                throw new Exception("抛个异常！");
+                //throw new Exception("抛个异常！");
                 var product = ProductService.Current.Products.SingleOrDefault(x => x.Id == id);
                 if (product == null)
                 {

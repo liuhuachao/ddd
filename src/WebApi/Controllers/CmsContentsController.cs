@@ -14,29 +14,84 @@ namespace WebApi.Controllers
     [Route("v1/news")]
     public class CmsContentsController : Controller
     {
-        private readonly ICmsContentsRespository _cms;
+        private readonly ICmsContentsRespository cms;
+        private readonly PigeonsContext _context;
 
-        public CmsContentsController(ICmsContentsRespository cms)
+        public CmsContentsController(ICmsContentsRespository cmsContentRespository,PigeonsContext pigeonsContext)
         {
-            _cms = cms;
+            cms = cmsContentRespository;
+            _context = pigeonsContext;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("1");
+            var content = (from c in _context.CmsContents                          
+                          orderby c.CmsId descending
+                          select new
+                          {
+                              Id = c.CmsId,
+                              Title = c.CmsTitle,
+                              Author = c.CmsAuthor,
+                              CoverImg = c.CmsPhotos,
+                              PostTime = c.OprateDate,
+                          })
+                          .Take(10);
+            return Json(content);
         }
 
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")]
+        [Route("{id}", Name = "GetCmsContent")]
         public IActionResult Get(int id)
         {
-            Entities.CmsContents content = this._cms.GetCmsContents(id);
-            return Ok(content);
+            //Entities.CmsContents content = this.cms.GetCmsContents(id);
+            //return Ok(content);
+
+            var content = from c in _context.CmsContents
+                          where c.CmsId == id
+                          select new
+                          {
+                              Id = c.CmsId,
+                              Title = c.CmsTitle,
+                              Author = c.CmsAuthor,
+                              CoverImg = c.CmsPhotos,
+                              PostTime = c.OprateDate,
+                          };
+            return Json(content);
         }
 
         [HttpPost]
         public void Post([FromBody]string value)
         {
+        }
+
+        /// <summary>
+        /// 添加异步方法
+        /// </summary>
+        /// <param name="cmsContent"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] CmsContents cmsContent)
+        {
+            if (cmsContent == null)
+            {
+                return BadRequest();
+            }
+
+            if (cmsContent.CmsTitle == "共产党")
+            {
+                ModelState.AddModelError("Title", "资讯的标题不可以是'共产党'三字");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            this._context.CmsContents.Add(cmsContent);
+            await this._context.SaveChangesAsync();
+
+            return CreatedAtRoute("GetCmsContent", new { id = cmsContent.CmsId }, cmsContent);
         }
 
         [HttpPut("{id}")]

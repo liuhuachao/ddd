@@ -63,7 +63,7 @@ namespace WebApi
         }
 
         /// <summary>
-        /// 配置
+        /// 配置Http请求管道
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>

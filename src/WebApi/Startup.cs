@@ -40,6 +40,10 @@ namespace WebApi
              })
             ;
 
+            // 配置 Repository
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICmsContentsRespository, CmsContentsRepository>();
+
             // 分别注册本地和远程日志服务
 #if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
@@ -56,10 +60,6 @@ namespace WebApi
             var pigeonsConnectionString = Configuration["ConnectionStrings:PigeonsDbConnectionString"];
             pigeonsConnectionString = isEncrypt == "true" ? Common.AESHelper.AESDecrypt(pigeonsConnectionString) : pigeonsConnectionString;
             services.AddDbContext<PigeonsContext>(o => o.UseSqlServer(pigeonsConnectionString));
-
-            // 配置 Repository
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<ICmsContentsRespository, CmsContentsRepository>();
         }
 
         /// <summary>

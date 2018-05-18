@@ -10,7 +10,6 @@ using WebApi.Repositories;
 
 namespace WebApi.Controllers
 {
-    //[Route("v1/[controller]")]
     [Route("v1/news")]
     public class CmsContentsController : Controller
     {

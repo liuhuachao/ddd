@@ -85,6 +85,12 @@ namespace WebApi
                 app.UseExceptionHandler();
             }
 
+            // 配置 Automapper
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Product, Dtos.ProductCreation>();
+            });
+
             app.UseStatusCodePages();
 
             app.UseMvc();

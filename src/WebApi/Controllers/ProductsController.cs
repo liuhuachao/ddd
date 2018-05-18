@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,21 +14,27 @@ using WebApi.Services;
 namespace WebApi.Controllers
 {
     [Route("v1/[controller]")]
-    public class ProductController : Controller
+    public class ProductsController : Controller
     {
-        private readonly ILogger<ProductController> _logger;
+        private readonly ILogger<ProductsController> _logger;
         private readonly IMailService _mail;
+        private readonly IProductRepository _productRepository;
 
-        public ProductController(ILogger<ProductController> logger,IMailService mail)
+        public ProductsController(ILogger<ProductsController> logger,IMailService mail,IProductRepository productRepository)
         {
             _logger = logger;
             _mail = mail;
+            _productRepository = productRepository;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(ProductService.Current.Products);
+            //return Ok(ProductService.Current.Products);
+
+            var products = _productRepository.GetProducts();
+            var results = Mapper.Map<IEnumerable<Dtos.ProductCreation>>(products);
+            return Ok(results);
         }
 
         [Route("{id}", Name = "GetProduct")]
@@ -76,7 +83,7 @@ namespace WebApi.Controllers
                 Id = ++maxId,
                 Name = product.Name,
                 Price = product.Price,
-                Description = product.Description
+                //Description = product.Description
             };
             ProductService.Current.Products.Add(newProduct);
 

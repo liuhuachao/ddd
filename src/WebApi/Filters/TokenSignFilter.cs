@@ -13,7 +13,7 @@ using WebApi.Enums;
 
 namespace WebApi.Filters
 {    
-    public class TokenSignFiltercs : ActionFilterAttribute
+    public class TokenSignFilter : ActionFilterAttribute
     {
         public const int OVERTIME = 100;
 

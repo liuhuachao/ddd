@@ -6,20 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 using WebApi.Interfaces;
 using WebApi.Repositories;
-
+using AutoMapper;
 
 namespace WebApi.Controllers
 {
     [Route("v1/news")]
     public class CmsContentsController : Controller
     {
-        private readonly ICmsContentsRespository cms;
+        private readonly ICmsContentsRespository _respository;
         private readonly PigeonsContext _context;
 
-        public CmsContentsController(ICmsContentsRespository cmsContentRespository,PigeonsContext pigeonsContext)
+        public CmsContentsController(ICmsContentsRespository respository, PigeonsContext context)
         {
-            cms = cmsContentRespository;
-            _context = pigeonsContext;
+            _respository = respository;
+            _context = context;
         }
 
         [HttpGet]
@@ -66,19 +66,8 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetByPager(int pageSize = 10, int pageIndex = 1)
         {
-            var content = (from c in _context.CmsContents
-                           orderby c.CmsId descending
-                           select new
-                           {
-                               cmsid = c.CmsId,
-                               title = c.CmsTitle,
-                               author = c.CmsAuthor,
-                               coverimg = c.CmsPhotos,
-                               posttime = c.OprateDate,
-                           })
-                           .Skip(pageSize * (pageIndex - 1))
-                           .Take(pageSize);
-            return Json(content);
+            var contents = this._respository.GetNewsList(pageSize, pageSize * (pageIndex - 1));
+            return Json(contents);
         }
 
         /// <summary>
@@ -94,18 +83,8 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetByParams(int limit = 10, int start = 1, int ordertype = 0)
         {
-            var content = from c in _context.CmsContents
-                           select new
-                           {
-                               cmsid = c.CmsId,
-                               title = c.CmsTitle,
-                               author = c.CmsAuthor,
-                               coverimg = c.CmsPhotos,
-                               posttime = c.OprateDate,
-                           };
-            content = ordertype == 0 ? content.OrderByDescending(c => c.cmsid) : content.OrderBy(c => c.cmsid);
-            content = content.Skip(start).Take(limit);
-            return Json(content);
+            var contents = this._respository.GetNewsList(limit, start, ordertype);
+            return Json(contents);
         }
 
         [HttpPost]

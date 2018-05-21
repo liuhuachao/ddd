@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApi.Dtos;
 using WebApi.Interfaces;
+using WebApi.Repositories;
 using WebApi.Models;
 using WebApi.Services;
 

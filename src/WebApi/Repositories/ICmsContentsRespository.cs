@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Models;
 
-namespace WebApi.Interfaces
+namespace WebApi.Repositories
 {
     public interface ICmsContentsRespository
     {      
@@ -12,7 +12,8 @@ namespace WebApi.Interfaces
         void DeleteCmsContents(CmsContents CmsContents);
         void UpdateCmsContents(CmsContents CmsContents);
         CmsContents GetCmsContents(int CmsContentsId);
-        IList<CmsContents> GetCmsContents();
+        IQueryable<CmsContents> GetCmsContents(int limit = 10,int start = 0,int orderType = 0);
+        IList<Dtos.NewsRead> GetNewsList(int limit = 10, int start = 0, int orderType = 0);
 
         bool IsExistCmsContents(int CmsContentsId);
 

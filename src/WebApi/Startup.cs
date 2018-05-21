@@ -91,6 +91,16 @@ namespace WebApi
             AutoMapper.Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Product, Dtos.ProductCreation>();
+
+                // 指定属性映射
+                cfg.CreateMap<CmsContents, Dtos.NewsRead>()
+                .ForMember(d => d.NewsId, o => o.MapFrom(s => s.CmsId))
+                .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
+                .ForMember(d => d.Intro, o => o.MapFrom(s => s.CmsKeys))
+                .ForMember(d => d.CoverImg, o => o.MapFrom(s => s.CmsPhotos))
+                .ForMember(d => d.PostTime, o => o.MapFrom(s => s.OprateDate))
+                ;
+
             });
 
             app.UseStatusCodePages();

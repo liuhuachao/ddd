@@ -22,37 +22,11 @@ namespace WebApi.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var content = (from c in _context.CmsContents                          
-                          orderby c.CmsId descending
-                          select new
-                          {
-                              Id = c.CmsId,
-                              Title = c.CmsTitle,
-                              Author = c.CmsAuthor,
-                              CoverImg = c.CmsPhotos,
-                              PostTime = c.OprateDate,
-                          })
-                          .Take(10);
-            return Json(content);
-        }
-
         [Route("{id}", Name = "GetCmsContent")]
         [HttpGet]
         public IActionResult Get(int id)
         {
-            var content = from c in _context.CmsContents
-                          where c.CmsId == id
-                          select new
-                          {
-                              cmsid = c.CmsId,
-                              title = c.CmsTitle,
-                              author = c.CmsAuthor,
-                              coverimg = c.CmsPhotos,
-                              posttime = c.OprateDate,
-                          };
+            var content = this._respository.GetNews(id);
             return Json(content);
         }
 
@@ -77,8 +51,10 @@ namespace WebApi.Controllers
         /// <param name="start">返回记录的开始位置</param>
         /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序</param>
         /// <returns></returns>
+        [Route("")]
         [Route("limit/{limit}")]
         [Route("limit/{limit}/start/{start}")]
+        [Route("limit/{limit}/ordertype/{ordertype}")]
         [Route("limit/{limit}/start/{start}/ordertype/{ordertype}")]
         [HttpGet]
         public IActionResult GetByParams(int limit = 10, int start = 1, int ordertype = 0)

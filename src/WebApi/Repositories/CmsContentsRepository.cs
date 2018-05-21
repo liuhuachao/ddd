@@ -38,6 +38,21 @@ namespace WebApi.Repositories
             return _context.CmsContents.Find(CmsId);
         }
 
+        public Dtos.NewsRead GetNews(int CmsId)
+        {
+            var contents = GetCmsContents(CmsId);
+            var results = new Dtos.NewsRead()
+            {
+                NewsId = contents.CmsId,
+                Title = contents.CmsTitle,
+                Intro = contents.CmsKeys,
+                CoverImg = contents.CmsPhotos,
+                Author = contents.CmsAuthor,
+                PostTime = contents.OprateDate.ToString(),
+            };
+            return results;
+        }
+
         public IQueryable<CmsContents> GetCmsContents(int limit = 10,int start = 0,int orderType = 0)
         {
             var _limit = limit > 100 ? 100 : limit;

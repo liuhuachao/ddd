@@ -39,23 +39,71 @@ namespace WebApi.Controllers
             return Json(content);
         }
 
-        //[HttpGet("{id}")]
         [Route("{id}", Name = "GetCmsContent")]
+        [HttpGet]
         public IActionResult Get(int id)
         {
-            //Entities.CmsContents content = this.cms.GetCmsContents(id);
-            //return Ok(content);
-
             var content = from c in _context.CmsContents
                           where c.CmsId == id
                           select new
                           {
-                              Id = c.CmsId,
-                              Title = c.CmsTitle,
-                              Author = c.CmsAuthor,
-                              CoverImg = c.CmsPhotos,
-                              PostTime = c.OprateDate,
+                              cmsid = c.CmsId,
+                              title = c.CmsTitle,
+                              author = c.CmsAuthor,
+                              coverimg = c.CmsPhotos,
+                              posttime = c.OprateDate,
                           };
+            return Json(content);
+        }
+
+        /// <summary>
+        /// 获取图文列表，带分页功能
+        /// </summary>
+        /// <param name="pageSize">每页数量</param>
+        /// <param name="pageIndex">第几页</param>
+        /// <returns></returns>
+        [Route("pagesize/{pageSize}/pageindex/{pageIndex}")]
+        [HttpGet]
+        public IActionResult GetByPager(int pageSize = 10, int pageIndex = 1)
+        {
+            var content = (from c in _context.CmsContents
+                           orderby c.CmsId descending
+                           select new
+                           {
+                               cmsid = c.CmsId,
+                               title = c.CmsTitle,
+                               author = c.CmsAuthor,
+                               coverimg = c.CmsPhotos,
+                               posttime = c.OprateDate,
+                           })
+                           .Skip(pageSize * (pageIndex - 1))
+                           .Take(pageSize);
+            return Json(content);
+        }
+
+        /// <summary>
+        /// 获取图文列表页，带过滤参数
+        /// </summary>
+        /// <param name="limit">返回记录的数量</param>
+        /// <param name="start">返回记录的开始位置</param>
+        /// <returns></returns>
+        [Route("limit/{limit}")]
+        [Route("limit/{limit}/start/{start}")]
+        [HttpGet]
+        public IActionResult GetByParams(int limit = 10, int start = 1)
+        {
+            var content = (from c in _context.CmsContents
+                           orderby c.CmsId descending
+                           select new
+                           {
+                               cmsid = c.CmsId,
+                               title = c.CmsTitle,
+                               author = c.CmsAuthor,
+                               coverimg = c.CmsPhotos,
+                               posttime = c.OprateDate,
+                           })
+                           .Skip(start)
+                           .Take(limit);
             return Json(content);
         }
 

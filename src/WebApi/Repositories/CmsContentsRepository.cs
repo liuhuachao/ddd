@@ -33,16 +33,22 @@ namespace WebApi.Repositories
             _context.SaveChanges();
         }
 
+        public CmsContents GetCmsContents(int CmsId)
+        {
+            return _context.CmsContents.Find(CmsId);
+        }
+
         public IQueryable<CmsContents> GetCmsContents(int limit = 10,int start = 0,int orderType = 0)
         {
+            var _limit = limit > 100 ? 100 : limit;
             IQueryable<CmsContents> contents;
             if (orderType == 0)
             {
-                contents = this._context.CmsContents.OrderByDescending(x => x.CmsId).Skip(start).Take(limit);
+                contents = this._context.CmsContents.OrderByDescending(x => x.CmsId).Skip(start).Take(_limit);
             }
             else
             {
-                contents = this._context.CmsContents.OrderBy(x => x.CmsId).Skip(start).Take(limit);
+                contents = this._context.CmsContents.OrderBy(x => x.CmsId).Skip(start).Take(_limit);
             }
             return contents;
         }
@@ -54,10 +60,7 @@ namespace WebApi.Repositories
             return results.ToList();
         }
 
-        public CmsContents GetCmsContents(int CmsId)
-        {
-            return _context.CmsContents.Find(CmsId);
-        }
+
 
         public bool IsExistCmsContents(int CmsId)
         {

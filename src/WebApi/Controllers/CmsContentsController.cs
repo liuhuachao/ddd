@@ -86,14 +86,15 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="limit">返回记录的数量</param>
         /// <param name="start">返回记录的开始位置</param>
+        /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序</param>
         /// <returns></returns>
         [Route("limit/{limit}")]
         [Route("limit/{limit}/start/{start}")]
+        [Route("limit/{limit}/start/{start}/ordertype/{ordertype}")]
         [HttpGet]
-        public IActionResult GetByParams(int limit = 10, int start = 1)
+        public IActionResult GetByParams(int limit = 10, int start = 1, int ordertype = 0)
         {
-            var content = (from c in _context.CmsContents
-                           orderby c.CmsId descending
+            var content = from c in _context.CmsContents
                            select new
                            {
                                cmsid = c.CmsId,
@@ -101,9 +102,9 @@ namespace WebApi.Controllers
                                author = c.CmsAuthor,
                                coverimg = c.CmsPhotos,
                                posttime = c.OprateDate,
-                           })
-                           .Skip(start)
-                           .Take(limit);
+                           };
+            content = ordertype == 0 ? content.OrderByDescending(c => c.cmsid) : content.OrderBy(c => c.cmsid);
+            content = content.Skip(start).Take(limit);
             return Json(content);
         }
 

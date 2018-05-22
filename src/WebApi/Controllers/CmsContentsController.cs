@@ -31,20 +31,6 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// 获取图文列表，带分页功能
-        /// </summary>
-        /// <param name="pageSize">每页数量</param>
-        /// <param name="pageIndex">第几页</param>
-        /// <returns></returns>
-        [Route("pagesize/{pageSize}/pageindex/{pageIndex}")]
-        [HttpGet]
-        public IActionResult GetByPager(int pageSize = 10, int pageIndex = 1)
-        {
-            var contents = this._respository.GetNewsList(pageSize, pageSize * (pageIndex - 1));
-            return Json(contents);
-        }
-
-        /// <summary>
         /// 获取图文列表页，带过滤参数
         /// </summary>
         /// <param name="limit">返回记录的数量</param>
@@ -57,7 +43,7 @@ namespace WebApi.Controllers
         [Route("limit/{limit}/ordertype/{ordertype}")]
         [Route("limit/{limit}/start/{start}/ordertype/{ordertype}")]
         [HttpGet]
-        public IActionResult GetByParams(int limit = 10, int start = 1, int ordertype = 0)
+        public IActionResult Get(int limit = 10, int start = 0, int ordertype = 0)
         {
             var contents = this._respository.GetNewsList(limit, start, ordertype);
             return Json(contents);

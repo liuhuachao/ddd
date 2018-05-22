@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Interfaces;
 using WebApi.Models;
+using AutoMapper;
 
 namespace WebApi.Repositories
 {
@@ -74,8 +74,6 @@ namespace WebApi.Repositories
             var results = Mapper.Map<IEnumerable<Dtos.NewsRead>>(contents);
             return results.ToList();
         }
-
-
 
         public bool IsExistCmsContents(int CmsId)
         {

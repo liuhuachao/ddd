@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using WebApi.Models;
 using WebApi.Interfaces;
 using WebApi.Repositories;
-using AutoMapper;
+using WebApi.Dtos;
 
 namespace WebApi.Controllers
 {
@@ -14,12 +15,10 @@ namespace WebApi.Controllers
     public class CmsContentsController : Controller
     {
         private readonly ICmsContentsRespository _respository;
-        private readonly PigeonsContext _context;
 
-        public CmsContentsController(ICmsContentsRespository respository, PigeonsContext context)
+        public CmsContentsController(ICmsContentsRespository respository)
         {
             _respository = respository;
-            _context = context;
         }
 
         [Route("{id}", Name = "GetCmsContent")]
@@ -49,25 +48,20 @@ namespace WebApi.Controllers
             return Json(contents);
         }
 
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
         /// <summary>
         /// 添加异步方法
         /// </summary>
         /// <param name="cmsContent"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CmsContents cmsContent)
+        public async Task<IActionResult> Post([FromBody] NewsCreate news)
         {
-            if (cmsContent == null)
+            if (news == null)
             {
                 return BadRequest();
             }
 
-            if (cmsContent.CmsTitle == "共产党")
+            if (news.Title == "共产党")
             {
                 ModelState.AddModelError("Title", "资讯的标题不可以是'共产党'三字");
             }
@@ -77,10 +71,18 @@ namespace WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            this._context.CmsContents.Add(cmsContent);
-            await this._context.SaveChangesAsync();
+            var content = new CmsContents()
+            {
+                CmsTitle = news.Title,
+                CmsKeys = news.Intro,
+                CmsPhotos = news.CoverImg,
+                CmsAuthor = news.Author,
+                OprateDate = Convert.ToDateTime(news.PostTime),
+            };
 
-            return CreatedAtRoute("GetCmsContent", new { id = cmsContent.CmsId }, cmsContent);
+            this._respository.AddCmsContents(content);
+            await this._respository.SaveAsync();
+            return CreatedAtRoute("GetCmsContent", new { id =  content.CmsId }, content);
         }
 
         [HttpPut("{id}")]

@@ -31,8 +31,6 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            //return Ok(ProductService.Current.Products);
-
             var products = _productRepository.GetProducts();
             var results = Mapper.Map<IEnumerable<Dtos.ProductCreation>>(products);
             return Ok(results);
@@ -87,7 +85,6 @@ namespace WebApi.Controllers
                 //Description = product.Description
             };
             ProductService.Current.Products.Add(newProduct);
-
             return CreatedAtRoute("GetProduct", new { id = newProduct.Id }, newProduct);
         }
 

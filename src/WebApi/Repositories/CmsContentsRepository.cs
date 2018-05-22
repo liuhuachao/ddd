@@ -75,6 +75,16 @@ namespace WebApi.Repositories
             return results.ToList();
         }
 
+        public bool Save()
+        {
+            return _context.SaveChanges() >= 0;
+        }
+
+        public async Task<int> SaveAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
+
         public bool IsExistCmsContents(int CmsId)
         {
             return _context.CmsContents.Any(x => x.CmsId == CmsId);

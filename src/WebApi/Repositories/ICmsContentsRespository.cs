@@ -15,6 +15,8 @@ namespace WebApi.Repositories
         Dtos.NewsRead GetNews(int CmsContentsId);
         IQueryable<CmsContents> GetCmsContents(int limit = 10,int start = 0,int orderType = 0);
         IList<Dtos.NewsRead> GetNewsList(int limit = 10, int start = 0, int orderType = 0);
+        bool Save();
+        Task<int> SaveAsync();
         bool IsExistCmsContents(int CmsContentsId);
     }
 }

@@ -82,7 +82,7 @@ namespace WebApi.Controllers
 
             this._respository.AddCmsContents(content);
             await this._respository.SaveAsync();
-            return CreatedAtRoute("GetCmsContent", new { id =  content.CmsId }, content);
+            return CreatedAtRoute("GetCmsContent", new { id =  content.CmsId }, news);
         }
 
         [HttpPut("{id}")]

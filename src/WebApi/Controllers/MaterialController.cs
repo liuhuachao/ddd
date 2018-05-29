@@ -12,6 +12,11 @@ namespace WebApi.Controllers
     [Route("v1/product")] 
     public class MaterialController : Controller
     {
+        /// <summary>
+        /// 根据产品Id获取物料列表
+        /// </summary>
+        /// <param name="productId">产品Id</param>
+        /// <returns>返回产品列表</returns>
         [HttpGet("{productId}/material")]
         public IActionResult GetMaterials(int productId)
         {
@@ -23,6 +28,12 @@ namespace WebApi.Controllers
             return Ok(product.Materials);
         }
 
+        /// <summary>
+        /// 根据物料Id获取单个材料
+        /// </summary>
+        /// <param name="productId">产品Id</param>
+        /// <param name="id">物料Id</param>
+        /// <returns>返回单个物料</returns>
         [HttpGet("{productId}/material/{id}")]
         public IActionResult GetMaterial(int productId, int id)
         {

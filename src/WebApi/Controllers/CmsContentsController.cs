@@ -21,6 +21,11 @@ namespace WebApi.Controllers
             _respository = respository;
         }
 
+        /// <summary>
+        /// 根据Id获取单篇文章
+        /// </summary>
+        /// <param name="id">文章Id</param>
+        /// <returns>返回单篇文章</returns>
         [Route("{id}", Name = "GetCmsContent")]
         [HttpGet]
         public IActionResult Get(int id)
@@ -85,11 +90,20 @@ namespace WebApi.Controllers
             return CreatedAtRoute("GetCmsContent", new { id =  content.CmsId }, news);
         }
 
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="id">文章Id</param>
+        /// <param name="value">修改内容</param>
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
 
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="id">文章Id</param>
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

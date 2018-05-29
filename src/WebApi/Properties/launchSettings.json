@@ -12,7 +12,8 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       //"launchUrl": "v1/products",
-      "launchUrl": "v1/news",
+      //"launchUrl": "v1/news",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ConnectionStrings:PigeonsDbConnectionString": "vca//g+AU50YnYtqi9xvK1CpfIrXL28PrJ06kTyrSsG+eUQXzGooMi9bGJLSq5Q+f91jucY6BqeasfUPaBOIP+WDENBjTrdjoL8dhvyDcTJpmiCa+quPJHadP6nryy/fsLia8XZyR/gXMSfOmpdTpuGOFUPlYM+8cojEetzfhfw=",
         "IsEncrypt": "true",

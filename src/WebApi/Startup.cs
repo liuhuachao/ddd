@@ -6,7 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 using NLog.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
 using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Repositories;
@@ -16,7 +19,14 @@ namespace WebApi
 {
     public class Startup
     {
+        /// <summary>
+        /// Configuration
+        /// </summary>
         public static IConfiguration Configuration { get; private set; }
+        /// <summary>
+        /// Startup
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,7 +37,7 @@ namespace WebApi
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
-        {
+        {           
             services.AddMvc()
             // 修改Mvc的配置来添加xml格式
             .AddMvcOptions(options =>
@@ -65,6 +75,26 @@ namespace WebApi
             //services.AddDbContext<PigeonsContext>(o => o.UseSqlServer(pigeonsConnectionString);
             // 解决 EF core 生成的分页语法SQL 2008不支持的问题
             services.AddDbContext<PigeonsContext>(options => options.UseSqlServer(pigeonsConnectionString, o => o.UseRowNumberForPaging()));
+
+            // 配置 Swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info()
+                {
+                    Version = "v1",
+                    Title = "My API Documents",
+                    Description = "RESTful API for Pigeons",
+                    TermsOfService = "None",
+                    Contact = new Contact { Name = "liuhuachao", Email = "liuhuachao@foxmail.com", Url = "http://www.chsgw.com" }
+                });
+
+                //Set the comments path for the swagger json and ui.
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, "WebApi.xml");
+                c.IncludeXmlComments(xmlPath);
+            });
+
+
         }
 
         /// <summary>
@@ -106,6 +136,17 @@ namespace WebApi
             app.UseStatusCodePages();
 
             app.UseMvc();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+            //app.UseSwaggerUI();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
         }
     }
 }

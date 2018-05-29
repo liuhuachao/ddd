@@ -13,7 +13,7 @@ namespace WebApi.Controllers
     [ApiVersion("1.0", Deprecated = true)]
     [ApiVersion("2.0")]
     [ApiVersion("3.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    //[Route("api/v{version:apiVersion}/[controller]")]
     public class ValuesController : Controller
     {
         [HttpGet, MapToApiVersion("1.0")]
@@ -41,6 +41,10 @@ namespace WebApi.Controllers
             return "value";
         }
 
+        /// <summary>
+        /// POST api/<controller>
+        /// </summary>
+        /// <param name="value"></param>
         [HttpPost]
         public void Post([FromBody]string value)
         {
@@ -58,3 +62,4 @@ namespace WebApi.Controllers
 
     }
 }
+

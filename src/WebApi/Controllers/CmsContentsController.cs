@@ -11,6 +11,9 @@ using WebApi.Dtos;
 
 namespace WebApi.Controllers
 {
+    /// <summary>
+    ///  资讯
+    /// </summary>
     [Route("v1/news")]
     public class CmsContentsController : Controller
     {

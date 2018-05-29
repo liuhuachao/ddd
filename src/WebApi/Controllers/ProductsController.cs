@@ -1,12 +1,11 @@
-﻿/*
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
 using WebApi.Dtos;
 using WebApi.Interfaces;
 using WebApi.Repositories;
@@ -38,6 +37,7 @@ namespace WebApi.Controllers
         }
 
         [Route("{id}", Name = "GetProduct")]
+        [HttpGet]
         public IActionResult GetProduct(int id)
         {
             try
@@ -176,4 +176,3 @@ namespace WebApi.Controllers
         }
     }
 }
-*/

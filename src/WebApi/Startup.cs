@@ -83,7 +83,7 @@ namespace WebApi
                 {
                     Version = "v1",
                     Title = "尊贵赛鸽网 API 文档",
-                    Description = "本文档严格遵循 RESTful 风格，使用 HTTP 和 HTTPS 协议",
+                    Description = "本文档遵循 RESTful 风格，使用 HTTP 和 HTTPS 协议",
                 });
 
                 //Set the comments path for the swagger json and ui.
@@ -131,7 +131,7 @@ namespace WebApi
 
             app.UseStatusCodePages();
 
-            app.UseMvc();
+            app.UseMvc();            
 
             #region 配置 swagger
             // Enable middleware to serve generated Swagger as a JSON endpoint

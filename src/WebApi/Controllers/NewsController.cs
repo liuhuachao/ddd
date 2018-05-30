@@ -15,11 +15,15 @@ namespace WebApi.Controllers
     ///  资讯
     /// </summary>
     [Route("v1/news")]
-    public class CmsContentsController : Controller
+    public class NewsController : Controller
     {
         private readonly ICmsContentsRespository _respository;
 
-        public CmsContentsController(ICmsContentsRespository respository)
+        /// <summary>
+        /// 资讯构造函数
+        /// </summary>
+        /// <param name="respository"></param>
+        public NewsController(ICmsContentsRespository respository)
         {
             _respository = respository;
         }

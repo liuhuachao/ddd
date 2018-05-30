@@ -10,7 +10,7 @@ namespace WebApi.Controllers
 {
     // 和主Model的Controller前缀一样
     [Route("v1/product")] 
-    public class MaterialController : Controller
+    public class MaterialsController : Controller
     {
         /// <summary>
         /// 根据产品Id获取物料列表

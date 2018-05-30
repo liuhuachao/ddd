@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.IO;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -9,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using NLog.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
-using System.IO;
 using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Repositories;
@@ -82,10 +82,8 @@ namespace WebApi
                 c.SwaggerDoc("v1", new Info()
                 {
                     Version = "v1",
-                    Title = "My API Documents",
-                    Description = "RESTful API for Pigeons",
-                    TermsOfService = "None",
-                    Contact = new Contact { Name = "liuhuachao", Email = "liuhuachao@foxmail.com", Url = "http://www.chsgw.com" }
+                    Title = "尊贵赛鸽网 API 文档",
+                    Description = "本文档严格遵循 RESTful 风格，使用 HTTP 和 HTTPS 协议",
                 });
 
                 //Set the comments path for the swagger json and ui.
@@ -117,12 +115,10 @@ namespace WebApi
                 app.UseExceptionHandler();
             }
 
-            // 配置 Automapper
+            #region 配置 Automapper
             AutoMapper.Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Product, Dtos.ProductCreation>();
-
-                // 指定属性映射
                 cfg.CreateMap<CmsContents, Dtos.NewsRead>()
                 .ForMember(d => d.NewsId, o => o.MapFrom(s => s.CmsId))
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
@@ -130,22 +126,23 @@ namespace WebApi
                 .ForMember(d => d.CoverImg, o => o.MapFrom(s => s.CmsPhotos))
                 .ForMember(d => d.PostTime, o => o.MapFrom(s => s.OprateDate))
                 ;
-
             });
+            #endregion
 
             app.UseStatusCodePages();
 
             app.UseMvc();
 
+            #region 配置 swagger
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
-            //app.UseSwaggerUI();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
+            #endregion
 
         }
     }

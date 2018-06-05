@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// POST api/<controller>
+        /// 新增
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
@@ -50,11 +50,20 @@ namespace WebApi.Controllers
         {
         }
 
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
 
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

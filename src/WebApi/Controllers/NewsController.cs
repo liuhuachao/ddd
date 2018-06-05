@@ -33,7 +33,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">文章Id</param>
         /// <returns>返回单篇文章</returns>
-        [Route("{id}", Name = "GetCmsContent")]
+        [Route("{id}", Name = "GetNews")]
         [HttpGet]
         public IActionResult Get(int id)
         {
@@ -42,11 +42,11 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// 获取图文列表页，带过滤参数
+        /// 获取图文列表页，带可选过滤参数
         /// </summary>
-        /// <param name="limit">返回记录的数量</param>
-        /// <param name="start">返回记录的开始位置</param>
-        /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序</param>
+        /// <param name="limit">返回记录的数量，默认为10</param>
+        /// <param name="start">返回记录的开始位置，默认为0</param>
+        /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序，默认为0</param>
         /// <returns></returns>
         [Route("")]
         [Route("limit/{limit}")]
@@ -63,7 +63,7 @@ namespace WebApi.Controllers
         /// <summary>
         /// 添加异步方法
         /// </summary>
-        /// <param name="cmsContent"></param>
+        /// <param name="news"></param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] NewsCreate news)
@@ -94,26 +94,8 @@ namespace WebApi.Controllers
 
             this._respository.AddCmsContents(content);
             await this._respository.SaveAsync();
-            return CreatedAtRoute("GetCmsContent", new { id =  content.CmsId }, news);
+            return CreatedAtRoute("GetNews", new { id =  content.CmsId }, news);
         }
 
-        /// <summary>
-        /// 修改
-        /// </summary>
-        /// <param name="id">文章Id</param>
-        /// <param name="value">修改内容</param>
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="id">文章Id</param>
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

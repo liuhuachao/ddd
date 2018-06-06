@@ -76,7 +76,7 @@ namespace WebApi.Controllers
         public IActionResult Get(int id)
         {
             var content = this._respository.GetCmsContent(id);
-            var results = Mapper.Map<IEnumerable<Dtos.NewsDetail>>(content);
+            var results = Mapper.Map<Dtos.NewsDetail>(content);
             return Ok(results);
         }
 

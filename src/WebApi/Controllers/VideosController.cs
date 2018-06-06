@@ -62,15 +62,17 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// 根据视频 Id 获取单个视频
+        /// 根据视频 Id 获取单个视频详情
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">视频 Id</param>
         /// <returns></returns>
         [Produces("application/json", Type = typeof(Dtos.VideosRead))]
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var video = this._respository.GetVideo(id);
+            var results = Mapper.Map<Dtos.VideosRead>(video);
+            return Ok(results);
         }
 
     }

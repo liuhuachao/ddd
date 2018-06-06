@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApi.Models
+namespace WebApi.Dtos
 {
+    /// <summary>
+    /// 公共请求参数
+    /// </summary>
     public class PublicRequestParameters
     {
         /// <summary>
@@ -22,7 +25,6 @@ namespace WebApi.Models
         /// </summary>
         public Guid Token { get; set; }
 
-
         /// <summary>
         /// 秘钥
         /// </summary>
@@ -31,7 +33,7 @@ namespace WebApi.Models
         /// <summary>
         /// 安全签名
         /// </summary>
-        public string signature { get; set; }
+        public string Signature { get; set; }
 
     }
 }

@@ -114,7 +114,7 @@ namespace WebApi
             AutoMapper.Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<CmsContents, Dtos.NewsList>()
-                .ForMember(d => d.NewsId, o => o.MapFrom(s => s.CmsId))
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.CmsId))
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.CmsKeys))
                 .ForMember(d => d.CoverImg, o => o.MapFrom(s => s.CmsPhotos))
@@ -122,7 +122,7 @@ namespace WebApi
                 ;
 
                 cfg.CreateMap<CmsContents, Dtos.NewsDetail>()
-                .ForMember(d => d.NewsId, o => o.MapFrom(s => s.CmsId))
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.CmsId))
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.CmsKeys))
                 .ForMember(d => d.CoverImg, o => o.MapFrom(s => s.CmsPhotos))

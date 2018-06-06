@@ -43,7 +43,7 @@ namespace WebApi.Repositories
             var contents = GetCmsContents(CmsId);
             var results = new Dtos.NewsList()
             {
-                NewsId = contents.CmsId,
+                Id = contents.CmsId,
                 Title = contents.CmsTitle,
                 Intro = contents.CmsKeys,
                 CoverImg = contents.CmsPhotos,

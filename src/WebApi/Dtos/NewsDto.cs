@@ -15,7 +15,7 @@ namespace WebApi.Dtos
         /// <summary>
         /// 标识
         /// </summary>
-        public int NewsId { get; set; }      
+        public int Id { get; set; }      
         /// <summary>
         /// 标题
         /// </summary>
@@ -46,7 +46,7 @@ namespace WebApi.Dtos
         /// <summary>
         /// 标识
         /// </summary>
-        public int NewsId { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// 标题
         /// </summary>

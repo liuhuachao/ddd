@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ namespace WebApi.Controllers
             this._logger.LogInformation("获取视频列表");
             var contents = this._respository.GetVideos(limit, start, ordertype);
             var newsList = Mapper.Map<IEnumerable<Dtos.VideosRead>>(contents);
-            return Ok(newsList);
+            return Json(newsList);
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace WebApi.Controllers
         {
             var contents = this._respository.GetVideos(pageSize, pageSize * (pageIndex - 1), ordertype);
             var videoList = Mapper.Map<IEnumerable<Dtos.VideosRead>>(contents);
-            return Ok(videoList);
+            return Json(videoList);
         }
 
         /// <summary>
@@ -75,10 +76,10 @@ namespace WebApi.Controllers
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)Enums.StatusCodeEnum.Success,
-                Description = Common.EnumHelper.GetEnumDescription(Enums.StatusCodeEnum.Success),
+                Msg = Common.EnumHelper.GetEnumDescription(Enums.StatusCodeEnum.Success),
                 Data = VideosRead
             };
-            return Ok(resultMsg);
+            return Json(resultMsg);
         }
 
     }

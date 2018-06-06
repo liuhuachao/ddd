@@ -49,7 +49,7 @@ namespace WebApi.Filters
             {
                 resultMsg = new ResultMsg();
                 resultMsg.Code = (int)StatusCodeEnum.ParameterError;
-                resultMsg.Description = EnumHelper.GetEnumDescription(StatusCodeEnum.ParameterError);
+                resultMsg.Msg = EnumHelper.GetEnumDescription(StatusCodeEnum.ParameterError);
                 resultMsg.Data = "";
                 actionContext.Response = ResponseHelper.ObjToResponse(resultMsg);
                 base.OnActionExecuting(actionContext);
@@ -66,7 +66,7 @@ namespace WebApi.Filters
             {
                 resultMsg = new ResultMsg();
                 resultMsg.Code = (int)StatusCodeEnum.URLExpireError;
-                resultMsg.Description = EnumHelper.GetEnumDescription(StatusCodeEnum.URLExpireError);
+                resultMsg.Msg = EnumHelper.GetEnumDescription(StatusCodeEnum.URLExpireError);
                 resultMsg.Data = "";
                 actionContext.Response = ResponseHelper.ObjToResponse(resultMsg);
                 base.OnActionExecuting(actionContext);

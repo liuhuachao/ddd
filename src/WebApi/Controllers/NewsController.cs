@@ -46,7 +46,7 @@ namespace WebApi.Controllers
             this._logger.LogInformation("获取资讯列表");
             var contents = this._respository.GetCmsContents(limit, start, ordertype);
             var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
-            return Ok(newsList);
+            return Json(newsList);
         }
     
         /// <summary>
@@ -62,7 +62,7 @@ namespace WebApi.Controllers
         {
             var contents = this._respository.GetCmsContents(pageSize, pageSize*(pageIndex-1), ordertype);
             var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
-            return Ok(newsList);
+            return Json(newsList);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace WebApi.Controllers
         {
             var content = this._respository.GetCmsContent(id);
             var results = Mapper.Map<Dtos.NewsDetail>(content);
-            return Ok(results);
+            return Json(results);
         }
 
 

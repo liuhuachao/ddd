@@ -15,7 +15,7 @@ namespace WebApi.Dtos
         /// <summary>
         /// 返回消息
         /// </summary>
-        public string Description { get; set; }
+        public string Msg { get; set; }
 
         /// <summary>
         /// 返回数据

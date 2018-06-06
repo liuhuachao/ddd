@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Http.Filters;
 using System.Threading;
 using System.Web.Http.Controllers;
-using WebApi.Models;
+using WebApi.Dtos;
 using WebApi.Common;
 using WebApi.Enums;
 
@@ -19,7 +19,7 @@ namespace WebApi.Filters
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            Models.ResultMsg resultMsg = null;
+            ResultMsg resultMsg = null;
             var request = actionContext.Request;
 
             string timestamp = string.Empty;
@@ -48,8 +48,8 @@ namespace WebApi.Filters
             if (string.IsNullOrEmpty(timestamp) || string.IsNullOrEmpty(nonce) || string.IsNullOrEmpty(token) || string.IsNullOrEmpty(signature))
             {
                 resultMsg = new ResultMsg();
-                resultMsg.StatusCode = (int)StatusCodeEnum.ParameterError;
-                resultMsg.Info = EnumHelper.GetEnumDescription(StatusCodeEnum.ParameterError);
+                resultMsg.Code = (int)StatusCodeEnum.ParameterError;
+                resultMsg.Description = EnumHelper.GetEnumDescription(StatusCodeEnum.ParameterError);
                 resultMsg.Data = "";
                 actionContext.Response = ResponseHelper.ObjToResponse(resultMsg);
                 base.OnActionExecuting(actionContext);
@@ -65,8 +65,8 @@ namespace WebApi.Filters
             if (falg || (!timespanvalidate))
             {
                 resultMsg = new ResultMsg();
-                resultMsg.StatusCode = (int)StatusCodeEnum.URLExpireError;
-                resultMsg.Info = EnumHelper.GetEnumDescription(StatusCodeEnum.URLExpireError);
+                resultMsg.Code = (int)StatusCodeEnum.URLExpireError;
+                resultMsg.Description = EnumHelper.GetEnumDescription(StatusCodeEnum.URLExpireError);
                 resultMsg.Data = "";
                 actionContext.Response = ResponseHelper.ObjToResponse(resultMsg);
                 base.OnActionExecuting(actionContext);

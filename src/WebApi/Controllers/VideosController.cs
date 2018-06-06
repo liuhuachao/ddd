@@ -71,8 +71,14 @@ namespace WebApi.Controllers
         public IActionResult Get(int id)
         {
             var video = this._respository.GetVideo(id);
-            var results = Mapper.Map<Dtos.VideosRead>(video);
-            return Ok(results);
+            var VideosRead = Mapper.Map<Dtos.VideosRead>(video);
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)Enums.StatusCodeEnum.Success,
+                Description = Common.EnumHelper.GetEnumDescription(Enums.StatusCodeEnum.Success),
+                Data = VideosRead
+            };
+            return Ok(resultMsg);
         }
 
     }

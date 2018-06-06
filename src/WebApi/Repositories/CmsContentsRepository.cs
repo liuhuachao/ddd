@@ -38,10 +38,10 @@ namespace WebApi.Repositories
             return _context.CmsContents.Find(CmsId);
         }
 
-        public Dtos.NewsRead GetNews(int CmsId)
+        public Dtos.NewsList GetNews(int CmsId)
         {
             var contents = GetCmsContents(CmsId);
-            var results = new Dtos.NewsRead()
+            var results = new Dtos.NewsList()
             {
                 NewsId = contents.CmsId,
                 Title = contents.CmsTitle,
@@ -68,10 +68,10 @@ namespace WebApi.Repositories
             return contents;
         }
 
-        public IList<Dtos.NewsRead> GetNewsList(int limit = 10, int start = 0, int orderType = 0)
+        public IList<Dtos.NewsList> GetNewsList(int limit = 10, int start = 0, int orderType = 0)
         {
             var contents = GetCmsContents(limit, start, orderType);
-            var results = Mapper.Map<IEnumerable<Dtos.NewsRead>>(contents);
+            var results = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
             return results.ToList();
         }
 

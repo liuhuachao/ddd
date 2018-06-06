@@ -1,22 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using AutoMapper;
+using WebApi.Dtos;
+using WebApi.Models;
 using WebApi.Repositories;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace WebApi.Controllers
 {
     /// <summary>
     ///  资讯
-    /// </summary>
+    /// </summary>    
     [Route("v1/news")]
     public class NewsController : Controller
     {
+        private readonly ILogger<NewsController> _logger;
         private readonly ICmsContentsRespository _respository;
-
+        
         /// <summary>
         /// 资讯构造函数
         /// </summary>
         /// <param name="respository"></param>
-        public NewsController(ICmsContentsRespository respository)
+        public NewsController(ILogger<NewsController> logger,ICmsContentsRespository respository)
         {
+            _logger = logger;
             _respository = respository;
         }
 
@@ -26,19 +36,18 @@ namespace WebApi.Controllers
         /// <param name="limit">返回记录的数量，默认为10</param>
         /// <param name="start">返回记录的开始位置，默认为0</param>
         /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序，默认为0</param>
-        /// <returns></returns>
+        /// <returns></returns>        
+        [Produces("application/json", Type = typeof(NewsList))]
         [Route("")]
         [Route("limit/{limit}")]
-        //[Route("limit/{limit}/start/{start}")]
         [Route("limit/{limit}/ordertype/{ordertype}")]
-        //[Route("limit/{limit}/start/{start}/ordertype/{ordertype}")]
         [HttpGet]
         public IActionResult Get(int limit = 10, int start = 0, int ordertype = 0)
         {
+            this._logger.LogInformation("测试日志");
             var contents = this._respository.GetNewsList(limit, start, ordertype);
-            return Json(contents);
+            return Ok(contents);
         }
-
     
         /// <summary>
         /// 获取资讯列表页，带分页功能
@@ -61,13 +70,16 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">文章Id</param>
         /// <returns>返回单篇文章</returns>
+        [Produces("application/json", Type = typeof(NewsDetail))]
         [Route("{id}", Name = "GetNews")]
         [HttpGet]
         public IActionResult Get(int id)
         {
-            var content = this._respository.GetNews(id);
-            return Json(content);
+            var content = this._respository.GetCmsContents(id);
+            var results = Mapper.Map<IEnumerable<Dtos.NewsDetail>>(content);
+            return Json(results);
         }
+
 
 
     }

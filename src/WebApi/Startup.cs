@@ -113,13 +113,21 @@ namespace WebApi
             #region 配置 Automapper
             AutoMapper.Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<CmsContents, Dtos.NewsRead>()
+                cfg.CreateMap<CmsContents, Dtos.NewsList>()
                 .ForMember(d => d.NewsId, o => o.MapFrom(s => s.CmsId))
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.CmsKeys))
                 .ForMember(d => d.CoverImg, o => o.MapFrom(s => s.CmsPhotos))
                 .ForMember(d => d.PostTime, o => o.MapFrom(s => s.OprateDate))
                 ;
+
+                cfg.CreateMap<CmsContents, Dtos.NewsDetail>()
+                .ForMember(d => d.NewsId, o => o.MapFrom(s => s.CmsId))
+                .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
+                .ForMember(d => d.Intro, o => o.MapFrom(s => s.CmsKeys))
+                .ForMember(d => d.CoverImg, o => o.MapFrom(s => s.CmsPhotos))
+                .ForMember(d => d.PostTime, o => o.MapFrom(s => s.OprateDate))
+                .ForMember(d => d.Content, o => o.MapFrom(s => s.CmsBody));
             });
             #endregion
 

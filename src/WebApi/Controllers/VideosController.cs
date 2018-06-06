@@ -52,9 +52,9 @@ namespace WebApi.Controllers
         /// <param name="pageIndex">第几页，默认为1</param>
         /// <param name="ordertype">排序方式，0表示倒序,1表示正序，默认为0</param>
         /// <returns></returns>
-        [Produces("application/json", Type = typeof(Dtos.VideosRead))]
-        [HttpGet]
+        [Produces("application/json", Type = typeof(Dtos.VideosRead))]        
         [Route("pagesize/{pageSize}/pageindex/{pageIndex}")]
+        [HttpGet]
         public IActionResult GetByPage(int pageSize = 10, int pageIndex = 1, int ordertype = 0)
         {
             var contents = this._respository.GetVideos(pageSize, pageSize * (pageIndex - 1), ordertype);

@@ -39,7 +39,6 @@ namespace WebApi.Controllers
         /// <returns></returns>        
         [Produces("application/json", Type = typeof(NewsList))]
         [Route("")]
-        //[Route("limit/{limit}")]
         [HttpGet]
         public IActionResult Get(int limit = 10, int start = 0, int ordertype = 0)
         {
@@ -48,7 +47,7 @@ namespace WebApi.Controllers
             var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
             return Json(newsList);
         }
-    
+
         /// <summary>
         /// 获取资讯列表，带分页功能
         /// </summary>
@@ -56,8 +55,8 @@ namespace WebApi.Controllers
         /// <param name="pageIndex">第几页，默认为1</param>
         /// <param name="ordertype">排序方式，0表示倒序,1表示正序，默认为0</param>
         /// <returns></returns>
-        [HttpGet]
         [Route("pagesize/{pageSize}/pageindex/{pageIndex}")]
+        [HttpGet]        
         public IActionResult GetByPage(int pageSize = 10, int pageIndex = 1, int ordertype = 0)
         {
             var contents = this._respository.GetCmsContents(pageSize, pageSize*(pageIndex-1), ordertype);

@@ -11,6 +11,10 @@
     <DocumentationFile>bin\Debug\netcoreapp2.0\WebApi.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp2.0\WebApi.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="%2a%2a\**" />
     <Compile Remove="wwwroot\**" />

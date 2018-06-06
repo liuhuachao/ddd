@@ -54,7 +54,6 @@ namespace WebApi
             });
 
             // 配置 Repository
-            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICmsContentsRespository, CmsContentsRepository>();
 
             // 分别注册本地和远程日志服务
@@ -64,9 +63,6 @@ namespace WebApi
             services.AddTransient<IMailService, CloudMailService>();
 #endif
 
-            // 配置 ProductsDbContext
-            var productsConnectionString = Configuration["ConnectionStrings:ProductsDbConnectionString"];
-            services.AddDbContext<ProductsContext>(o => o.UseSqlServer(productsConnectionString));
 
             // 配置 PigeonsDbContext
             var isEncrypt = Configuration["IsEncrypt"];
@@ -91,7 +87,6 @@ namespace WebApi
                 var xmlPath = Path.Combine(basePath, "WebApi.xml");
                 c.IncludeXmlComments(xmlPath);
             });
-
 
         }
 
@@ -118,7 +113,6 @@ namespace WebApi
             #region 配置 Automapper
             AutoMapper.Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Product, Dtos.ProductCreation>();
                 cfg.CreateMap<CmsContents, Dtos.NewsRead>()
                 .ForMember(d => d.NewsId, o => o.MapFrom(s => s.CmsId))
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
@@ -141,7 +135,7 @@ namespace WebApi
             app.UseSwaggerUI(c =>
             {
                 c.DocumentTitle = "API Document";
-                c.RoutePrefix = "help";
+                c.RoutePrefix = "";
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
             #endregion

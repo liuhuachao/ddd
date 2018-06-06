@@ -13,23 +13,26 @@ namespace WebApi.Controllers
     [ApiVersion("1.0", Deprecated = true)]
     [ApiVersion("2.0")]
     [ApiVersion("3.0")]
-    //[Route("api/v{version:apiVersion}/[controller]")]
+    [Route("api/")]
     public class ValuesController : Controller
     {
-        [HttpGet, MapToApiVersion("1.0")]
+        [Route("v1/[controller]")]
+        [HttpGet]
         public string Get()
         {
             //通过下面的方法可以获取到客户端在访问那个版本的接口，当用户都升级的时候可以终止老版本的接口
             return HttpContext.GetRequestedApiVersion().ToString();
         }
 
-        [HttpGet, MapToApiVersion("2.0")]
+        [Route("v2/[controller]")]
+        [HttpGet]
         public string Getv2()
         {
             return HttpContext.GetRequestedApiVersion().ToString();
         }
 
-        [HttpGet, MapToApiVersion("3.0")]
+        [Route("v3/[controller]")]
+        [HttpGet]
         public string Getv3()
         {
             return HttpContext.GetRequestedApiVersion().ToString();
@@ -41,33 +44,7 @@ namespace WebApi.Controllers
             return "value";
         }
 
-        /// <summary>
-        /// 新增
-        /// </summary>
-        /// <param name="value"></param>
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
 
-        /// <summary>
-        /// 修改
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="id"></param>
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
 
     }
 }

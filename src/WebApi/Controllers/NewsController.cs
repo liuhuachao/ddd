@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// 获取资讯列表页，带可选过滤参数
+        /// 获取资讯列表
         /// </summary>
         /// <param name="limit">返回记录的数量，默认为10</param>
         /// <param name="start">返回记录的开始位置，默认为0</param>
@@ -39,18 +39,18 @@ namespace WebApi.Controllers
         /// <returns></returns>        
         [Produces("application/json", Type = typeof(NewsList))]
         [Route("")]
-        [Route("limit/{limit}")]
-        [Route("limit/{limit}/ordertype/{ordertype}")]
+        //[Route("limit/{limit}")]
         [HttpGet]
         public IActionResult Get(int limit = 10, int start = 0, int ordertype = 0)
         {
-            this._logger.LogInformation("测试日志");
-            var contents = this._respository.GetNewsList(limit, start, ordertype);
-            return Ok(contents);
+            this._logger.LogInformation("获取资讯列表");
+            var contents = this._respository.GetCmsContents(limit, start, ordertype);
+            var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
+            return Ok(newsList);
         }
     
         /// <summary>
-        /// 获取资讯列表页，带分页功能
+        /// 获取资讯列表，带分页功能
         /// </summary>
         /// <param name="pageSize">每页条数，默认为10</param>
         /// <param name="pageIndex">第几页，默认为1</param>
@@ -58,11 +58,11 @@ namespace WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("pagesize/{pageSize}/pageindex/{pageIndex}")]
-        [Route("pagesize/{pageSize}/pageindex/{pageIndex}/ordertype/{ordertype}")]
         public IActionResult GetByPage(int pageSize = 10, int pageIndex = 1, int ordertype = 0)
         {
-            var contents = this._respository.GetNewsList(pageSize, pageSize*(pageIndex-1), ordertype);
-            return Json(contents);
+            var contents = this._respository.GetCmsContents(pageSize, pageSize*(pageIndex-1), ordertype);
+            var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
+            return Ok(newsList);
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult Get(int id)
         {
-            var content = this._respository.GetCmsContents(id);
+            var content = this._respository.GetCmsContent(id);
             var results = Mapper.Map<IEnumerable<Dtos.NewsDetail>>(content);
-            return Json(results);
+            return Ok(results);
         }
 
 

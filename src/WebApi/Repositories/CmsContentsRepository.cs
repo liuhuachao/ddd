@@ -33,24 +33,9 @@ namespace WebApi.Repositories
             _context.SaveChanges();
         }
 
-        public CmsContents GetCmsContents(int CmsId)
+        public CmsContents GetCmsContent(int CmsId)
         {
             return _context.CmsContents.Find(CmsId);
-        }
-
-        public Dtos.NewsList GetNews(int CmsId)
-        {
-            var contents = GetCmsContents(CmsId);
-            var results = new Dtos.NewsList()
-            {
-                Id = contents.CmsId,
-                Title = contents.CmsTitle,
-                Intro = contents.CmsKeys,
-                CoverImg = contents.CmsPhotos,
-                Author = contents.CmsAuthor,
-                PostTime = contents.OprateDate.ToString(),
-            };
-            return results;
         }
 
         public IQueryable<CmsContents> GetCmsContents(int limit = 10,int start = 0,int orderType = 0)
@@ -68,13 +53,6 @@ namespace WebApi.Repositories
             return contents;
         }
 
-        public IList<Dtos.NewsList> GetNewsList(int limit = 10, int start = 0, int orderType = 0)
-        {
-            var contents = GetCmsContents(limit, start, orderType);
-            var results = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
-            return results.ToList();
-        }
-
         public bool Save()
         {
             return _context.SaveChanges() >= 0;
@@ -85,7 +63,7 @@ namespace WebApi.Repositories
             return await _context.SaveChangesAsync();
         }
 
-        public bool IsExistCmsContents(int CmsId)
+        public bool IsExist(int CmsId)
         {
             return _context.CmsContents.Any(x => x.CmsId == CmsId);
         }

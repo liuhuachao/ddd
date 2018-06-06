@@ -8,7 +8,7 @@ namespace WebApi.Dtos
     /// <summary>
     /// 资讯查询列表类
     /// </summary>    
-    public class VideosList
+    public class VideosRead
     {
         /// <summary>
         /// 标识
@@ -18,10 +18,6 @@ namespace WebApi.Dtos
         /// 标题
         /// </summary>
         public string Title { get; set; }
-        /// <summary>
-        /// 视频源Url
-        /// </summary>
-        public string Source { get; set; }
         /// <summary>
         /// 简介
         /// </summary>
@@ -38,5 +34,9 @@ namespace WebApi.Dtos
         /// 发表时间
         /// </summary>
         public string PostTime { get; set; }
+        /// <summary>
+        /// 视频源Url
+        /// </summary>
+        public string SourceUrl { get; set; }
     }
 }

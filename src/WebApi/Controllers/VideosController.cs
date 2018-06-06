@@ -75,8 +75,8 @@ namespace WebApi.Controllers
             var VideosRead = Mapper.Map<Dtos.VideosRead>(video);
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
-                Code = (int)Enums.StatusCodeEnum.Success,
-                Msg = Common.EnumHelper.GetEnumDescription(Enums.StatusCodeEnum.Success),
+                Code = (int)Enums.StatusCodeEnum.OK,
+                Msg = Common.EnumHelper.GetEnumDescription(Enums.StatusCodeEnum.OK),
                 Data = VideosRead
             };
             return Json(resultMsg);

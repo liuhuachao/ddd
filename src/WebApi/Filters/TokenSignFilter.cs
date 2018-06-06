@@ -48,8 +48,8 @@ namespace WebApi.Filters
             if (string.IsNullOrEmpty(timestamp) || string.IsNullOrEmpty(nonce) || string.IsNullOrEmpty(token) || string.IsNullOrEmpty(signature))
             {
                 resultMsg = new ResultMsg();
-                resultMsg.Code = (int)StatusCodeEnum.ParameterError;
-                resultMsg.Msg = EnumHelper.GetEnumDescription(StatusCodeEnum.ParameterError);
+                resultMsg.Code = (int)StatusCodeEnum.BadRequest;
+                resultMsg.Msg = EnumHelper.GetEnumDescription(StatusCodeEnum.BadRequest);
                 resultMsg.Data = "";
                 actionContext.Response = ResponseHelper.ObjToResponse(resultMsg);
                 base.OnActionExecuting(actionContext);

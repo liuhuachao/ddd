@@ -83,6 +83,18 @@ namespace WebApi.Dtos
         /// 视频源Url
         /// </summary>
         public string SourceUrl { get; set; }
+        /// <summary>
+        /// 点击量
+        /// </summary>
+        public int Clicks { get; set; }
+        /// <summary>
+        /// 点赞数
+        /// </summary>
+        public int Likes { get; set; }
+        /// <summary>
+        /// 视频时长
+        /// </summary>
+        public string Duration { get; set; }
     }
 
 }

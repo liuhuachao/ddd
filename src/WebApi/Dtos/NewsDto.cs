@@ -62,6 +62,8 @@ namespace WebApi.Dtos
     /// </summary>    
     public class NewsDetail
     {
+        private int _id;
+        private string _shareLink = "http://m.chsgw.com/news/news_detail.aspx?id=";
         /// <summary>
         /// 标识
         /// </summary>
@@ -90,5 +92,27 @@ namespace WebApi.Dtos
         /// 文章内容
         /// </summary>
         public string Content { get; set; }
+        /// <summary>
+        /// 点击量
+        /// </summary>
+        public int Clicks { get; set; }
+        /// <summary>
+        /// 点赞数
+        /// </summary>
+        public int Likes { get; set; }
+        /// <summary>
+        /// 分享链接
+        /// </summary>
+        public string ShareLink
+        {
+            get
+            {
+                return _shareLink + this.Id.ToString();
+            }
+            set { _shareLink = value; }
+        }
+
+
+
     }
 }

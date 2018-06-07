@@ -134,12 +134,23 @@ namespace WebApi
                 .ForMember(d => d.CoverImg, o => o.MapFrom(s => s.CmsPhotos))
                 .ForMember(d => d.PostTime, o => o.MapFrom(s => s.OprateDate))
                 .ForMember(d => d.Content, o => o.MapFrom(s => s.CmsBody))
+                .ForMember(d => d.Clicks, o => o.MapFrom(s => s.CmsClick))
+                .ForMember(d => d.Likes, o => o.MapFrom(s => s.Likes))
                 ;
 
                 cfg.CreateMap<VdVideo, Dtos.VideoList>()
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.Info))
                 .ForMember(d => d.PostTime, o => o.MapFrom(s => s.UpdateTime))
                 .ForMember(d => d.SourceUrl, o => o.MapFrom(s => s.VideoSource))
+                ;
+
+                cfg.CreateMap<VdVideo, Dtos.VideoDetail>()
+                .ForMember(d => d.Intro, o => o.MapFrom(s => s.Info))
+                .ForMember(d => d.PostTime, o => o.MapFrom(s => s.UpdateTime))
+                .ForMember(d => d.SourceUrl, o => o.MapFrom(s => s.VideoSource))
+                .ForMember(d => d.Clicks, o => o.MapFrom(s => s.Hits))
+                .ForMember(d => d.Likes, o => o.MapFrom(s => s.Likes))
+                .ForMember(d => d.Duration, o => o.MapFrom(s => s.VideoLength))
                 ;
             });
             #endregion

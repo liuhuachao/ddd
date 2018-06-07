@@ -65,9 +65,8 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var video = this._respository.GetVideo(id);
-            var videoList = Mapper.Map<Dtos.VideoList>(video);
-            var videoDetail = Mapper.Map<Dtos.VideoDetail>(videoList);
+            var video = this._respository.GetVideo(id);            
+            var videoDetail = Mapper.Map<Dtos.VideoDetail>(video);
             var code = video != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {

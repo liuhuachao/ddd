@@ -43,7 +43,7 @@ namespace WebApi.Controllers
         [Produces("application/json", Type = typeof(NewsList))]
         [Route("")]        
         [HttpGet]
-        public IActionResult GetNewsList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
+        public IActionResult GetList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
             var contents = this._respository.GetList(pageSize, pageSize * (pageIndex - 1), 0);
             var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
@@ -58,14 +58,14 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
-        /// 根据Id获取单篇文章
+        /// 根据 Id 获取单篇文章详情
         /// </summary>
         /// <param name="id">文章Id</param>
         /// <returns>返回单篇文章</returns>
         [Produces("application/json", Type = typeof(NewsDetail))]
         [Route("{id}", Name = "GetNews")]
         [HttpGet]
-        public IActionResult GetNews(int id)
+        public IActionResult GetDetail(int id)
         {
             var content = this._respository.GetSingle(id);
             var newsDetail = Mapper.Map<Dtos.NewsDetail>(content);
@@ -85,9 +85,9 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("{id}")]
+        [Route("UpdateClicks")]
         [HttpPatch]
-        public async Task<IActionResult> UpdateClicks(int id)
+        public async Task<IActionResult> UpdateClicks([FromQuery]int id)
         {
             var addClick = new Random().Next(1,10);
             this._respository.UpdateClick(id,addClick);

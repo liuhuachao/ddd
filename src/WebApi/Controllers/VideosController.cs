@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         [Produces("application/json", Type = typeof(Dtos.VideoList))]        
         [Route("")]
         [HttpGet]
-        public IActionResult GetByPage([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
+        public IActionResult GetList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
             var videos = this._respository.GetVideos(pageSize, pageSize * (pageIndex - 1), ordertype);
             var videosRead = Mapper.Map<IEnumerable<Dtos.VideoList>>(videos);
@@ -63,7 +63,7 @@ namespace WebApi.Controllers
         /// <returns></returns>
         [Produces("application/json", Type = typeof(Dtos.VideoDetail))]
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetDetail(int id)
         {
             var video = this._respository.GetVideo(id);            
             var videoDetail = Mapper.Map<Dtos.VideoDetail>(video);

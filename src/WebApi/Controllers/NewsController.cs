@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         {
             _logger = logger;
             _respository = respository;
-        }        
+        }
 
         /// <summary>
         /// 获取资讯列表
@@ -40,6 +40,7 @@ namespace WebApi.Controllers
         /// <param name="pageIndex">第几页，默认为1</param>
         /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序，默认为0</param>
         /// <returns></returns>
+        [Produces("application/json", Type = typeof(NewsList))]
         [Route("")]        
         [HttpGet]
         public IActionResult GetNewsList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)

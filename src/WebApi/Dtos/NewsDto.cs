@@ -12,9 +12,6 @@ namespace WebApi.Dtos
     /// </summary>    
     public class NewsList
     {
-        private string _coverImage;
-        private int _showType;
-
         /// <summary>
         /// 标识
         /// </summary>
@@ -30,11 +27,7 @@ namespace WebApi.Dtos
         /// <summary>
         /// 封面图
         /// </summary>
-        public string CoverImg
-        {
-            get { return _coverImage; }
-            set { _coverImage = value; }
-        }
+        public string CoverImg { get; set; }
         /// <summary>
         /// 作者
         /// </summary>
@@ -50,11 +43,10 @@ namespace WebApi.Dtos
         {
             get
             {                
-                return string.IsNullOrEmpty(this._coverImage)?2:new Random().Next(0,2);
+                return string.IsNullOrEmpty(this.CoverImg) ? 2 : new Random().Next(0,2);
             }
-            set { _showType = value; }
+            set { }
         }
-
     }
 
     /// <summary>
@@ -62,8 +54,8 @@ namespace WebApi.Dtos
     /// </summary>    
     public class NewsDetail
     {
-        private int _id;
         private string _shareLink = "http://m.chsgw.com/news/news_detail.aspx?id=";
+
         /// <summary>
         /// 标识
         /// </summary>

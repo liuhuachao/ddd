@@ -17,28 +17,28 @@ namespace WebApi.Repositories
             _context = pigeonsContext;
         }
 
-        public void AddCmsContents(CmsContents CmsContents)
+        public void Add(CmsContents CmsContents)
         {
             this._context.CmsContents.Add(CmsContents);
         }
 
-        public void DeleteCmsContents(CmsContents CmsContents)
+        public void Delete(CmsContents CmsContents)
         {
-            _context.CmsContents.Remove(CmsContents);
+            this._context.CmsContents.Remove(CmsContents);
         }
 
-        public void UpdateCmsContents(CmsContents cmsContents)
+        public void UpdateClick(int id,int addClick)
         {
-            var content = this._context.CmsContents.Find(cmsContents.CmsId);            
-            _context.SaveChanges();
+            var content = this._context.CmsContents.Find(id);
+            content.CmsClick += addClick ;
         }
 
-        public CmsContents GetCmsContent(int CmsId)
+        public CmsContents GetSingle(int CmsId)
         {
             return _context.CmsContents.Find(CmsId);
         }
 
-        public IQueryable<CmsContents> GetCmsContents(int limit = 10,int start = 0,int orderType = 0)
+        public IQueryable<CmsContents> GetList(int limit = 10,int start = 0,int orderType = 0)
         {
             var _limit = limit > 100 ? 100 : limit;
             IQueryable<CmsContents> contents;

@@ -45,7 +45,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetNewsList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
-            var contents = this._respository.GetCmsContents(pageSize, pageSize * (pageIndex - 1), 0);
+            var contents = this._respository.GetList(pageSize, pageSize * (pageIndex - 1), 0);
             var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
             var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -67,7 +67,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetNews(int id)
         {
-            var content = this._respository.GetCmsContent(id);
+            var content = this._respository.GetSingle(id);
             var newsDetail = Mapper.Map<Dtos.NewsDetail>(content);
             var code = content != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -78,6 +78,33 @@ namespace WebApi.Controllers
             };
             return Json(resultMsg);
         }
+
+
+        /// <summary>
+        /// 更新点击量
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("{id}")]
+        [HttpPatch]
+        public async Task<IActionResult> UpdateClicks(int id)
+        {
+            var addClick = new Random().Next(1,10);
+            this._respository.UpdateClick(id,addClick);
+            var code = await this._respository.SaveAsync() > 0 ? Enums.StatusCodeEnum.Accepted : Enums.StatusCodeEnum.NotModified;
+            var video = Mapper.Map<Dtos.NewsDetail>(this._respository.GetSingle(id));
+
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = video
+            };
+
+            return Json(resultMsg);
+        }
+
+
 
     }
 }

@@ -80,7 +80,12 @@ namespace WebApi
                 {
                     Version = "v1",
                     Title = "尊贵赛鸽网 API 文档",
-                    Description = "本文档遵循 RESTful 风格，使用 HTTP 和 HTTPS 协议",
+                    Description = @"本文档遵循 RESTful 风格，使用 HTTP 和 HTTPS 协议，返回参数格式如下  
+                    {
+                    'code': 200,
+                    'msg': '请求成功',
+                    'data': { }
+                    }",
                 });
 
                 //Set the comments path for the swagger json and ui.

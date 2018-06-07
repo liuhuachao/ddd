@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace WebApi.Dtos
 {   
     /// <summary>
-    /// 资讯查询列表类
+    /// 资讯列表
     /// </summary>    
     public class NewsList
     {
@@ -58,7 +58,7 @@ namespace WebApi.Dtos
     }
 
     /// <summary>
-    /// 资讯查询详情类
+    /// 资讯详情
     /// </summary>    
     public class NewsDetail
     {
@@ -90,23 +90,5 @@ namespace WebApi.Dtos
         /// 文章内容
         /// </summary>
         public string Content { get; set; }
-    }
-
-    /// <summary>
-    /// 资讯新增类
-    /// </summary>
-    public class NewsCreate
-    {
-        [Required(ErrorMessage = "{0}是必填项")]
-        [StringLength(50,MinimumLength = 2)]
-        public string Title { get; set; }
-        public string Intro { get; set; }
-        public string CoverImg { get; set; }
-        [Required(ErrorMessage = "{0}是必填项")]
-        public string Author { get; set; }
-        public string PostTime { get; set; }
-        [Display(Name = "分类")]
-        [Required(ErrorMessage = "{0}是必填项")]
-        public string Category { get; set; }
     }
 }

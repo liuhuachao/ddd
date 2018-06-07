@@ -44,7 +44,7 @@ namespace WebApi.Dtos
         /// </summary>
         public string PostTime { get; set; }
         /// <summary>
-        /// 显示类型，可选值为0/1/2/3
+        /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
         /// </summary>
         public int ShowType
         {

@@ -6,12 +6,15 @@ using System.ComponentModel.DataAnnotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace WebApi.Dtos
-{
+{   
     /// <summary>
     /// 资讯查询列表类
     /// </summary>    
     public class NewsList
     {
+        private string _coverImage;
+        private int _showType;
+
         /// <summary>
         /// 标识
         /// </summary>
@@ -27,7 +30,11 @@ namespace WebApi.Dtos
         /// <summary>
         /// 封面图
         /// </summary>
-        public string CoverImg { get; set; }
+        public string CoverImg
+        {
+            get { return _coverImage; }
+            set { _coverImage = value; }
+        }
         /// <summary>
         /// 作者
         /// </summary>
@@ -36,6 +43,18 @@ namespace WebApi.Dtos
         /// 发表时间
         /// </summary>
         public string PostTime { get; set; }
+        /// <summary>
+        /// 显示类型，可选值为0/1/2/3
+        /// </summary>
+        public int ShowType
+        {
+            get
+            {                
+                return string.IsNullOrEmpty(this._coverImage)?2:new Random().Next(0,2);
+            }
+            set { _showType = value; }
+        }
+
     }
 
     /// <summary>

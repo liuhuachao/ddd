@@ -35,39 +35,14 @@ namespace WebApi.Controllers
         /// <summary>
         /// 获取视频列表
         /// </summary>
-        /// <param name="limit">返回记录的数量，默认为10</param>
-        /// <param name="start">返回记录的开始位置，默认为0</param>
-        /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序，默认为0</param>
-        /// <returns></returns>  
-        [Produces("application/json", Type = typeof(Dtos.VideoRead))]
-        [Route("")]
-        [HttpGet]
-        public IActionResult Get(int limit = 10, int start = 0, int ordertype = 0)
-        {
-            this._logger.LogInformation("获取视频列表");
-            var videos = this._respository.GetVideos(limit, start, ordertype);
-            var videosRead = Mapper.Map<IEnumerable<Dtos.VideoRead>>(videos);
-            var code = videos.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
-            {
-                Code = (int)code,
-                Msg = Common.EnumHelper.GetEnumDescription(code),
-                Data = videosRead
-            };
-            return Json(resultMsg);
-        }
-
-        /// <summary>
-        /// 获取视频列表，带分页功能
-        /// </summary>
         /// <param name="pageSize">每页条数，默认为10</param>
         /// <param name="pageIndex">第几页，默认为1</param>
         /// <param name="ordertype">排序方式，0表示倒序,1表示正序，默认为0</param>
         /// <returns></returns>
         [Produces("application/json", Type = typeof(Dtos.VideoRead))]        
-        [Route("pagesize/{pageSize}/pageindex/{pageIndex}")]
+        [Route("")]
         [HttpGet]
-        public IActionResult GetByPage(int pageSize = 10, int pageIndex = 1, int ordertype = 0)
+        public IActionResult GetByPage([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
             var videos = this._respository.GetVideos(pageSize, pageSize * (pageIndex - 1), ordertype);
             var videosRead = Mapper.Map<IEnumerable<Dtos.VideoRead>>(videos);

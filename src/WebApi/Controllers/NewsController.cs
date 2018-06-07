@@ -16,6 +16,7 @@ namespace WebApi.Controllers
     ///  资讯
     /// </summary>    
     [Route("v1/news")]
+    [ApiVersion("1.0")]
     public class NewsController : Controller
     {
         private readonly ILogger<NewsController> _logger;
@@ -30,45 +31,20 @@ namespace WebApi.Controllers
         {
             _logger = logger;
             _respository = respository;
-        }
+        }        
 
         /// <summary>
         /// 获取资讯列表
         /// </summary>
-        /// <param name="limit">返回记录的数量，默认为10</param>
-        /// <param name="start">返回记录的开始位置，默认为0</param>
-        /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序，默认为0</param>
-        /// <returns></returns>        
-        [Produces("application/json", Type = typeof(NewsList))]
-        [Route("")]
-        [HttpGet]
-        public IActionResult Get(int limit = 10, int start = 0, int ordertype = 0)
-        {
-            this._logger.LogInformation("获取资讯列表");
-            var contents = this._respository.GetCmsContents(limit, start, ordertype);
-            var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
-            var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
-            {
-                Code = (int)code,
-                Msg = Common.EnumHelper.GetEnumDescription(code),
-                Data = newsList
-            };
-            return Json(resultMsg);
-        }
-
-        /// <summary>
-        /// 获取资讯列表，带分页功能
-        /// </summary>
         /// <param name="pageSize">每页条数，默认为10</param>
         /// <param name="pageIndex">第几页，默认为1</param>
-        /// <param name="ordertype">排序方式，0表示倒序,1表示正序，默认为0</param>
+        /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序，默认为0</param>
         /// <returns></returns>
-        [Route("pagesize/{pageSize}/pageindex/{pageIndex}")]
-        [HttpGet]        
-        public IActionResult GetByPage(int pageSize = 10, int pageIndex = 1, int ordertype = 0)
+        [Route("")]        
+        [HttpGet]
+        public IActionResult GetNewsList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
-            var contents = this._respository.GetCmsContents(pageSize, pageSize*(pageIndex-1), ordertype);
+            var contents = this._respository.GetCmsContents(pageSize, pageSize * (pageIndex - 1), 0);
             var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
             var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -88,7 +64,7 @@ namespace WebApi.Controllers
         [Produces("application/json", Type = typeof(NewsDetail))]
         [Route("{id}", Name = "GetNews")]
         [HttpGet]
-        public IActionResult Get(int id)
+        public IActionResult GetNews(int id)
         {
             var content = this._respository.GetCmsContent(id);
             var newsDetail = Mapper.Map<Dtos.NewsDetail>(content);

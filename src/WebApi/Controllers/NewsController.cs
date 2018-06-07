@@ -92,13 +92,13 @@ namespace WebApi.Controllers
             var addClick = new Random().Next(1,10);
             this._respository.UpdateClick(id,addClick);
             var code = await this._respository.SaveAsync() > 0 ? Enums.StatusCodeEnum.Accepted : Enums.StatusCodeEnum.NotModified;
-            var video = Mapper.Map<Dtos.NewsDetail>(this._respository.GetSingle(id));
+            var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._respository.GetSingle(id));
 
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
-                Data = video
+                Data = newsDetail,
             };
 
             return Json(resultMsg);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -21,9 +22,10 @@ namespace WebApi.Controllers
         private readonly ICmsContentsRespository _respository;
         
         /// <summary>
-        /// 资讯构造函数
+        /// 构造函数
         /// </summary>
-        /// <param name="respository"></param>
+        /// <param name="logger">日志</param>
+        /// <param name="respository">仓库</param>
         public NewsController(ILogger<NewsController> logger,ICmsContentsRespository respository)
         {
             _logger = logger;
@@ -45,7 +47,14 @@ namespace WebApi.Controllers
             this._logger.LogInformation("获取资讯列表");
             var contents = this._respository.GetCmsContents(limit, start, ordertype);
             var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
-            return Json(newsList);
+            var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = newsList
+            };
+            return Json(resultMsg);
         }
 
         /// <summary>
@@ -61,7 +70,14 @@ namespace WebApi.Controllers
         {
             var contents = this._respository.GetCmsContents(pageSize, pageSize*(pageIndex-1), ordertype);
             var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
-            return Json(newsList);
+            var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = newsList
+            };
+            return Json(resultMsg);
         }
 
         /// <summary>
@@ -75,11 +91,16 @@ namespace WebApi.Controllers
         public IActionResult Get(int id)
         {
             var content = this._respository.GetCmsContent(id);
-            var results = Mapper.Map<Dtos.NewsDetail>(content);
-            return Json(results);
+            var newsDetail = Mapper.Map<Dtos.NewsDetail>(content);
+            var code = content != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = newsDetail
+            };
+            return Json(resultMsg);
         }
-
-
 
     }
 }

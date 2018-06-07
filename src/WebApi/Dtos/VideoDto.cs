@@ -8,7 +8,7 @@ namespace WebApi.Dtos
     /// <summary>
     /// 资讯查询列表类
     /// </summary>    
-    public class VideosRead
+    public class VideoRead
     {
         /// <summary>
         /// 标识

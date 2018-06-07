@@ -131,7 +131,7 @@ namespace WebApi
                 .ForMember(d => d.Content, o => o.MapFrom(s => s.CmsBody))
                 ;
 
-                cfg.CreateMap<VdVideo, Dtos.VideosRead>()
+                cfg.CreateMap<VdVideo, Dtos.VideoRead>()
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.Info))
                 .ForMember(d => d.PostTime, o => o.MapFrom(s => s.UpdateTime))
                 .ForMember(d => d.SourceUrl, o => o.MapFrom(s => s.VideoSource))

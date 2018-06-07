@@ -21,6 +21,11 @@ namespace WebApi.Controllers
         private readonly ILogger<VideosController> _logger;
         private readonly IVideosRespository _respository;
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="logger">日志</param>
+        /// <param name="respository">仓库</param>
         public VideosController(ILogger<VideosController> logger, IVideosRespository respository)
         {
             _logger = logger;
@@ -34,15 +39,22 @@ namespace WebApi.Controllers
         /// <param name="start">返回记录的开始位置，默认为0</param>
         /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序，默认为0</param>
         /// <returns></returns>  
-        [Produces("application/json", Type = typeof(Dtos.VideosRead))]
+        [Produces("application/json", Type = typeof(Dtos.VideoRead))]
         [Route("")]
         [HttpGet]
         public IActionResult Get(int limit = 10, int start = 0, int ordertype = 0)
         {
             this._logger.LogInformation("获取视频列表");
-            var contents = this._respository.GetVideos(limit, start, ordertype);
-            var newsList = Mapper.Map<IEnumerable<Dtos.VideosRead>>(contents);
-            return Json(newsList);
+            var videos = this._respository.GetVideos(limit, start, ordertype);
+            var videosRead = Mapper.Map<IEnumerable<Dtos.VideoRead>>(videos);
+            var code = videos.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = videosRead
+            };
+            return Json(resultMsg);
         }
 
         /// <summary>
@@ -52,14 +64,21 @@ namespace WebApi.Controllers
         /// <param name="pageIndex">第几页，默认为1</param>
         /// <param name="ordertype">排序方式，0表示倒序,1表示正序，默认为0</param>
         /// <returns></returns>
-        [Produces("application/json", Type = typeof(Dtos.VideosRead))]        
+        [Produces("application/json", Type = typeof(Dtos.VideoRead))]        
         [Route("pagesize/{pageSize}/pageindex/{pageIndex}")]
         [HttpGet]
         public IActionResult GetByPage(int pageSize = 10, int pageIndex = 1, int ordertype = 0)
         {
-            var contents = this._respository.GetVideos(pageSize, pageSize * (pageIndex - 1), ordertype);
-            var videoList = Mapper.Map<IEnumerable<Dtos.VideosRead>>(contents);
-            return Json(videoList);
+            var videos = this._respository.GetVideos(pageSize, pageSize * (pageIndex - 1), ordertype);
+            var videosRead = Mapper.Map<IEnumerable<Dtos.VideoRead>>(videos);
+            var code = videos.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = videosRead
+            };
+            return Json(resultMsg);
         }
 
         /// <summary>
@@ -67,17 +86,18 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">视频 Id</param>
         /// <returns></returns>
-        [Produces("application/json", Type = typeof(Dtos.VideosRead))]
+        [Produces("application/json", Type = typeof(Dtos.VideoRead))]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             var video = this._respository.GetVideo(id);
-            var VideosRead = Mapper.Map<Dtos.VideosRead>(video);
+            var videoRead = Mapper.Map<Dtos.VideoRead>(video);
+            var code = video != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
-                Code = (int)Enums.StatusCodeEnum.OK,
-                Msg = Common.EnumHelper.GetEnumDescription(Enums.StatusCodeEnum.OK),
-                Data = VideosRead
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = videoRead
             };
             return Json(resultMsg);
         }

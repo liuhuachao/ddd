@@ -12,6 +12,8 @@ namespace WebApi.Dtos
     /// </summary>    
     public class NewsList
     {
+        private string _postTime;
+
         /// <summary>
         /// 标识
         /// </summary>
@@ -35,7 +37,20 @@ namespace WebApi.Dtos
         /// <summary>
         /// 发表时间
         /// </summary>
-        public string PostTime { get; set; }
+        public string PostTime
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_postTime) || !Common.TimeHelper.IsDate(_postTime))
+                    return "新鲜出炉";
+                else
+                    return Common.TimeHelper.GetTimeDiffUntil(Convert.ToDateTime(_postTime));
+            }
+            set
+            {
+                _postTime = value;
+            }
+        }
         /// <summary>
         /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
         /// </summary>
@@ -55,6 +70,7 @@ namespace WebApi.Dtos
     public class NewsDetail
     {
         private string _shareLink = "http://m.chsgw.com/news/news_detail.aspx?id=";
+        private string _content;
 
         /// <summary>
         /// 标识
@@ -83,7 +99,17 @@ namespace WebApi.Dtos
         /// <summary>
         /// 文章内容
         /// </summary>
-        public string Content { get; set; }
+        public string Content
+        {
+            get
+            {
+                return _content;
+            }
+            set
+            {
+                _content = value;
+            }
+        }
         /// <summary>
         /// 点击量
         /// </summary>

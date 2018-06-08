@@ -1,9 +1,9 @@
 using System;
 using Xunit;
 
-namespace WebApiXUnitTest
+namespace WebApiTest
 {
-    public class AESUnitTest
+    public class AESHelperTest
     {
         [Fact]
         public void TestEncryptAndDecrypt()

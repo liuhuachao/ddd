@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using WebApi.Interfaces;
 using WebApi.Models;
-using AutoMapper;
 
 namespace WebApi.Repositories
 {
@@ -44,6 +45,16 @@ namespace WebApi.Repositories
             {
                 contents = this._context.CmsContents.OrderBy(x => x.CmsId).Skip(start).Take(_limit);
             }
+            return contents;
+        }
+
+        public IQueryable<CmsContents> Search(string title)
+        {
+            var limit = 10;
+            var start = 0;
+            IQueryable<CmsContents> contents = this._context.CmsContents
+                .Where(content => EF.Functions.Like(content.CmsTitle,"%"+ title + "%"))
+                .OrderByDescending(x => x.CmsId).Skip(start).Take(limit);            
             return contents;
         }
 

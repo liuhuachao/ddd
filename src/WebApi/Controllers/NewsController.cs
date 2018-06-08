@@ -63,7 +63,7 @@ namespace WebApi.Controllers
         /// <param name="id">文章Id</param>
         /// <returns>返回单篇文章</returns>
         [Produces("application/json", Type = typeof(NewsDetail))]
-        [Route("{id}", Name = "GetNews")]
+        [Route("{id}", Name = "GetDetail")]
         [HttpGet]
         public IActionResult GetDetail(int id)
         {
@@ -75,6 +75,29 @@ namespace WebApi.Controllers
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
                 Data = newsDetail
+            };
+            return Json(resultMsg);
+        }
+
+
+        /// <summary>
+        /// 根据标题搜索资讯
+        /// </summary>
+        /// <param name="title">标题</param>
+        /// <returns></returns>
+        [Produces("application/json", Type = typeof(NewsList))]
+        [Route("Search")]
+        [HttpGet]
+        public IActionResult Search([FromQuery]string title)
+        {
+            var contents = this._respository.Search(title);
+            var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
+            var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = newsList
             };
             return Json(resultMsg);
         }

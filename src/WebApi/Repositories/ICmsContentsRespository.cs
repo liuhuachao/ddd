@@ -10,7 +10,6 @@ namespace WebApi.Repositories
     {      
         void Add(CmsContents CmsContents);
         void Delete(CmsContents CmsContents);
-        void UpdateClick(int id,int addClicks);
         CmsContents GetSingle(int CmsContentsId);
         IQueryable<CmsContents> GetList(int limit = 10,int start = 0,int orderType = 0);
         bool Save();

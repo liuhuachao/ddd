@@ -83,15 +83,16 @@ namespace WebApi.Controllers
         /// <summary>
         /// 更新点击量
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">资讯 Id</param>
         /// <returns></returns>
         [Route("UpdateClicks")]
         [HttpPatch]
         public async Task<IActionResult> UpdateClicks([FromQuery]int id)
         {
             var addClick = new Random().Next(1,10);
-            this._respository.UpdateClick(id,addClick);
-            var code = await this._respository.SaveAsync() > 0 ? Enums.StatusCodeEnum.Accepted : Enums.StatusCodeEnum.NotModified;
+            var news = this._respository.GetSingle(id);
+            news.CmsClick += addClick;
+            var code = await this._respository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
             var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._respository.GetSingle(id));
 
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -104,6 +105,30 @@ namespace WebApi.Controllers
             return Json(resultMsg);
         }
 
+        /// <summary>
+        /// 更新点赞量
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("UpdateLikes")]
+        [HttpPatch]
+        public async Task<IActionResult> UpdateLikes([FromQuery]int id)
+        {
+            var addClick = new Random().Next(1, 10);
+            var news = this._respository.GetSingle(id);
+            news.Likes += 1;
+            var code = await this._respository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
+            var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._respository.GetSingle(id));
+
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = newsDetail,
+            };
+
+            return Json(resultMsg);
+        }
 
 
     }

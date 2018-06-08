@@ -27,12 +27,6 @@ namespace WebApi.Repositories
             this._context.CmsContents.Remove(CmsContents);
         }
 
-        public void UpdateClick(int id,int addClick)
-        {
-            var content = this._context.CmsContents.Find(id);
-            content.CmsClick += addClick ;
-        }
-
         public CmsContents GetSingle(int CmsId)
         {
             return _context.CmsContents.Find(CmsId);

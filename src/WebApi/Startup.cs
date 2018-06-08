@@ -125,6 +125,7 @@ namespace WebApi
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.CmsKeys))
                 .ForMember(d => d.CoverImg, o => o.MapFrom(s => s.CmsPhotos))
                 .ForMember(d => d.PostTime, o => o.MapFrom(s => s.OprateDate))
+                .ForMember(d => d.ClassCode, o => o.MapFrom(s => s.CmsCode))
                 ;
 
                 cfg.CreateMap<CmsContents, Dtos.NewsDetail>()

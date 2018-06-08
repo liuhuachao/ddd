@@ -4,6 +4,9 @@ using System.ComponentModel;
 
 namespace WebApi.Enums
 {
+    /// <summary>
+    /// 状态码
+    /// </summary>
     public enum StatusCodeEnum
     {
         #region Successful 200-299

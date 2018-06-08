@@ -13,6 +13,7 @@ namespace WebApi.Dtos
     public class NewsList
     {
         private string _postTime;
+        private string _className;
 
         /// <summary>
         /// 标识
@@ -50,6 +51,18 @@ namespace WebApi.Dtos
             {
                 _postTime = value;
             }
+        }
+        /// <summary>
+        /// 栏目编码
+        /// </summary>
+        public string ClassCode { get; set; }
+        /// <summary>
+        /// 栏目名称
+        /// </summary>
+        public string ClassName
+        {
+            get { return Common.Utility.GetClassName(ClassCode); }
+            set { _className = value; }
         }
         /// <summary>
         /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频

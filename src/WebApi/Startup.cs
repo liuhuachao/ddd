@@ -116,7 +116,7 @@ namespace WebApi
                 app.UseExceptionHandler();
             }
 
-            #region 配置 Automapper
+            // 配置 Automapper
             AutoMapper.Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<CmsContents, Dtos.NewsList>()
@@ -154,7 +154,6 @@ namespace WebApi
                 .ForMember(d => d.Duration, o => o.MapFrom(s => s.VideoLength))
                 ;
             });
-            #endregion
 
             app.UseStatusCodePages();
 

@@ -114,9 +114,9 @@ namespace WebApi.Controllers
         [HttpPatch]
         public async Task<IActionResult> UpdateLikes([FromQuery]int id)
         {
-            var addClick = new Random().Next(1, 10);
+            var addLikes = new Random().Next(1, 10);
             var news = this._respository.GetSingle(id);
-            news.Likes += 1;
+            news.Likes += addLikes;
             var code = await this._respository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
             var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._respository.GetSingle(id));
 

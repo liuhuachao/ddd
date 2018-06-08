@@ -44,7 +44,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
-            var videos = this._respository.GetVideos(pageSize, pageSize * (pageIndex - 1), ordertype);
+            var videos = this._respository.GetList(pageSize, pageSize * (pageIndex - 1), ordertype);
             var videosRead = Mapper.Map<IEnumerable<Dtos.VideoList>>(videos);
             var code = videos.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -65,7 +65,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetDetail(int id)
         {
-            var video = this._respository.GetVideo(id);            
+            var video = this._respository.GetSingle(id);            
             var videoDetail = Mapper.Map<Dtos.VideoDetail>(video);
             var code = video != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -74,6 +74,56 @@ namespace WebApi.Controllers
                 Msg = Common.EnumHelper.GetEnumDescription(code),
                 Data = videoDetail
             };
+            return Json(resultMsg);
+        }
+
+        /// <summary>
+        /// 更新点击量
+        /// </summary>
+        /// <param name="id">资讯 Id</param>
+        /// <returns></returns>
+        [Route("UpdateClicks")]
+        [HttpPatch]
+        public async Task<IActionResult> UpdateClicks([FromQuery]int id)
+        {
+            var addClick = new Random().Next(1, 10);
+            var video = this._respository.GetSingle(id);
+            video.Hits += addClick;
+            var code = await this._respository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
+            var videoDetail = Mapper.Map<Dtos.VideoDetail>(this._respository.GetSingle(id));
+
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = videoDetail,
+            };
+
+            return Json(resultMsg);
+        }
+
+        /// <summary>
+        /// 更新点赞量
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("UpdateLikes")]
+        [HttpPatch]
+        public async Task<IActionResult> UpdateLikes([FromQuery]int id)
+        {
+            var addLikes = new Random().Next(1, 10);
+            var news = this._respository.GetSingle(id);
+            news.Likes += addLikes;
+            var code = await this._respository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
+            var videoDetail = Mapper.Map<Dtos.VideoDetail>(this._respository.GetSingle(id));
+
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = videoDetail,
+            };
+
             return Json(resultMsg);
         }
 

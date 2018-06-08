@@ -15,12 +15,12 @@ namespace WebApi.Repositories
             _context = pigeonsContext;
         }
 
-        public VdVideo GetVideo(int Id)
+        public VdVideo GetSingle(int Id)
         {
             return _context.VdVideo.Find(Id);
         }
 
-        public IQueryable<VdVideo> GetVideos(int limit = 10, int start = 0, int orderType = 0)
+        public IQueryable<VdVideo> GetList(int limit = 10, int start = 0, int orderType = 0)
         {
             var _limit = limit > 100 ? 100 : limit;
             IQueryable<VdVideo> videos;

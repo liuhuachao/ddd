@@ -91,7 +91,7 @@ namespace WebApi.Controllers
         public IActionResult Search([FromQuery]string title)
         {
             var contents = this._respository.Search(title);
-            var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
+            var newsList = Mapper.Map<IList<Dtos.NewsList>>(contents);
             var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {

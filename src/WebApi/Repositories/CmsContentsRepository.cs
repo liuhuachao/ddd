@@ -48,13 +48,14 @@ namespace WebApi.Repositories
             return contents;
         }
 
-        public IQueryable<CmsContents> Search(string title)
+        public IList<CmsContents> Search(string title)
         {
             var limit = 10;
             var start = 0;
-            IQueryable<CmsContents> contents = this._context.CmsContents
+            IList<CmsContents> contents = this._context.CmsContents
                 .Where(content => EF.Functions.Like(content.CmsTitle,"%"+ title + "%"))
-                .OrderByDescending(x => x.CmsId).Skip(start).Take(limit);            
+                .OrderByDescending(x => x.CmsId).Skip(start).Take(limit)
+                .ToList();            
             return contents;
         }
 

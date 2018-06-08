@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,6 +34,17 @@ namespace WebApi.Repositories
                 videos = this._context.VdVideo.OrderBy(x => x.Id).Skip(start).Take(_limit);
             }
             return videos;
+        }
+
+        public IList<VdVideo> Search(string title)
+        {
+            var limit = 10;
+            var start = 0;
+            IList<VdVideo> videoList = this._context.VdVideo
+                .Where(item => EF.Functions.Like(item.Title, "%" + title + "%"))
+                .OrderByDescending(x => x.Id).Skip(start).Take(limit)
+                .ToList();
+            return videoList;
         }
 
         public bool Save()

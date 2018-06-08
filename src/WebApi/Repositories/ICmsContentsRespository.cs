@@ -12,7 +12,7 @@ namespace WebApi.Repositories
         void Delete(CmsContents CmsContents);
         CmsContents GetSingle(int CmsContentsId);
         IQueryable<CmsContents> GetList(int limit = 10,int start = 0,int orderType = 0);
-        IQueryable<CmsContents> Search(string title);
+        IList<CmsContents> Search(string title);
         bool Save();
         Task<int> SaveAsync();
         bool IsExist(int CmsContentsId);

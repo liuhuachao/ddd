@@ -10,6 +10,7 @@ namespace WebApi.Repositories
     {
         VdVideo GetSingle(int Id);
         IQueryable<VdVideo> GetList(int limit = 10, int start = 0, int orderType = 0);
+        IList<VdVideo> Search(string title);
         bool Save();
         Task<int> SaveAsync();
         bool IsExist(int Id);

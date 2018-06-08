@@ -45,13 +45,13 @@ namespace WebApi.Controllers
         public IActionResult GetList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
             var videos = this._respository.GetList(pageSize, pageSize * (pageIndex - 1), ordertype);
-            var videosRead = Mapper.Map<IEnumerable<Dtos.VideoList>>(videos);
+            var videosList = Mapper.Map<IEnumerable<Dtos.VideoList>>(videos);
             var code = videos.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
-                Data = videosRead
+                Data = videosList
             };
             return Json(resultMsg);
         }
@@ -73,6 +73,28 @@ namespace WebApi.Controllers
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
                 Data = videoDetail
+            };
+            return Json(resultMsg);
+        }
+
+        /// <summary>
+        /// 根据标题搜索视频
+        /// </summary>
+        /// <param name="title">标题</param>
+        /// <returns></returns>
+        [Produces("application/json", Type = typeof(Dtos.VideoList))]
+        [Route("Search")]
+        [HttpGet]
+        public IActionResult Search([FromQuery]string title)
+        {
+            var videos = this._respository.Search(title);
+            var videosList = Mapper.Map<IList<Dtos.VideoList>>(videos);
+            var code = videos.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = videosList
             };
             return Json(resultMsg);
         }

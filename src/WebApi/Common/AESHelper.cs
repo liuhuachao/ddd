@@ -21,14 +21,10 @@ namespace WebApi.Common
         /// <summary>
         /// 加密
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="key"></param>
+        /// <param name="inputStr">输入字符串</param>
+        /// <param name="key">秘钥</param>
         /// <returns></returns>
-        public static string AESEncrypt(string input)
-        {
-            return AESEncrypt(input, KEY);
-        }
-        public static string AESEncrypt(string input, string key)
+        public static string AESEncrypt(string inputStr, string key)
         {
             var encryptKey = Encoding.UTF8.GetBytes(key);
 
@@ -43,7 +39,7 @@ namespace WebApi.Common
 
                         using (var swEncrypt = new StreamWriter(csEncrypt))
                         {
-                            swEncrypt.Write(input);
+                            swEncrypt.Write(inputStr);
                         }
 
                         var iv = aesAlg.IV;
@@ -62,19 +58,20 @@ namespace WebApi.Common
             }
         }
 
+        public static string AESEncrypt(string input)
+        {
+            return AESEncrypt(input, KEY);
+        }
+
         /// <summary>
         /// 解密
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="key"></param>
+        /// <param name="inputStr">输入字符串</param>
+        /// <param name="key">秘钥</param>
         /// <returns></returns>
-        public static string AESDecrypt(string input)
+        public static string AESDecrypt(string inputStr, string key)
         {
-            return AESDecrypt(input,KEY);
-        }
-        public static string AESDecrypt(string input, string key)
-        {
-            var fullCipher = Convert.FromBase64String(input);
+            var fullCipher = Convert.FromBase64String(inputStr);
             byte[] iv = new byte[16];
             var cipher = new byte[fullCipher.Length - iv.Length];
 
@@ -101,6 +98,11 @@ namespace WebApi.Common
                     return result;
                 }
             }
+        }
+
+        public static string AESDecrypt(string input)
+        {
+            return AESDecrypt(input, KEY);
         }
 
     }

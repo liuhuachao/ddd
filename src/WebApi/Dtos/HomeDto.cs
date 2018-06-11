@@ -22,10 +22,6 @@ namespace WebApi.Dtos
         /// </summary>
         public string Title { get; set; }
         /// <summary>
-        /// 简介
-        /// </summary>
-        public string Intro { get; set; }
-        /// <summary>
         /// 封面图
         /// </summary>
         public string CoverImg { get; set; }
@@ -73,5 +69,19 @@ namespace WebApi.Dtos
             }
             set { }
         }
+    }
+
+    /// <summary>
+    /// 热搜
+    /// </summary>
+    public class HomeHotSearch
+    {
+        /// <summary>
+        /// 标识
+        /// </summary>
+        public int Id { get; set; }
+        public string ClassName { get; set; }
+        public int? ShowType { get; set; }
+        public int? Clicks { get; set; }
     }
 }

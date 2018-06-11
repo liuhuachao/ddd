@@ -30,6 +30,8 @@ namespace WebApi.Models
         public virtual DbSet<VdVideoRecord> VdVideoRecord { get; set; }
         public virtual DbSet<VdVideoReview> VdVideoReview { get; set; }
 
+        public virtual DbSet<Dtos.HomeHotSearch> HomeHotSearch { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CmsAuthor>(entity =>

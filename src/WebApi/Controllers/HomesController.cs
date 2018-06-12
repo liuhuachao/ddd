@@ -63,7 +63,7 @@ namespace WebApi.Controllers
                 Msg = Common.EnumHelper.GetEnumDescription(code),
                 Data = homeList
             };
-            this._logger.LogInformation(string.Format("热搜返回数据：{0}",resultMsg));
+            this._logger.LogInformation("热搜结束");
             return Json(resultMsg);
         }
 

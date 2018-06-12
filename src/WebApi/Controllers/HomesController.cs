@@ -42,6 +42,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult HotSearch()
         {
+            this._logger.LogInformation("热搜开始");
             Enums.StatusCodeEnum code ;
             var homeList = this._respository.GetList();
             if (homeList == null)
@@ -62,6 +63,7 @@ namespace WebApi.Controllers
                 Msg = Common.EnumHelper.GetEnumDescription(code),
                 Data = homeList
             };
+            this._logger.LogInformation(string.Format("热搜返回数据：{0}",resultMsg));
             return Json(resultMsg);
         }
 

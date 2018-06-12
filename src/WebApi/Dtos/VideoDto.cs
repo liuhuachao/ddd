@@ -55,6 +55,8 @@ namespace WebApi.Dtos
     /// </summary>    
     public class VideoDetail
     {
+        private string _shareLink = "http://m.chsgw.com/vod/";
+
         /// <summary>
         /// 标识
         /// </summary>
@@ -91,6 +93,17 @@ namespace WebApi.Dtos
         /// 点赞数
         /// </summary>
         public int Likes { get; set; }
+        /// <summary>
+        /// 分享链接
+        /// </summary>
+        public string ShareLink
+        {
+            get
+            {
+                return _shareLink + this.Id.ToString();
+            }
+            set { _shareLink = value; }
+        }
         /// <summary>
         /// 视频时长
         /// </summary>

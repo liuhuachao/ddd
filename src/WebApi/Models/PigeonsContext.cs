@@ -31,6 +31,7 @@ namespace WebApi.Models
         public virtual DbSet<VdVideoReview> VdVideoReview { get; set; }
 
         public virtual DbSet<Dtos.HomeHotSearch> HomeHotSearch { get; set; }
+        public virtual DbSet<Dtos.HomeDetail> HomeDetail { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

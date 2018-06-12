@@ -7,6 +7,7 @@ namespace WebApi.Repositories
 {
     public interface IHomesRespository
     {
+        Dtos.HomeDetail GetDetail(int id,int type);      
         IList<Dtos.HomeHotSearch> GetList(int limit = 10);
     }
 }

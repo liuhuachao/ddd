@@ -13,9 +13,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 namespace WebApi.Controllers
 {
     /// <summary>
-    /// 热搜
+    /// 首页
     /// </summary>
-    [Route("v1/homes")]
+    [Route("v1/[Controller]/[Action]")]
     [ApiVersion("1.0")]
     public class HomesController : Controller
     {
@@ -33,14 +33,35 @@ namespace WebApi.Controllers
             _respository = respository;
         }
 
+
         /// <summary>
-        /// 热搜
+        /// 获取详情
+        /// </summary>
+        /// <param name="id">标识Id</param>
+        /// <param name="showType">显示类型</param>
+        /// <returns></returns>
+        [Produces("application/json", Type = typeof(HomeDetail))]
+        [HttpGet]
+        public IActionResult GetDetail([FromQuery]int id, [FromQuery]int showType)
+        {
+            var detail = this._respository.GetDetail(id,showType);
+            var code = detail != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = detail
+            };
+            return Json(resultMsg);
+        }
+
+        /// <summary>
+        /// 获取热搜
         /// </summary>
         /// <returns></returns>
         [Produces("application/json", Type = typeof(HomeHotSearch))]
-        [Route("HotSearch")]
         [HttpGet]
-        public IActionResult HotSearch()
+        public IActionResult GetHotSearch()
         {
             this._logger.LogInformation("热搜开始");
             Enums.StatusCodeEnum code ;

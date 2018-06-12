@@ -42,8 +42,20 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult HotSearch()
         {
+            Enums.StatusCodeEnum code ;
             var homeList = this._respository.GetList();
-            var code = homeList.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            if (homeList == null)
+            {
+                code = Enums.StatusCodeEnum.InternalServerError;
+            }
+            else if (homeList.Count <= 0)
+            {
+                code = Enums.StatusCodeEnum.NotFound;
+            }
+            else
+            {
+                code = Enums.StatusCodeEnum.OK;
+            }
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,

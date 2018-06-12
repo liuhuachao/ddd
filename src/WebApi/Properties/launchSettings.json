@@ -11,11 +11,9 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      //"launchUrl": "v1/news",
       "launchUrl": "",
       "environmentVariables": {
-        //"ConnectionStrings:PigeonsDbConnectionString": "vca//g+AU50YnYtqi9xvK1CpfIrXL28PrJ06kTyrSsG+eUQXzGooMi9bGJLSq5Q+f91jucY6BqeasfUPaBOIP+WDENBjTrdjoL8dhvyDcTJpmiCa+quPJHadP6nryy/fsLia8XZyR/gXMSfOmpdTpuGOFUPlYM+8cojEetzfhfw=",
-        "ConnectionStrings:PigeonsDbConnectionString": "Kp0Dzjtu+cx+rFZw5817kE1o5JysHLf8shyRGW7ecWZuZUtshN9fboX9WYiukWV8w+PF4JBnyqzt37tyVv/bMi5o+sm73j+DZqFhHtNU4LXyihpgAuESIZDc24ztvlILI0SsPMom4BuucHE4lwN0vvkk5YdjBo1YcukrKLnbhNQ=",
+        "ConnectionStrings:PigeonsDbConnectionString": "vca//g+AU50YnYtqi9xvK1CpfIrXL28PrJ06kTyrSsG+eUQXzGooMi9bGJLSq5Q+f91jucY6BqeasfUPaBOIP+WDENBjTrdjoL8dhvyDcTJpmiCa+quPJHadP6nryy/fsLia8XZyR/gXMSfOmpdTpuGOFUPlYM+8cojEetzfhfw=",
         "IsEncrypt": "true",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

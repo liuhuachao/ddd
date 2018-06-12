@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
 using NLog.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 using WebApi.Interfaces;
 using WebApi.Models;
@@ -59,12 +59,11 @@ namespace WebApi
             services.AddScoped<IHomesRespository, HomesRespository>();
 
             // 分别注册本地和远程日志服务
-#if DEBUG
+            #if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
-#else
+            #else
             services.AddTransient<IMailService, CloudMailService>();
-#endif
-
+            #endif
 
             // 配置 PigeonsDbContext
             var isEncrypt = Configuration["IsEncrypt"];
@@ -94,7 +93,6 @@ namespace WebApi
                 var xmlPath = Path.Combine(basePath, "WebApi.xml");
                 c.IncludeXmlComments(xmlPath);
             });
-
         }
 
         /// <summary>

@@ -21,9 +21,9 @@
     "Server": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "v1/product",
+      "launchUrl": "",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Release"
       },
       "applicationUrl": "http://localhost:8404/"
     }

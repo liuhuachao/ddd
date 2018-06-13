@@ -17,7 +17,7 @@ namespace WebApi.Common
         /// <returns></returns>
         public static string GetTimeDiffUntil(DateTime dt)
         {
-            return DateDiff(dt,DateTime.UtcNow);
+            return DateDiff(dt,DateTime.Now);
         }
 
         /// <summary>

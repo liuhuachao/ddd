@@ -116,7 +116,7 @@ namespace WebApi.Dtos
         {
             get
             {
-                return _content;
+                return Common.HtmlHelper.BuildNewsDetailHtml(_content);
             }
             set
             {

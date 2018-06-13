@@ -12,11 +12,11 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "launchUrl": "",
-      "environmentVariables": {
-        "ConnectionStrings:PigeonsDbConnectionString": "vca//g+AU50YnYtqi9xvK1CpfIrXL28PrJ06kTyrSsG+eUQXzGooMi9bGJLSq5Q+f91jucY6BqeasfUPaBOIP+WDENBjTrdjoL8dhvyDcTJpmiCa+quPJHadP6nryy/fsLia8XZyR/gXMSfOmpdTpuGOFUPlYM+8cojEetzfhfw=",
-        "IsEncrypt": "true",
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      //"environmentVariables": {
+      //  "ConnectionStrings:PigeonsDbConnectionString": "vca//g+AU50YnYtqi9xvK1CpfIrXL28PrJ06kTyrSsG+eUQXzGooMi9bGJLSq5Q+f91jucY6BqeasfUPaBOIP+WDENBjTrdjoL8dhvyDcTJpmiCa+quPJHadP6nryy/fsLia8XZyR/gXMSfOmpdTpuGOFUPlYM+8cojEetzfhfw=",
+      //  "IsEncrypt": "true",
+      //  "ASPNETCORE_ENVIRONMENT": "Development"
+      //}
     },
     "Server": {
       "commandName": "Project",

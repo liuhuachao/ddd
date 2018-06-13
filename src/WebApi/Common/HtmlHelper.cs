@@ -23,27 +23,29 @@ namespace WebApi.Common
         /// <summary>
         /// 解码
         /// </summary>
-        /// <param name="str">string</param>
-        /// <returns>string</returns>
-        public static string Decode(string str)
-        {
-            return System.Web.HttpUtility.HtmlDecode(str);
-        }
+        /// <param name="encodeStr">Html编码后的字符串</param>
+        /// <returns>返回解码后的字符串</returns>
+        public static string Decode(string encodeStr)
+        {            
+            var decodeStr = encodeStr;
+            decodeStr = decodeStr.Replace("&amp;", "&");
+            decodeStr = decodeStr.Replace("&lt;", "<");
+            decodeStr = decodeStr.Replace("&gt;", ">");
+            decodeStr = decodeStr.Replace("&nbsp;", " ");
+            decodeStr = decodeStr.Replace("&quot;", "'");            
 
-        /// <summary>
-        /// 加载CSS样式文件
-        /// </summary>
-        public static string LinkCss(string cssPath)
-        {
-            return @"<link rel=""stylesheet"" type=""text/css"" href=""" + cssPath + @""" />" + "\r\n";
-        }
+            decodeStr = decodeStr.Replace("\r", "");
+            decodeStr = decodeStr.Replace("\t", "");
+            decodeStr = decodeStr.Replace("\n", "");
 
-        /// <summary>
-        /// 加载javascript脚本文件
-        /// </summary>
-        public static string LoadJs(string jsPath)
-        {
-            return @"<script type=""text/javascript"" src=""" + jsPath + @"""></script>" + "\r\n";
+            decodeStr = decodeStr.Replace("\\", "");
+            decodeStr = decodeStr.Replace("''", "'");            
+            decodeStr = decodeStr.Replace("<br></p><br>", "</p>");
+            decodeStr = decodeStr.Replace("<p><br><br /></p>", "");
+            decodeStr = decodeStr.Replace("<br>", "");
+            decodeStr = decodeStr.Replace("<br />", "");            
+
+            return decodeStr;
         }
 
         /// <summary>
@@ -87,11 +89,10 @@ namespace WebApi.Common
             var cssStr = new StringBuilder();
             var jsStr = new StringBuilder();
             var headStr = new StringBuilder();
-            bodyStr = System.Web.HttpUtility.HtmlDecode(bodyStr).Replace("\r","");
-            bodyStr = System.Web.HttpUtility.HtmlDecode(bodyStr).Replace("<br><br>", "");
-            var bodySB = new StringBuilder();
-
+            bodyStr = HtmlHelper.Decode(bodyStr);
+            var bodySB = new StringBuilder(); 
             var openAppStr = new StringBuilder();
+
             openAppStr.Append("<div class='news_main'>");
             openAppStr.Append("<div class='news-banner-container'>");
             openAppStr.Append("<div class='news-banner-left'>");

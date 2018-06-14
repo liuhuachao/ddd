@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Dtos;
-using WebApi.Interfaces;
+using WebApi.Repositories;
 
 namespace WebApi.Controllers
 {
@@ -18,17 +18,17 @@ namespace WebApi.Controllers
     public class NewsController : Controller
     {
         private readonly ILogger<NewsController> _logger;
-        private readonly ICmsContentsRespository _respository;
+        private readonly ICmsContentsRepository _Repository;
         
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="logger">日志</param>
-        /// <param name="respository">仓库</param>
-        public NewsController(ILogger<NewsController> logger,ICmsContentsRespository respository)
+        /// <param name="Repository">仓库</param>
+        public NewsController(ILogger<NewsController> logger,ICmsContentsRepository Repository)
         {
             _logger = logger;
-            _respository = respository;
+            _Repository = Repository;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
-            var contents = this._respository.GetList(pageSize, pageSize * (pageIndex - 1), 0);
+            var contents = this._Repository.GetList(pageSize, pageSize * (pageIndex - 1), 0);
             var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
             var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -65,7 +65,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetDetail(int id)
         {
-            var content = this._respository.GetSingle(id);
+            var content = this._Repository.GetSingle(id);
             var newsDetail = Mapper.Map<Dtos.NewsDetail>(content);
             var code = content != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -88,7 +88,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult Search([FromQuery]string title)
         {
-            var contents = this._respository.Search(title);
+            var contents = this._Repository.Search(title);
             var newsList = Mapper.Map<IList<Dtos.NewsList>>(contents);
             var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -110,10 +110,10 @@ namespace WebApi.Controllers
         public async Task<IActionResult> UpdateClicks([FromQuery]int id)
         {
             var addClick = new Random().Next(1,10);
-            var news = this._respository.GetSingle(id);
+            var news = this._Repository.GetSingle(id);
             news.CmsClick += addClick;
-            var code = await this._respository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
-            var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._respository.GetSingle(id));
+            var code = await this._Repository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
+            var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._Repository.GetSingle(id));
 
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
@@ -135,10 +135,10 @@ namespace WebApi.Controllers
         public async Task<IActionResult> UpdateLikes([FromQuery]int id)
         {
             var addLikes = new Random().Next(1, 10);
-            var news = this._respository.GetSingle(id);
+            var news = this._Repository.GetSingle(id);
             news.Likes += addLikes;
-            var code = await this._respository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
-            var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._respository.GetSingle(id));
+            var code = await this._Repository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
+            var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._Repository.GetSingle(id));
 
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {

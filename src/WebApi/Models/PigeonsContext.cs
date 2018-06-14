@@ -29,9 +29,10 @@ namespace WebApi.Models
         public virtual DbSet<VdVideoCollect> VdVideoCollect { get; set; }
         public virtual DbSet<VdVideoRecord> VdVideoRecord { get; set; }
         public virtual DbSet<VdVideoReview> VdVideoReview { get; set; }
-
-        public virtual DbSet<Dtos.HomeHotSearch> HomeHotSearch { get; set; }
+        
         public virtual DbSet<Dtos.HomeDetail> HomeDetail { get; set; }
+        public virtual DbSet<Dtos.HomeHotSearch> HomeHotSearch { get; set; }
+        public virtual DbSet<Dtos.HomeList> HomeList { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -292,6 +293,8 @@ namespace WebApi.Models
                     .WithMany(p => p.CmsContents)
                     .HasForeignKey(d => d.CmsCid)
                     .HasConstraintName("R_CMS_Contents_CmsCID");
+
+                entity.HasQueryFilter(d => (d.Attribs == 2 || d.Attribs == 9) && (d.CmsCode.Equals("010101")||d.CmsCode.Equals("010105")));
             });
 
             modelBuilder.Entity<CmsContribution>(entity =>

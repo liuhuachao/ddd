@@ -9,7 +9,7 @@ using WebApi.Models;
 
 namespace WebApi.Repositories
 {
-    public class CmsContentsRepository : ICmsContentsRespository
+    public class CmsContentsRepository : ICmsContentsRepository
     {
         private readonly PigeonsContext _context;
 

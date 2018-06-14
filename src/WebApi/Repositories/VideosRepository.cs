@@ -8,11 +8,11 @@ using WebApi.Models;
 
 namespace WebApi.Repositories
 {
-    public class VideosRespository : IVideosRespository
+    public class VideosRepository : IVideosRepository
     {
         private readonly PigeonsContext _context;
 
-        public VideosRespository(PigeonsContext pigeonsContext)
+        public VideosRepository(PigeonsContext pigeonsContext)
         {
             _context = pigeonsContext;
         }

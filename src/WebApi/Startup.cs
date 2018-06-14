@@ -54,9 +54,9 @@ namespace WebApi
             });
 
             // 配置 Repository
-            services.AddScoped<ICmsContentsRespository, CmsContentsRepository>();
-            services.AddScoped<IVideosRespository,VideosRespository>();
-            services.AddScoped<IHomesRespository, HomesRespository>();
+            services.AddScoped<ICmsContentsRepository, CmsContentsRepository>();
+            services.AddScoped<IVideosRepository,VideosRepository>();
+            services.AddScoped<IHomesRepository, HomesRepository>();
 
             // 分别注册本地和远程日志服务
             #if DEBUG

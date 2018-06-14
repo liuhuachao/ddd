@@ -11,12 +11,12 @@ using WebApi.Interfaces;
 
 namespace WebApi.Repositories
 {
-    public class HomesRespository : IHomesRespository
+    public class HomesRepository : IHomesRepository
     {
         private readonly PigeonsContext _context;
-        private readonly ILogger<HomesRespository> _logger;
+        private readonly ILogger<HomesRepository> _logger;
 
-        public HomesRespository(PigeonsContext pigeonsContext, ILogger<HomesRespository> logger)
+        public HomesRepository(PigeonsContext pigeonsContext, ILogger<HomesRepository> logger)
         {
             _context = pigeonsContext;
             _logger = logger;
@@ -46,7 +46,7 @@ namespace WebApi.Repositories
             return detail;
         }
 
-        public IList<Dtos.HomeHotSearch> GetList(int limit = 10)
+        public IList<Dtos.HomeHotSearch> GetHotSearch(int limit = 10)
         {
             var _limit = limit > 100 ? 100 : limit;
             IList<Dtos.HomeHotSearch> homeList;
@@ -62,5 +62,30 @@ namespace WebApi.Repositories
             }
             return homeList;
         }
+
+        public IList<Dtos.HomeList> GetList(int pageSize = 8,int pageIndex = 1)
+        {
+            var _pageSize = pageSize > 100 ? 100 : pageSize;
+            IList<Dtos.HomeList> homeList;
+            try
+            {
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@pageSize",pageSize),
+                    new SqlParameter("@pageIndex",pageIndex),
+                };
+
+                homeList = this._context.Set<Dtos.HomeList>()
+                    .FromSql("EXECUTE UP_App_GetHomeList",parameters).ToList();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                this._logger.LogCritical(ex.Message);
+                return null;
+            }
+            return homeList;
+        }
+
+
     }
 }

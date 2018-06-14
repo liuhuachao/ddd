@@ -63,6 +63,5 @@ namespace WebApi.Repositories
         {
             return _context.CmsContents.Any(x => x.CmsId == CmsId);
         }
-
     }
 }

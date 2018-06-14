@@ -85,7 +85,5 @@ namespace WebApi.Repositories
             }
             return homeList;
         }
-
-
     }
 }

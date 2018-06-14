@@ -109,5 +109,4 @@ namespace WebApi.Dtos
         /// </summary>
         public string Duration { get; set; }
     }
-
 }

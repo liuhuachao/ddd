@@ -142,8 +142,5 @@ namespace WebApi.Dtos
             }
             set { _shareLink = value; }
         }
-
-
-
     }
 }

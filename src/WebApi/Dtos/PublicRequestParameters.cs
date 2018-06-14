@@ -34,6 +34,5 @@ namespace WebApi.Dtos
         /// 安全签名
         /// </summary>
         public string Signature { get; set; }
-
     }
 }

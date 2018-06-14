@@ -77,7 +77,6 @@ namespace WebApi.Controllers
             return Json(resultMsg);
         }
 
-
         /// <summary>
         /// 根据标题搜索资讯
         /// </summary>
@@ -149,7 +148,5 @@ namespace WebApi.Controllers
 
             return Json(resultMsg);
         }
-
-
     }
 }

@@ -27,7 +27,6 @@ namespace WebApi.Controllers
             _Repository = Repository;
         }
 
-
         /// <summary>
         /// 获取列表
         /// </summary>
@@ -102,7 +101,5 @@ namespace WebApi.Controllers
             this._logger.LogInformation("热搜结束");
             return Json(resultMsg);
         }
-
-
     }
 }

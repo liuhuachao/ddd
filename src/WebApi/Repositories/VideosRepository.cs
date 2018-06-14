@@ -62,7 +62,5 @@ namespace WebApi.Repositories
         {
             return _context.VdVideo.Any(x => x.Id == id);
         }
-
-
     }
 }

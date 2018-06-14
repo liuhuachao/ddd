@@ -12,6 +12,8 @@ namespace WebApi.Dtos
     /// </summary>    
     public class NewsList
     {
+        private string _title;
+        private string _intro;
         private string _postTime;
         private string _className;
 
@@ -22,11 +24,19 @@ namespace WebApi.Dtos
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get; set; }
+        public string Title
+        {
+            get { return Common.HtmlHelper.Decode(_title); }
+            set { _title = value; }
+        }
         /// <summary>
         /// 简介
         /// </summary>
-        public string Intro { get; set; }
+        public string Intro
+        {
+            get { return Common.HtmlHelper.Decode(_intro); }
+            set { _intro = value; }
+        }
         /// <summary>
         /// 封面图
         /// </summary>
@@ -82,6 +92,8 @@ namespace WebApi.Dtos
     /// </summary>    
     public class NewsDetail
     {
+        private string _title;
+        private string _intro;
         private string _shareLink = "http://m.chsgw.com/news/news_detail.aspx?id=";
         private string _content;
 
@@ -92,11 +104,19 @@ namespace WebApi.Dtos
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get; set; }
+        public string Title
+        {
+            get { return Common.HtmlHelper.Decode(_title); }
+            set { _title = value; }
+        }
         /// <summary>
         /// 简介
         /// </summary>
-        public string Intro { get; set; }
+        public string Intro
+        {
+            get { return Common.HtmlHelper.Decode(_intro); }
+            set { _intro = value; }
+        }
         /// <summary>
         /// 封面图
         /// </summary>

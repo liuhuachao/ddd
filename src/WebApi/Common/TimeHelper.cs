@@ -11,7 +11,7 @@ namespace WebApi.Common
     public class TimeHelper
     {
         /// <summary>
-        /// 返回输入时间距离现在UTC时间的差，如2小时前，5分钟前
+        /// 返回输入时间距离现在时间的差，如2小时前，5分钟前
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
@@ -54,43 +54,28 @@ namespace WebApi.Common
         }
 
         /// <summary>
-        /// 将String转换为DateTime?类型
+        /// 将泛型类转为日期格式
         /// </summary>
-        /// <param name="dateString"></param>
-        /// <returns>DateTime?</returns>
-        public static DateTime? StringToDate(string dateString)
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dateT"></param>
+        /// <returns></returns>
+        public static DateTime? ConvertToDate<T>(T dateT)
         {
-            if (String.IsNullOrEmpty(dateString)) return null;
+            if (dateT == null) return null;
             DateTime dtValue;
-            if (!DateTime.TryParse(dateString, out dtValue)) return null;
+            if (!DateTime.TryParse(dateT.ToString(), out dtValue)) return null;
             return dtValue;
         }
 
-        /// <summary>
-        /// 将object转换为DateTime?类型
-        /// </summary>
-        /// <param name="dateObj"></param>
-        /// <returns></returns>
-        public static DateTime? ObjectToDate(object dateObj)
-        {
-            if (dateObj == null) return null;
-            DateTime dtValue;
-            if (!DateTime.TryParse(dateObj.ToString(), out dtValue)) return null;
-            return dtValue;
-        }
-        
         /// <summary>
         /// 是否为日期格式
-        /// Date.Parse(object o)方法接受一个object类型的参数，当参数为空或转换失败时会抛出异常
-        /// DateTime.TryParse方法不会抛出异常
         /// </summary>
-        /// <param name="dateObj"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dateT"></param>
         /// <returns></returns>
-        public static bool IsDate(object dateObj)
+        public static bool IsDate<T>(T dateT)
         {
-            return DateTime.TryParse(dateObj.ToString(),out DateTime dtValue);
+            return DateTime.TryParse(dateT.ToString(),out DateTime dtValue);
         }
-
-
     }
 }

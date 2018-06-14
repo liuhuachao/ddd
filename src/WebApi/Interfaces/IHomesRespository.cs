@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApi.Repositories
+namespace WebApi.Interfaces
 {
     public interface IHomesRespository
     {

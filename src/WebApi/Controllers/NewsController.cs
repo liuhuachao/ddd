@@ -1,14 +1,12 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using AutoMapper;
 using WebApi.Dtos;
-using WebApi.Models;
-using WebApi.Repositories;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using WebApi.Interfaces;
 
 namespace WebApi.Controllers
 {

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Models;
 
-namespace WebApi.Repositories
+namespace WebApi.Interfaces
 {
     public interface ICmsContentsRespository
     {      
-        void Add(CmsContents CmsContents);
-        void Delete(CmsContents CmsContents);
         CmsContents GetSingle(int CmsContentsId);
         IQueryable<CmsContents> GetList(int limit = 10,int start = 0,int orderType = 0);
         IList<CmsContents> Search(string title);

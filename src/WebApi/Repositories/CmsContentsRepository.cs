@@ -18,16 +18,6 @@ namespace WebApi.Repositories
             _context = pigeonsContext;
         }
 
-        public void Add(CmsContents CmsContents)
-        {
-            this._context.CmsContents.Add(CmsContents);
-        }
-
-        public void Delete(CmsContents CmsContents)
-        {
-            this._context.CmsContents.Remove(CmsContents);
-        }
-
         public CmsContents GetSingle(int CmsId)
         {
             return _context.CmsContents.Find(CmsId);

@@ -20,6 +20,7 @@ namespace WebApi.Common
         {
             return System.Web.HttpUtility.HtmlEncode(str);
         }
+
         /// <summary>
         /// 解码
         /// </summary>
@@ -40,10 +41,9 @@ namespace WebApi.Common
 
             decodeStr = decodeStr.Replace("\\", "");
             decodeStr = decodeStr.Replace("''", "'");            
-            decodeStr = decodeStr.Replace("<br></p><br>", "</p>");
-            decodeStr = decodeStr.Replace("<p><br><br /></p>", "");
             decodeStr = decodeStr.Replace("<br>", "");
-            decodeStr = decodeStr.Replace("<br />", "");            
+            decodeStr = decodeStr.Replace("<br />", "");
+            decodeStr = decodeStr.Replace("<p></p>", "");
 
             return decodeStr;
         }
@@ -100,7 +100,6 @@ namespace WebApi.Common
             openAppStr.Append("<div class='news-banner-text'>");
             openAppStr.Append("<p>尊贵赛鸽</p>");
             openAppStr.Append("<p>有态度、有温度、有深度</p>");
-
             openAppStr.Append("</div>");
             openAppStr.Append("</div>");
             openAppStr.Append("<div class='news-banner-right'>");
@@ -120,7 +119,5 @@ namespace WebApi.Common
             var returnStr = BuildHtml(title, cssStr.ToString(), jsStr.ToString(), headStr.ToString(), bodySB.ToString());
             return returnStr;
         }
-
-
     }
 }

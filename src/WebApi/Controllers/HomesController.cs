@@ -30,20 +30,20 @@ namespace WebApi.Controllers
         /// <summary>
         /// 获取列表
         /// </summary>
-        /// <param name="pageSize">每页条数，默认为8</param>
         /// <param name="pageIndex">第几页，默认为1</param>
+        /// <param name="pageSize">每页条数，默认为8</param>
         /// <returns></returns>
         [Produces("application/json", Type = typeof(HomeList))]
         [HttpGet]
-        public IActionResult GetList([FromQuery]int pageSize,[FromQuery]int pageIndex)
+        public IActionResult GetList([FromQuery]int pageIndex, [FromQuery]int pageSize)
         {
-            var detail = this._Repository.GetList();
-            var code = detail != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            var homeList = this._Repository.GetList();
+            var code = (homeList == null || homeList.Count <= 0) ? Enums.StatusCodeEnum.NotFound : Enums.StatusCodeEnum.OK;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
-                Data = detail
+                Data = homeList
             };
             return Json(resultMsg);
         }
@@ -51,7 +51,7 @@ namespace WebApi.Controllers
         /// <summary>
         /// 获取详情
         /// </summary>
-        /// <param name="id">标识Id</param>
+        /// <param name="id">主键Id</param>
         /// <param name="showType">显示类型，3表示视频，其他为资讯</param>
         /// <returns></returns>
         [Produces("application/json", Type = typeof(HomeDetail))]

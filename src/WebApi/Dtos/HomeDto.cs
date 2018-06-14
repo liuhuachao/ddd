@@ -10,8 +10,8 @@ namespace WebApi.Dtos
     /// </summary>
     public class HomeList
     {
+        private string _title;
         private string _postTime;
-        private string _className;
 
         /// <summary>
         /// 标识
@@ -20,11 +20,19 @@ namespace WebApi.Dtos
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get; set; }
+        public string Title
+        {
+            get { return Common.HtmlHelper.Decode(_title); }
+            set { _title = value; }
+        }        
         /// <summary>
         /// 封面图
         /// </summary>
         public string CoverImg { get; set; }
+        /// <summary>
+        /// 视频源Url
+        /// </summary>
+        public string SourceUrl { get; set; }
         /// <summary>
         /// 作者
         /// </summary>
@@ -47,28 +55,13 @@ namespace WebApi.Dtos
             }
         }
         /// <summary>
-        /// 栏目编码
-        /// </summary>
-        public string ClassCode { get; set; }
-        /// <summary>
         /// 栏目名称
         /// </summary>
-        public string ClassName
-        {
-            get { return Common.Utility.GetClassName(ClassCode); }
-            set { _className = value; }
-        }
+        public string ClassName { get; set; }
         /// <summary>
         /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
         /// </summary>
-        public int ShowType
-        {
-            get
-            {
-                return string.IsNullOrEmpty(this.CoverImg) ? 2 : new Random().Next(0, 2);
-            }
-            set { }
-        }
+        public int ShowType { get; set; }
     }
 
     /// <summary>
@@ -76,6 +69,8 @@ namespace WebApi.Dtos
     /// </summary>
     public class HomeDetail
     {
+        private string _title;
+        private string _intro;
         private string _content;
 
         /// <summary>
@@ -85,11 +80,19 @@ namespace WebApi.Dtos
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get; set; }
+        public string Title
+        {
+            get { return Common.HtmlHelper.Decode(_title); }
+            set { _title = value; }
+        }
         /// <summary>
         /// 简介
         /// </summary>
-        public string Intro { get; set; }
+        public string Intro
+        {
+            get { return Common.HtmlHelper.Decode(_intro); }
+            set { _intro = value; }
+        }
         /// <summary>
         /// 封面图
         /// </summary>
@@ -101,7 +104,7 @@ namespace WebApi.Dtos
         /// <summary>
         /// 发表时间
         /// </summary>
-        public DateTime? PostTime { get; set; }
+        public string PostTime { get; set; }
         /// <summary>
         /// 文章内容
         /// </summary>

@@ -63,20 +63,22 @@ namespace WebApi.Repositories
             return homeList;
         }
 
-        public IList<Dtos.HomeList> GetList(int pageSize = 8,int pageIndex = 1)
+        public IList<Dtos.HomeList> GetList(int pageIndex = 1, int pageSize = 8)
         {
             var _pageSize = pageSize > 100 ? 100 : pageSize;
             IList<Dtos.HomeList> homeList;
             try
             {
                 SqlParameter[] parameters = new SqlParameter[]
-                {
-                    new SqlParameter("@pageSize",pageSize),
+                {                   
                     new SqlParameter("@pageIndex",pageIndex),
+                    new SqlParameter("@pageSize",pageSize),
+                    new SqlParameter("@totalCount",DbType.Int32),
                 };
+                parameters[2].Direction = ParameterDirection.Output;
 
                 homeList = this._context.Set<Dtos.HomeList>()
-                    .FromSql("EXECUTE UP_App_GetHomeList",parameters).ToList();
+                    .FromSql("EXECUTE UP_App_GetHomeList @pageIndex,@pageSize,@totalCount OUTPUT", parameters).ToList();
             }
             catch (System.Data.SqlClient.SqlException ex)
             {

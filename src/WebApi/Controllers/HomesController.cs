@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebApi.Dtos;
 using WebApi.Interfaces;
 using WebApi.Repositories;
@@ -161,13 +163,51 @@ namespace WebApi.Controllers
             {
                 code = Enums.StatusCodeEnum.OK;
             }
+            var msg = Common.EnumHelper.GetEnumDescription(code);
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,
-                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Msg = msg,
                 Data = homeList
             };
             this._logger.LogInformation("热搜结束");
+            return Json(resultMsg);
+        }
+        
+        /// <summary>
+        /// 更新点赞量
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="showType"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        public async Task<IActionResult> UpdateLikes([FromQuery]int id, [FromQuery]int showType)
+        {
+            this._logger.LogInformation("更新点赞量开始");
+            Enums.StatusCodeEnum code = Enums.StatusCodeEnum.OK;
+
+            if (!ModelState.IsValid || id <= 0 )
+            {
+                code = Enums.StatusCodeEnum.BadRequest;
+            }
+            else if (!this._Repository.IsExist(id, showType))
+            {
+                code = Enums.StatusCodeEnum.NotFound;
+            }
+            else
+            {
+                code = await this._Repository.UpdateLikes(id,showType) > 0 ? code : Enums.StatusCodeEnum.NotModified;
+            }
+            var msg = Common.EnumHelper.GetEnumDescription(code);
+
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = msg,
+                Data = null,
+            };
+
+            this._logger.LogInformation("更新点赞量结束");
             return Json(resultMsg);
         }
     }

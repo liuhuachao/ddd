@@ -128,5 +128,33 @@ namespace WebApi.Repositories
             return homeList;
         }
 
+        public async Task<int> UpdateLikes(int id,int showType)
+        {
+            var addLikes = new Random().Next(1, 10);
+            dynamic model = null;
+            if (showType == 3)
+            {
+                model = this._context.VdVideo.Find(id);               
+            }
+            else
+            {
+                model = this._context.CmsContents.Find(id);
+            }
+            model.Likes += addLikes;
+            return await _context.SaveChangesAsync();
+        }
+
+        public bool IsExist(int id, int showType)
+        {
+            if (showType == 3)
+            {
+                return this._context.CmsContents.Any(x => x.CmsId == id);
+            }
+            else
+            {
+                return this._context.VdVideo.Any(x => x.Id == id);
+            }
+        }
+
     }
 }

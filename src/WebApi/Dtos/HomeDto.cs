@@ -150,6 +150,8 @@ namespace WebApi.Dtos
     /// </summary>
     public class HomeSearch
     {
+        private string _title;
+
         /// <summary>
         /// 标识
         /// </summary>
@@ -157,7 +159,11 @@ namespace WebApi.Dtos
         /// <summary>
         /// 标题
         /// </summary>
-        public string Title { get; set; }
+        public string Title
+        {
+            get { return Common.HtmlHelper.Decode(_title); }
+            set { _title = value; }
+        }
         /// <summary>
         /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
         /// </summary>

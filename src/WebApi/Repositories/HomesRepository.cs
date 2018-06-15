@@ -67,7 +67,6 @@ namespace WebApi.Repositories
             {
                 this._logger.LogCritical(ex.Message);
                 return null;
-                //throw;
             }
             return detail;
         }      

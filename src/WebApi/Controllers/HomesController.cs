@@ -41,7 +41,7 @@ namespace WebApi.Controllers
             this._logger.LogInformation("获取列表开始");
             var code = Enums.StatusCodeEnum.OK;
             IList<Dtos.HomeList> homeList = null;
-            if (pageIndex == 0 || pageSize == 0)
+            if (!ModelState.IsValid || pageIndex <= 0 || pageSize <= 0)
             {
                 code = Enums.StatusCodeEnum.BadRequest;
             }
@@ -72,10 +72,9 @@ namespace WebApi.Controllers
         public IActionResult GetDetail([FromQuery]int id, [FromQuery]int showType)
         {
             this._logger.LogInformation("获取详情开始");
-
             var code = Enums.StatusCodeEnum.OK;
             Dtos.HomeDetail detail = null;
-            if (id <= 0)
+            if (!ModelState.IsValid || id <= 0)
             {
                 code = Enums.StatusCodeEnum.BadRequest;
             }
@@ -107,23 +106,32 @@ namespace WebApi.Controllers
         {
             this._logger.LogInformation("搜索开始");
             Enums.StatusCodeEnum code;
-            var homeList = this._Repository.Search(title);
-            if (homeList == null)
+            IList<Dtos.HomeSearch> homeList = null;
+            if (string.IsNullOrEmpty(title))
             {
-                code = Enums.StatusCodeEnum.InternalServerError;
-            }
-            else if (homeList.Count <= 0)
-            {
-                code = Enums.StatusCodeEnum.NotFound;
-            }
+                code = Enums.StatusCodeEnum.BadRequest;
+            }            
             else
             {
-                code = Enums.StatusCodeEnum.OK;
+                homeList = this._Repository.Search(title);
+                if (homeList == null)
+                {
+                    code = Enums.StatusCodeEnum.InternalServerError;
+                }
+                else if (homeList.Count <= 0)
+                {
+                    code = Enums.StatusCodeEnum.NotFound;
+                }
+                else
+                {
+                    code = Enums.StatusCodeEnum.OK;
+                }
             }
+            var msg = Common.EnumHelper.GetEnumDescription(code);
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,
-                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Msg = msg,
                 Data = homeList
             };
             this._logger.LogInformation("搜索结束");

@@ -29,10 +29,11 @@ namespace WebApi.Models
         public virtual DbSet<VdVideoCollect> VdVideoCollect { get; set; }
         public virtual DbSet<VdVideoRecord> VdVideoRecord { get; set; }
         public virtual DbSet<VdVideoReview> VdVideoReview { get; set; }
-        
-        public virtual DbSet<Dtos.HomeDetail> HomeDetail { get; set; }
-        public virtual DbSet<Dtos.HomeHotSearch> HomeHotSearch { get; set; }
+
         public virtual DbSet<Dtos.HomeList> HomeList { get; set; }
+        public virtual DbSet<Dtos.HomeDetail> HomeDetail { get; set; }
+        public virtual DbSet<Dtos.HomeSearch> HomeSearch { get; set; }
+        public virtual DbSet<Dtos.HotSearch> HotSearch { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

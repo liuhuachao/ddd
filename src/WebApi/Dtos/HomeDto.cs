@@ -143,13 +143,31 @@ namespace WebApi.Dtos
         /// 分享链接
         /// </summary>
         public string ShareLink { get; set; }
+    }
 
+    /// <summary>
+    /// 搜索
+    /// </summary>
+    public class HomeSearch
+    {
+        /// <summary>
+        /// 标识
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// 标题
+        /// </summary>
+        public string Title { get; set; }
+        /// <summary>
+        /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
+        /// </summary>
+        public int? ShowType { get; set; }
     }
 
     /// <summary>
     /// 热搜
     /// </summary>
-    public class HomeHotSearch
+    public class HotSearch
     {
         /// <summary>
         /// 标识
@@ -163,9 +181,5 @@ namespace WebApi.Dtos
         /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
         /// </summary>
         public int? ShowType { get; set; }
-        /// <summary>
-        /// 点击量
-        /// </summary>
-        public int? Clicks { get; set; }
     }
 }

@@ -29,22 +29,24 @@ namespace WebApi.Common
         public static string Decode(string encodeStr)
         {            
             var decodeStr = encodeStr;
-            decodeStr = decodeStr.Replace("&amp;", "&");
-            decodeStr = decodeStr.Replace("&lt;", "<");
-            decodeStr = decodeStr.Replace("&gt;", ">");
-            decodeStr = decodeStr.Replace("&nbsp;", " ");
-            decodeStr = decodeStr.Replace("&quot;", "'");            
+            if(encodeStr != null && !string.IsNullOrEmpty(decodeStr))
+            {
+                decodeStr = decodeStr.Replace("&amp;", "&");
+                decodeStr = decodeStr.Replace("&lt;", "<");
+                decodeStr = decodeStr.Replace("&gt;", ">");
+                decodeStr = decodeStr.Replace("&nbsp;", " ");
+                decodeStr = decodeStr.Replace("&quot;", "'");
 
-            decodeStr = decodeStr.Replace("\r", "");
-            decodeStr = decodeStr.Replace("\t", "");
-            decodeStr = decodeStr.Replace("\n", "");
+                decodeStr = decodeStr.Replace("\r", "");
+                decodeStr = decodeStr.Replace("\t", "");
+                decodeStr = decodeStr.Replace("\n", "");
 
-            decodeStr = decodeStr.Replace("\\", "");
-            decodeStr = decodeStr.Replace("''", "'");            
-            decodeStr = decodeStr.Replace("<br>", "");
-            decodeStr = decodeStr.Replace("<br />", "");
-            decodeStr = decodeStr.Replace("<p></p>", "");
-
+                decodeStr = decodeStr.Replace("\\", "");
+                decodeStr = decodeStr.Replace("''", "'");
+                decodeStr = decodeStr.Replace("<br>", "");
+                decodeStr = decodeStr.Replace("<br />", "");
+                decodeStr = decodeStr.Replace("<p></p>", "");
+            }         
             return decodeStr;
         }
 

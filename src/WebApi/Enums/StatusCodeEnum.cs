@@ -53,7 +53,7 @@ namespace WebApi.Enums
         #endregion
 
         #region Client Error 400-499 
-        [Description("错误请求")]
+        [Description("错误请求,参数个数或类型错误!")]
         BadRequest = 400,
 
         [Description("未授权")]

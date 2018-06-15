@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using WebApi.Dtos;
 using WebApi.Interfaces;
 using WebApi.Repositories;
@@ -35,16 +36,28 @@ namespace WebApi.Controllers
         /// <returns></returns>
         [Produces("application/json", Type = typeof(HomeList))]
         [HttpGet]
-        public IActionResult GetList([FromQuery]int pageIndex, [FromQuery]int pageSize)
+        public IActionResult GetList([FromQuery]int pageIndex = 1, [FromQuery]int pageSize = 8)
         {
-            var homeList = this._Repository.GetList();
-            var code = (homeList == null || homeList.Count <= 0) ? Enums.StatusCodeEnum.NotFound : Enums.StatusCodeEnum.OK;
+            this._logger.LogInformation("获取列表开始");
+            var code = Enums.StatusCodeEnum.OK;
+            IList<Dtos.HomeList> homeList = null;
+            if (pageIndex == 0 || pageSize == 0)
+            {
+                code = Enums.StatusCodeEnum.BadRequest;
+            }
+            else
+            {
+                homeList = this._Repository.GetList(pageIndex,pageSize);
+                code = (homeList == null || homeList.Count <= 0) ? Enums.StatusCodeEnum.NotFound : code;
+            }
+            var msg = Common.EnumHelper.GetEnumDescription(code);
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,
-                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Msg = msg,
                 Data = homeList
             };
+            this._logger.LogInformation("获取列表结束");
             return Json(resultMsg);
         }
 
@@ -58,6 +71,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetDetail([FromQuery]int id, [FromQuery]int showType)
         {
+            this._logger.LogInformation("获取详情开始");
             var detail = this._Repository.GetDetail(id,showType);
             var code = detail != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -66,6 +80,41 @@ namespace WebApi.Controllers
                 Msg = Common.EnumHelper.GetEnumDescription(code),
                 Data = detail
             };
+            this._logger.LogInformation("获取详情结束");
+            return Json(resultMsg);
+        }
+
+        /// <summary>
+        /// 搜索标题
+        /// </summary>
+        /// <param name="title">标题</param>
+        /// <returns></returns>
+        [Produces("application/json", Type = typeof(HomeSearch))]
+        [HttpGet]
+        public IActionResult Search([FromQuery]string title)
+        {
+            this._logger.LogInformation("搜索开始");
+            Enums.StatusCodeEnum code;
+            var homeList = this._Repository.Search(title);
+            if (homeList == null)
+            {
+                code = Enums.StatusCodeEnum.InternalServerError;
+            }
+            else if (homeList.Count <= 0)
+            {
+                code = Enums.StatusCodeEnum.NotFound;
+            }
+            else
+            {
+                code = Enums.StatusCodeEnum.OK;
+            }
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Data = homeList
+            };
+            this._logger.LogInformation("搜索结束");
             return Json(resultMsg);
         }
 
@@ -73,13 +122,13 @@ namespace WebApi.Controllers
         /// 获取热搜
         /// </summary>
         /// <returns></returns>
-        [Produces("application/json", Type = typeof(HomeHotSearch))]
+        [Produces("application/json", Type = typeof(HotSearch))]
         [HttpGet]
-        public IActionResult GetHotSearch()
+        public IActionResult HotSearch()
         {
             this._logger.LogInformation("热搜开始");
             Enums.StatusCodeEnum code ;
-            var homeList = this._Repository.GetHotSearch();
+            var homeList = this._Repository.HotSearch();
             if (homeList == null)
             {
                 code = Enums.StatusCodeEnum.InternalServerError;

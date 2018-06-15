@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WebApi.Models;
 using WebApi.Interfaces;
+using AutoMapper;
 
 namespace WebApi.Repositories
 {
@@ -20,6 +21,31 @@ namespace WebApi.Repositories
         {
             _context = pigeonsContext;
             _logger = logger;
+        }
+
+        public IList<Dtos.HomeList> GetList(int pageIndex = 1, int pageSize = 8)
+        {
+            var _pageSize = pageSize > 100 ? 100 : pageSize;
+            IList<Dtos.HomeList> homeList;
+            try
+            {
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@pageIndex",pageIndex),
+                    new SqlParameter("@pageSize",pageSize),
+                    new SqlParameter("@totalCount",DbType.Int32),
+                };
+                parameters[2].Direction = ParameterDirection.Output;
+
+                homeList = this._context.Set<Dtos.HomeList>()
+                    .FromSql("EXECUTE UP_App_GetHomeList @pageIndex,@pageSize,@totalCount OUTPUT", parameters).ToList();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                this._logger.LogCritical(ex.Message);
+                return null;
+            }
+            return homeList;
         }
 
         public Dtos.HomeDetail GetDetail(int id, int type)
@@ -44,41 +70,56 @@ namespace WebApi.Repositories
                 //throw;
             }
             return detail;
-        }
-
-        public IList<Dtos.HomeHotSearch> GetHotSearch(int limit = 10)
+        }      
+ 
+        public IList<Dtos.HomeSearch> Search(string title)
         {
-            var _limit = limit > 100 ? 100 : limit;
-            IList<Dtos.HomeHotSearch> homeList;
-            try
+            var limit = 10;
+
+            IQueryable<Dtos.HomeSearch> news = this._context.CmsContents
+                .Where(c => EF.Functions.Like(c.CmsTitle, "%" + title + "%"))
+                .OrderByDescending(x => x.CmsId)
+                .Take(limit / 2)
+                .Select(n => new Dtos.HomeSearch()
+                {
+                    Id = n.CmsId,
+                    Title = n.CmsTitle,
+                    ShowType = 2,
+                });
+
+            IQueryable<Dtos.HomeSearch> videos = this._context.VdVideo
+                .Where(item => EF.Functions.Like(item.Title, "%" + title + "%"))
+                .OrderByDescending(x => x.Id)
+                .Take(limit / 2)
+                .Select(v => new Dtos.HomeSearch()
+                {
+                    Id = v.Id,
+                    Title = v.Title,
+                    ShowType = 3,
+                });
+
+            IList<Dtos.HomeSearch> homeList = new List<Dtos.HomeSearch>();
+
+            foreach (var item in news)
             {
-                homeList = this._context.Set<Dtos.HomeHotSearch>()
-                .FromSql("EXECUTE UP_App_GetHotSearch").ToList();
+                homeList.Add(item);
             }
-            catch (System.Data.SqlClient.SqlException ex)
+            foreach (var item in videos)
             {
-                this._logger.LogCritical(ex.Message);
-                return null;               
+                homeList.Add(item);
             }
+            
             return homeList;
         }
 
-        public IList<Dtos.HomeList> GetList(int pageIndex = 1, int pageSize = 8)
+        public IList<Dtos.HotSearch> HotSearch(int limit = 10)
         {
-            var _pageSize = pageSize > 100 ? 100 : pageSize;
-            IList<Dtos.HomeList> homeList;
+            var _limit = limit > 100 ? 100 : limit;
+            IList<Dtos.HotSearch> homeList;
             try
             {
-                SqlParameter[] parameters = new SqlParameter[]
-                {                   
-                    new SqlParameter("@pageIndex",pageIndex),
-                    new SqlParameter("@pageSize",pageSize),
-                    new SqlParameter("@totalCount",DbType.Int32),
-                };
-                parameters[2].Direction = ParameterDirection.Output;
-
-                homeList = this._context.Set<Dtos.HomeList>()
-                    .FromSql("EXECUTE UP_App_GetHomeList @pageIndex,@pageSize,@totalCount OUTPUT", parameters).ToList();
+                homeList = this._context.Set<Dtos.HotSearch>()
+                .FromSql("EXECUTE UP_App_GetHotSearch").ToList();
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
@@ -87,5 +128,6 @@ namespace WebApi.Repositories
             }
             return homeList;
         }
+
     }
 }

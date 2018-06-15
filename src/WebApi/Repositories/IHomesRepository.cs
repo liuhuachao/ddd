@@ -6,7 +6,8 @@ namespace WebApi.Repositories
     public interface IHomesRepository
     {
         HomeDetail GetDetail(int id, int type);
-        IList<HomeHotSearch> GetHotSearch(int limit = 10);
-        IList<HomeList> GetList(int pageIndex = 1 , int pageSize = 8);
+        IList<HomeList> GetList(int pageIndex = 1, int pageSize = 8);
+        IList<HotSearch> HotSearch(int limit = 10);
+        IList<HomeSearch> Search(string title);
     }
 }

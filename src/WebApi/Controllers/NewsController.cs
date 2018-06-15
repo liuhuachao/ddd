@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Dtos;
+using WebApi.Filters;
 using WebApi.Repositories;
 
 namespace WebApi.Controllers
@@ -105,7 +106,7 @@ namespace WebApi.Controllers
         /// <param name="id">资讯 Id</param>
         /// <returns></returns>
         [Route("UpdateClicks")]
-        [HttpPatch]
+        [HttpPatch]        
         public async Task<IActionResult> UpdateClicks([FromQuery]int id)
         {
             var addClick = new Random().Next(1,10);
@@ -128,9 +129,10 @@ namespace WebApi.Controllers
         /// 更新点赞量
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns></returns>        
+        //[HiddenApi]
         [Route("UpdateLikes")]
-        [HttpPatch]
+        [HttpPatch]        
         public async Task<IActionResult> UpdateLikes([FromQuery]int id)
         {
             var addLikes = new Random().Next(1, 10);

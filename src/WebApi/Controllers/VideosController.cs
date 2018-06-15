@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApi.Interfaces;
+using WebApi.Filters;
 using WebApi.Repositories;
 
 namespace WebApi.Controllers
@@ -13,7 +13,8 @@ namespace WebApi.Controllers
     /// <summary>
     /// 视频
     /// </summary>
-    [Route("v1/videos")]
+    //[HiddenApi]
+    [Route("v1/videos")]    
     public class VideosController : Controller
     {
         private readonly ILogger<VideosController> _logger;

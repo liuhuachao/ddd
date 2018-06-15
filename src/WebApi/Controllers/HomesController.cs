@@ -72,12 +72,24 @@ namespace WebApi.Controllers
         public IActionResult GetDetail([FromQuery]int id, [FromQuery]int showType)
         {
             this._logger.LogInformation("获取详情开始");
-            var detail = this._Repository.GetDetail(id,showType);
-            var code = detail != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+
+            var code = Enums.StatusCodeEnum.OK;
+            Dtos.HomeDetail detail = null;
+            if (id <= 0)
+            {
+                code = Enums.StatusCodeEnum.BadRequest;
+            }
+            else
+            {
+                detail = this._Repository.GetDetail(id, showType);
+                code = (detail == null ) ? Enums.StatusCodeEnum.NotFound : code;
+            }
+            var msg = Common.EnumHelper.GetEnumDescription(code);
+
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,
-                Msg = Common.EnumHelper.GetEnumDescription(code),
+                Msg = msg,
                 Data = detail
             };
             this._logger.LogInformation("获取详情结束");

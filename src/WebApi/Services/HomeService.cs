@@ -12,28 +12,28 @@ namespace WebApi.Services
     /// 首页服务类
     /// 增加缓存
     /// </summary>
-    public class HomeService
+    public class HomeService : IHomeService
     {
         private readonly ILogger<HomeService> _logger;
         private readonly IHomesRepository _repository;
-        private readonly ICacheStorage _cacheStorage;
+        private readonly ICacheService _cacheSevice;
 
-        public HomeService(ILogger<HomeService> logger,IHomesRepository repository,ICacheStorage cacheStorage)
+        public HomeService(ILogger<HomeService> logger,IHomesRepository repository, ICacheService cacheSevice)
         {
             this._logger = logger;
             this._repository = repository;
-            this._cacheStorage = cacheStorage;
+            this._cacheSevice = cacheSevice;
         }
 
         public IList<Dtos.HomeList> GetList(int pageIndex = 1, int pageSize = 8)
         {
             IList<Dtos.HomeList> homeList;
             string storageKey = string.Format("home_list_{0}_{1}",pageIndex,pageSize);
-            homeList = this._cacheStorage.Retrieve<List<Dtos.HomeList>>(storageKey);
+            homeList = this._cacheSevice.Get<List<Dtos.HomeList>>(storageKey);
             if (homeList == null)
             {
                 homeList = this._repository.GetList(pageIndex, pageSize);
-                this._cacheStorage.Store(storageKey,homeList);
+                this._cacheSevice.Set(storageKey,homeList,TimeSpan.FromMinutes(1),TimeSpan.FromMinutes(1));
             }            
             return homeList;
         }
@@ -42,11 +42,11 @@ namespace WebApi.Services
         {
             Dtos.HomeDetail homeDetail;
             string storageKey = string.Format("home_detail_{0}_{1}", id, type);
-            homeDetail = this._cacheStorage.Retrieve<Dtos.HomeDetail>(storageKey);
+            homeDetail = this._cacheSevice.Get<Dtos.HomeDetail>(storageKey);
             if (homeDetail == null)
             {
                 homeDetail = this._repository.GetDetail(id, type);
-                this._cacheStorage.Store(storageKey, homeDetail);
+                this._cacheSevice.Set(storageKey, homeDetail,TimeSpan.FromHours(1), TimeSpan.FromHours(1));
             }
             return homeDetail;
         }
@@ -55,11 +55,11 @@ namespace WebApi.Services
         {
             IList<Dtos.HomeSearch> homeSearch;
             string storageKey = string.Format("home_search_{0}", title);
-            homeSearch = this._cacheStorage.Retrieve<List<Dtos.HomeSearch>>(storageKey);
+            homeSearch = this._cacheSevice.Get<List<Dtos.HomeSearch>>(storageKey);
             if (homeSearch == null)
             {
                 homeSearch = this._repository.Search(title);
-                this._cacheStorage.Store(storageKey, homeSearch);
+                this._cacheSevice.Set(storageKey, homeSearch,TimeSpan.FromHours(1),TimeSpan.FromHours(1));
             }
             return homeSearch;
         }
@@ -68,11 +68,11 @@ namespace WebApi.Services
         {
             IList<Dtos.HotSearch> hotSearch;
             string storageKey = string.Format("hot_search_{0}", limit);
-            hotSearch = this._cacheStorage.Retrieve<List<Dtos.HotSearch>>(storageKey);
+            hotSearch = this._cacheSevice.Get<List<Dtos.HotSearch>>(storageKey);
             if (hotSearch == null)
             {
                 hotSearch = this._repository.HotSearch(limit);
-                this._cacheStorage.Store(storageKey, hotSearch);
+                this._cacheSevice.Set(storageKey, hotSearch,TimeSpan.FromDays(1), TimeSpan.FromDays(1));
             }
             return hotSearch;
         }

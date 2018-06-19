@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.Net.Http.Headers;
 using NLog.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
@@ -56,22 +57,21 @@ namespace WebApi
             });
 
             // 配置 Repository
-            services.AddScoped<ICmsContentsRepository, CmsContentsRepository>();
-            services.AddScoped<IVideosRepository,VideosRepository>();
             services.AddScoped<IHomesRepository, HomesRepository>();
-
-            // 分别注册本地和远程日志服务
-#if DEBUG
-            services.AddTransient<IMailService, LocalMailService>();
-#else
-            services.AddTransient<IMailService, CloudMailService>();
-#endif
+            services.AddScoped<IHomeService,HomeService>();
+            services.AddScoped<ICmsContentsRepository, CmsContentsRepository>();
+            services.AddScoped<IVideosRepository,VideosRepository>();            
 
             // 配置内存缓存
             services.AddMemoryCache();
+            services.AddScoped<ICacheService, MemoryCacheService>();
 
             // 配置响应缓存
-            services.AddResponseCaching();
+            services.AddResponseCaching();            
+
+            // 配置 日志服务
+            services.AddTransient<IMailService, CloudMailService>();
+
 
             // 配置 PigeonsDbContext
             var isEncrypt = Configuration["IsEncrypt"];
@@ -113,8 +113,16 @@ namespace WebApi
         /// <param name="loggerFactory"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // 配置 静态文件处理
-            app.UseStaticFiles();
+            // 配置 静态文件缓存时间
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    const int durationInSeconds = 60 * 60 * 24;
+                    ctx.Context.Response.Headers[HeaderNames.CacheControl] =
+                        "public,max-age=" + durationInSeconds;
+                }
+            });
 
             // 配置 NLog
             loggerFactory.AddNLog();

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApi.Dtos;
-using WebApi.Interfaces;
 using WebApi.Repositories;
 using WebApi.Services;
 

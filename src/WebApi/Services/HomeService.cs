@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using WebApi.Repositories;
-using WebApi.Interfaces;
 
 namespace WebApi.Services
 {

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WebApi.Models;
-using WebApi.Interfaces;
 using AutoMapper;
 
 namespace WebApi.Repositories

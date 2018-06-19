@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using WebApi.Interfaces;
 using WebApi.Models;
 
 namespace WebApi.Repositories

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +12,6 @@ using NLog.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
 using WebApi.Filters;
-using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Repositories;
 using WebApi.Services;
@@ -56,22 +54,15 @@ namespace WebApi
                 option.DefaultApiVersion = new ApiVersion(1, 0);
             });
 
-            // 配置 Repository
-            services.AddScoped<IHomesRepository, HomesRepository>();
+            // 配置 Repository            
             services.AddScoped<IHomeService,HomeService>();
+            services.AddScoped<IHomesRepository, HomesRepository>();
             services.AddScoped<ICmsContentsRepository, CmsContentsRepository>();
             services.AddScoped<IVideosRepository,VideosRepository>();            
 
             // 配置内存缓存
             services.AddMemoryCache();
             services.AddScoped<ICacheService, MemoryCacheService>();
-
-            // 配置响应缓存
-            services.AddResponseCaching();            
-
-            // 配置 日志服务
-            services.AddTransient<IMailService, CloudMailService>();
-
 
             // 配置 PigeonsDbContext
             var isEncrypt = Configuration["IsEncrypt"];
@@ -97,8 +88,6 @@ namespace WebApi
                 });
                 c.DocumentFilter<HiddenApiFilter>();
 
-
-            //Set the comments path for the swagger json and ui.
             var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "WebApi.xml");
                 c.IncludeXmlComments(xmlPath);
@@ -187,7 +176,7 @@ namespace WebApi
             app.UseSwaggerUI(c =>
             {
                 c.DocumentTitle = "API Document";
-                c.RoutePrefix = "";
+                c.RoutePrefix = string.Empty;
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
             #endregion

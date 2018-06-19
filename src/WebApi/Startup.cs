@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
@@ -60,11 +61,17 @@ namespace WebApi
             services.AddScoped<IHomesRepository, HomesRepository>();
 
             // 分别注册本地和远程日志服务
-            #if DEBUG
+#if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
-            #else
+#else
             services.AddTransient<IMailService, CloudMailService>();
-            #endif
+#endif
+
+            // 配置内存缓存
+            services.AddMemoryCache();
+
+            // 配置响应缓存
+            services.AddResponseCaching();
 
             // 配置 PigeonsDbContext
             var isEncrypt = Configuration["IsEncrypt"];

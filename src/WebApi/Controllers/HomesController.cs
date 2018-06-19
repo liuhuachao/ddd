@@ -38,6 +38,7 @@ namespace WebApi.Controllers
         /// <returns></returns>
         [Produces("application/json", Type = typeof(HomeList))]
         [HttpGet]
+        [ResponseCache(Duration = 60,VaryByQueryKeys = new string[] { "pageIndex", "pageSize" })]
         public IActionResult GetList([FromQuery]int pageIndex = 1, [FromQuery]int pageSize = 8)
         {
             this._logger.LogInformation("获取列表开始");

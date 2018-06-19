@@ -113,6 +113,9 @@ namespace WebApi
         /// <param name="loggerFactory"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            // 配置 静态文件处理
+            app.UseStaticFiles();
+
             // 配置 NLog
             loggerFactory.AddNLog();
 

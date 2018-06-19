@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using WebApi.Filters;
 
 namespace WebApi.Dtos
-{   
+{
     /// <summary>
     /// 资讯列表
-    /// </summary>    
+    /// </summary>
     public class NewsList
     {
         private string _title;

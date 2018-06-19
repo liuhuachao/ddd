@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Filters;
 
 namespace WebApi.Dtos
 {
     /// <summary>
     /// 视频列表
-    /// </summary>    
+    /// </summary>
     public class VideoList
     {
         private string _title;
@@ -62,7 +63,7 @@ namespace WebApi.Dtos
 
     /// <summary>
     /// 视频详情
-    /// </summary>    
+    /// </summary>
     public class VideoDetail
     {
         private string _title;

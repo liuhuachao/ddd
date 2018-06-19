@@ -16,6 +16,7 @@ namespace WebApi.Controllers
     /// </summary>    
     [Route("v1/news")]
     [ApiVersion("1.0")]
+    [HiddenApi]
     public class NewsController : Controller
     {
         private readonly ILogger<NewsController> _logger;
@@ -39,9 +40,9 @@ namespace WebApi.Controllers
         /// <param name="pageIndex">第几页，默认为1</param>
         /// <param name="ordertype">返回记录的排序方法,0表示降序,1表示升序，默认为0</param>
         /// <returns></returns>
-        [Produces("application/json", Type = typeof(NewsList))]
-        [Route("")]        
         [HttpGet]
+        [Route("")]
+        [HiddenApi]
         public IActionResult GetList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
             var contents = this._Repository.GetList(pageSize, pageSize * (pageIndex - 1), 0);
@@ -60,10 +61,9 @@ namespace WebApi.Controllers
         /// 根据 Id 获取单篇文章详情
         /// </summary>
         /// <param name="id">文章Id</param>
-        /// <returns>返回单篇文章</returns>
-        [Produces("application/json", Type = typeof(NewsDetail))]
-        [Route("{id}", Name = "GetDetail")]
+        /// <returns>返回单篇文章</returns>        
         [HttpGet]
+        [Route("{id}", Name = "GetDetail")]
         public IActionResult GetDetail(int id)
         {
             var content = this._Repository.GetSingle(id);
@@ -82,10 +82,9 @@ namespace WebApi.Controllers
         /// 根据标题搜索资讯
         /// </summary>
         /// <param name="title">标题</param>
-        /// <returns></returns>
-        [Produces("application/json", Type = typeof(NewsList))]
-        [Route("Search")]
+        /// <returns></returns>        
         [HttpGet]
+        [Route("Search")]
         public IActionResult Search([FromQuery]string title)
         {
             var contents = this._Repository.Search(title);
@@ -104,9 +103,9 @@ namespace WebApi.Controllers
         /// 更新点击量
         /// </summary>
         /// <param name="id">资讯 Id</param>
-        /// <returns></returns>
+        /// <returns></returns>        
+        [HttpPatch]
         [Route("UpdateClicks")]
-        [HttpPatch]        
         public async Task<IActionResult> UpdateClicks([FromQuery]int id)
         {
             var addClick = new Random().Next(1,10);
@@ -129,10 +128,9 @@ namespace WebApi.Controllers
         /// 更新点赞量
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>        
-        //[HiddenApi]
+        /// <returns></returns>
+        [HttpPatch]
         [Route("UpdateLikes")]
-        [HttpPatch]        
         public async Task<IActionResult> UpdateLikes([FromQuery]int id)
         {
             var addLikes = new Random().Next(1, 10);

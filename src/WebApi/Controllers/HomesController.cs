@@ -12,9 +12,9 @@ namespace WebApi.Controllers
 {
     /// <summary>
     /// 首页
-    /// </summary>
-    [Route("v1/[Controller]/[Action]")]
+    /// </summary>    
     [ApiVersion("1.0")]
+    [Route("v1/[Controller]/[Action]")]
     public class HomesController : Controller
     {
         private readonly ILogger<HomesController> _logger;
@@ -41,8 +41,7 @@ namespace WebApi.Controllers
         /// <param name="pageSize">每页条数，默认为8</param>
         /// <returns></returns>
         [HttpGet]
-        [Produces("application/json", Type = typeof(HomeList))]        
-        [ResponseCache(Duration = 60)]
+        [Produces("application/json", Type = typeof(HomeList))]
         public IActionResult GetList([FromQuery]int pageIndex = 1, [FromQuery]int pageSize = 8)
         {
             this._logger.LogInformation("获取列表开始");
@@ -76,7 +75,6 @@ namespace WebApi.Controllers
         /// <returns></returns>        
         [HttpGet]
         [Produces("application/json", Type = typeof(HomeDetail))]
-        [ResponseCache(Duration = 60, VaryByQueryKeys = new string[] { "id", "showType" })]
         public IActionResult GetDetail([FromQuery]int id, [FromQuery]int showType)
         {
             this._logger.LogInformation("获取详情开始");
@@ -110,7 +108,6 @@ namespace WebApi.Controllers
         /// <returns></returns>        
         [HttpGet]
         [Produces("application/json", Type = typeof(HomeSearch))]
-        [ResponseCache(Duration = 60, VaryByQueryKeys = new string[] { "title"})]
         public IActionResult Search([FromQuery]string title)
         {
             this._logger.LogInformation("搜索开始");
@@ -151,9 +148,8 @@ namespace WebApi.Controllers
         /// 获取热搜
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Produces("application/json", Type = typeof(HotSearch))]        
-        [ResponseCache(Duration = 60)]
+        [HttpGet]         
+        [Produces("application/json", Type = typeof(HotSearch))]
         public IActionResult HotSearch()
         {
             this._logger.LogInformation("热搜开始");
@@ -189,9 +185,9 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id">主键Id</param>
         /// <param name="showType">显示类型，3表示视频，其他为资讯</param>
-        /// <returns></returns>
-        [Produces("application/json", Type = typeof(ResultMsg))]
+        /// <returns></returns>        
         [HttpPatch]
+        [Produces("application/json", Type = typeof(ResultMsg))]
         public async Task<IActionResult> UpdateLikes([FromQuery]int id, [FromQuery]int showType)
         {
             this._logger.LogInformation("更新点赞量开始");

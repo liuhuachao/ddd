@@ -68,7 +68,30 @@ namespace WebApi.Repositories
                 return null;
             }
             return detail;
-        }      
+        }
+
+        public IList<Dtos.HomeList> GetMore(int id, int type)
+        {
+            IList<Dtos.HomeList> homeMore;
+            try
+            {
+                SqlParameter[] parameters = new SqlParameter[]
+               {
+                    new SqlParameter("@id",id),
+                    new SqlParameter("@showType",type),
+               };
+
+                homeMore = this._context.Set<Dtos.HomeList>()
+                .FromSql("EXECUTE UP_App_GetMore @id,@showType", parameters)
+                .ToList();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                this._logger.LogCritical(ex.Message);
+                return null;
+            }
+            return homeMore;
+        }
  
         public IList<Dtos.HomeSearch> Search(string title)
         {

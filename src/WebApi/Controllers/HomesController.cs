@@ -101,6 +101,40 @@ namespace WebApi.Controllers
         }
 
         /// <summary>
+        /// 更多精彩
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="showType"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Produces("application/json", Type = typeof(HomeList))]
+        public IActionResult GetMore([FromQuery]int id, [FromQuery]int showType)
+        {
+            this._logger.LogInformation("获取更多精彩开始");
+            var code = Enums.StatusCodeEnum.OK;
+            IList<Dtos.HomeList> homeMore = null;
+            if (!ModelState.IsValid || id <= 0)
+            {
+                code = Enums.StatusCodeEnum.BadRequest;
+            }
+            else
+            {
+                homeMore = this._homeService.GetMore(id, showType);
+                code = (homeMore == null) ? Enums.StatusCodeEnum.NotFound : code;
+            }
+            var msg = Common.EnumHelper.GetEnumDescription(code);
+
+            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            {
+                Code = (int)code,
+                Msg = msg,
+                Data = homeMore
+            };
+            this._logger.LogInformation("获取更多精彩结束");
+            return Json(resultMsg);
+        }
+
+        /// <summary>
         /// 搜索标题
         /// </summary>
         /// <param name="title">标题</param>

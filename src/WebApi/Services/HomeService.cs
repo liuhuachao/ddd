@@ -50,6 +50,19 @@ namespace WebApi.Services
             return homeDetail;
         }
 
+        public IList<Dtos.HomeList> GetMore(int id, int type)
+        {
+            IList<Dtos.HomeList> homeList;
+            string storageKey = string.Format("home_more_{0}_{1}", id, type);
+            homeList = this._cacheSevice.Get<IList<Dtos.HomeList>>(storageKey);
+            if (homeList == null)
+            {
+                homeList = this._repository.GetMore(id, type);
+                this._cacheSevice.Set(storageKey, homeList, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
+            }
+            return homeList;
+        }
+
         public IList<Dtos.HomeSearch> Search(string title)
         {
             IList<Dtos.HomeSearch> homeSearch;

@@ -103,8 +103,8 @@ namespace WebApi.Controllers
         /// <summary>
         /// 更多精彩
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="showType"></param>
+        /// <param name="id">主键Id</param>
+        /// <param name="showType">显示类型，3表示视频，其他为资讯</param>
         /// <returns></returns>
         [HttpGet]
         [Produces("application/json", Type = typeof(HomeList))]

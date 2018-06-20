@@ -21,13 +21,9 @@
 
   <ItemGroup>
     <Compile Remove="%2a%2a\**" />
-    <Compile Remove="wwwroot\**" />
     <Content Remove="%2a%2a\**" />
-    <Content Remove="wwwroot\**" />
     <EmbeddedResource Remove="%2a%2a\**" />
-    <EmbeddedResource Remove="wwwroot\**" />
     <None Remove="%2a%2a\**" />
-    <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>

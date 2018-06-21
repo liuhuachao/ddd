@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDD.Data", "DDD.Data\DDD.Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DDD.Test", "DDD.Test\DDD.Test.csproj", "{92F3E65B-CD96-46EF-99CF-20AB7C30BC6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDD.Repository", "DDD.Repository\DDD.Repository.csproj", "{F531F349-AFDA-4EB1-B6ED-5A5B6EB13125}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{92F3E65B-CD96-46EF-99CF-20AB7C30BC6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92F3E65B-CD96-46EF-99CF-20AB7C30BC6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92F3E65B-CD96-46EF-99CF-20AB7C30BC6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F531F349-AFDA-4EB1-B6ED-5A5B6EB13125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F531F349-AFDA-4EB1-B6ED-5A5B6EB13125}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F531F349-AFDA-4EB1-B6ED-5A5B6EB13125}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F531F349-AFDA-4EB1-B6ED-5A5B6EB13125}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

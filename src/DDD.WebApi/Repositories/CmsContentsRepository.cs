@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using DDD.WebApi.Models;
+using DDD.Data;
+using DDD.Domain.Entities;
 
 namespace DDD.WebApi.Repositories
 {

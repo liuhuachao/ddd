@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DDD.WebApi.Models;
+using DDD.Data;
+using DDD.Domain.Entities;
 
 namespace DDD.WebApi.Repositories
 {

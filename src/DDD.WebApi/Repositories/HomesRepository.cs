@@ -6,7 +6,8 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using DDD.WebApi.Models;
+using DDD.Data;
+using DDD.Domain.Entities;
 using AutoMapper;
 using DDD.Application.Dtos;
 

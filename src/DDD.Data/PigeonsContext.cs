@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using DDD.Domain.Entities;
+using DDD.Application.Dtos;
 
 namespace DDD.Data
 {
@@ -30,6 +31,11 @@ namespace DDD.Data
         public virtual DbSet<VdVideoCollect> VdVideoCollect { get; set; }
         public virtual DbSet<VdVideoRecord> VdVideoRecord { get; set; }
         public virtual DbSet<VdVideoReview> VdVideoReview { get; set; }
+
+        public virtual DbSet<HomeList> HomeList { get; set; }
+        public virtual DbSet<HomeDetail> HomeDetail { get; set; }
+        public virtual DbSet<HomeSearch> HomeSearch { get; set; }
+        public virtual DbSet<HotSearch> HotSearch { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

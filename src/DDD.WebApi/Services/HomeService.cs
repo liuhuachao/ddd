@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using DDD.WebApi.Repositories;
+using DDD.Application.Interfaces;
 
 namespace DDD.WebApi.Services
 {

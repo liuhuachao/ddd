@@ -15,6 +15,8 @@ using DDD.WebApi.Filters;
 using DDD.WebApi.Models;
 using DDD.WebApi.Repositories;
 using DDD.WebApi.Services;
+using DDD.Application.Interfaces;
+using DDD.Application.Services;
 
 namespace DDD.WebApi
 {

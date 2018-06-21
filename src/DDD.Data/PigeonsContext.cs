@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using DDD.Domain.Models;
+using DDD.Domain.Entities;
 
 namespace DDD.Data
 {
@@ -30,7 +30,6 @@ namespace DDD.Data
         public virtual DbSet<VdVideoCollect> VdVideoCollect { get; set; }
         public virtual DbSet<VdVideoRecord> VdVideoRecord { get; set; }
         public virtual DbSet<VdVideoReview> VdVideoReview { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DDD.WebApi.Services
+namespace DDD.Application.Interfaces
 {
     public interface ICacheService
     {

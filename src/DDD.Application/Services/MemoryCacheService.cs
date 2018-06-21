@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DDD.Application.Interfaces;
 
-namespace DDD.WebApi.Services
+namespace DDD.Application.Services
 {
     public class MemoryCacheService : ICacheService
     {
-        private IMemoryCache _memoryCache;
+        private readonly IMemoryCache _memoryCache;
 
         public MemoryCacheService(IMemoryCache memoryCache)
         {
@@ -25,8 +26,7 @@ namespace DDD.WebApi.Services
            {
                 throw new ArgumentNullException(nameof(key));
             }
-            object cached;
-            return this._memoryCache.TryGetValue(key, out cached);
+            return this._memoryCache.TryGetValue(key, out object cached);
         }
 
         /// <summary>

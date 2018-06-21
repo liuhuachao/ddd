@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DDD.Domain.Models
+namespace DDD.Domain.Entities
 {
     public partial class LiLive
     {

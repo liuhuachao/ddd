@@ -56,7 +56,7 @@ namespace DDD.WebApp
             // 配置 Automapper
             AutoMapper.Mapper.Initialize(cfg =>
             {            
-                cfg.CreateMap<Domain.Models.CmsContents, WebApp.Models.NewsDetailViewModel>()
+                cfg.CreateMap<Domain.Entities.CmsContents, WebApp.Models.NewsDetailViewModel>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.CmsId))
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.CmsKeys))
@@ -67,7 +67,7 @@ namespace DDD.WebApp
                 .ForMember(d => d.Likes, o => o.MapFrom(s => s.Likes))
                 ;
 
-                cfg.CreateMap<Domain.Models.VdVideo, WebApp.Models.VideoDetailViewModel>()
+                cfg.CreateMap<Domain.Entities.VdVideo, WebApp.Models.VideoDetailViewModel>()
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.Info))
                 .ForMember(d => d.PostTime, o => o.MapFrom(s => s.Uptime))
                 .ForMember(d => d.SourceUrl, o => o.MapFrom(s => s.VideoSource))

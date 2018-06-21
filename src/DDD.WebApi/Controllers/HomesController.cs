@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DDD.WebApi.Dtos;
 using DDD.WebApi.Repositories;
 using DDD.WebApi.Services;
+using DDD.Common.Enums;
 
 namespace DDD.WebApi.Controllers
 {
@@ -44,16 +45,16 @@ namespace DDD.WebApi.Controllers
         public IActionResult GetList([FromQuery]int pageIndex = 1, [FromQuery]int pageSize = 8)
         {
             this._logger.LogInformation("获取列表开始");
-            var code = Enums.StatusCodeEnum.OK;
+            var code = StatusCodeEnum.OK;
             IList<Dtos.HomeList> homeList = null;
             if (!ModelState.IsValid || pageIndex <= 0 || pageSize <= 0)
             {
-                code = Enums.StatusCodeEnum.BadRequest;
+                code = StatusCodeEnum.BadRequest;
             }
             else
             {
                 homeList = this._homeService.GetList(pageIndex,pageSize);
-                code = (homeList == null || homeList.Count <= 0) ? Enums.StatusCodeEnum.NotFound : code;
+                code = (homeList == null || homeList.Count <= 0) ? StatusCodeEnum.NotFound : code;
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -77,16 +78,16 @@ namespace DDD.WebApi.Controllers
         public IActionResult GetDetail([FromQuery]int id, [FromQuery]int showType)
         {
             this._logger.LogInformation("获取详情开始");
-            var code = Enums.StatusCodeEnum.OK;
+            var code = StatusCodeEnum.OK;
             Dtos.HomeDetail detail = null;
             if (!ModelState.IsValid || id <= 0)
             {
-                code = Enums.StatusCodeEnum.BadRequest;
+                code = StatusCodeEnum.BadRequest;
             }
             else
             {
                 detail = this._homeService.GetDetail(id,showType);
-                code = (detail == null ) ? Enums.StatusCodeEnum.NotFound : code;
+                code = (detail == null ) ? StatusCodeEnum.NotFound : code;
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
 
@@ -111,16 +112,16 @@ namespace DDD.WebApi.Controllers
         public IActionResult GetMore([FromQuery]int id, [FromQuery]int showType)
         {
             this._logger.LogInformation("获取更多精彩开始");
-            var code = Enums.StatusCodeEnum.OK;
+            var code = StatusCodeEnum.OK;
             IList<Dtos.HomeList> homeMore = null;
             if (!ModelState.IsValid || id <= 0)
             {
-                code = Enums.StatusCodeEnum.BadRequest;
+                code = StatusCodeEnum.BadRequest;
             }
             else
             {
                 homeMore = this._homeService.GetMore(id, showType);
-                code = (homeMore == null) ? Enums.StatusCodeEnum.NotFound : code;
+                code = (homeMore == null) ? StatusCodeEnum.NotFound : code;
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
 
@@ -144,26 +145,26 @@ namespace DDD.WebApi.Controllers
         public IActionResult Search([FromQuery]string title)
         {
             this._logger.LogInformation("搜索开始");
-            Enums.StatusCodeEnum code;
+            StatusCodeEnum code;
             IList<Dtos.HomeSearch> homeSearch = null;
             if (string.IsNullOrEmpty(title))
             {
-                code = Enums.StatusCodeEnum.BadRequest;
+                code = StatusCodeEnum.BadRequest;
             }            
             else
             {
                 homeSearch = this._homeService.Search(title);
                 if (homeSearch == null)
                 {
-                    code = Enums.StatusCodeEnum.InternalServerError;
+                    code = StatusCodeEnum.InternalServerError;
                 }
                 else if (homeSearch.Count <= 0)
                 {
-                    code = Enums.StatusCodeEnum.NotFound;
+                    code = StatusCodeEnum.NotFound;
                 }
                 else
                 {
-                    code = Enums.StatusCodeEnum.OK;
+                    code = StatusCodeEnum.OK;
                 }
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
@@ -186,21 +187,21 @@ namespace DDD.WebApi.Controllers
         public IActionResult HotSearch()
         {
             this._logger.LogInformation("热搜开始");
-            Enums.StatusCodeEnum code ;
+            StatusCodeEnum code ;
             IList<Dtos.HotSearch> hotSearch = null;
             hotSearch = this._homeService.HotSearch();
 
             if (hotSearch == null)
             {
-                code = Enums.StatusCodeEnum.InternalServerError;
+                code = StatusCodeEnum.InternalServerError;
             }
             else if (hotSearch.Count <= 0)
             {
-                code = Enums.StatusCodeEnum.NotFound;
+                code = StatusCodeEnum.NotFound;
             }
             else
             {
-                code = Enums.StatusCodeEnum.OK;
+                code = StatusCodeEnum.OK;
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -224,19 +225,19 @@ namespace DDD.WebApi.Controllers
         public async Task<IActionResult> UpdateLikes([FromQuery]int id, [FromQuery]int showType)
         {
             this._logger.LogInformation("更新点赞量开始");
-            Enums.StatusCodeEnum code = Enums.StatusCodeEnum.OK;
+            StatusCodeEnum code = StatusCodeEnum.OK;
 
             if (!ModelState.IsValid || id <= 0 )
             {
-                code = Enums.StatusCodeEnum.BadRequest;
+                code = StatusCodeEnum.BadRequest;
             }
             else if (!this._Repository.IsExist(id, showType))
             {
-                code = Enums.StatusCodeEnum.NotFound;
+                code = StatusCodeEnum.NotFound;
             }
             else
             {
-                code = await this._Repository.UpdateLikes(id,showType) > 0 ? code : Enums.StatusCodeEnum.NotModified;
+                code = await this._Repository.UpdateLikes(id,showType) > 0 ? code : StatusCodeEnum.NotModified;
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace DDD.WebApi.Enums
+namespace DDD.Common.Enums
 {
     /// <summary>
     /// 状态码

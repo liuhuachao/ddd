@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DDD.WebApi.Dtos;
 using DDD.WebApi.Filters;
 using DDD.WebApi.Repositories;
+using DDD.Common.Enums;
 
 namespace DDD.WebApi.Controllers
 {
@@ -47,7 +48,7 @@ namespace DDD.WebApi.Controllers
         {
             var contents = this._Repository.GetList(pageSize, pageSize * (pageIndex - 1), 0);
             var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
-            var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            var code = contents.Count() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,
@@ -68,7 +69,7 @@ namespace DDD.WebApi.Controllers
         {
             var content = this._Repository.GetSingle(id);
             var newsDetail = Mapper.Map<Dtos.NewsDetail>(content);
-            var code = content != null ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            var code = content != null ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,
@@ -89,7 +90,7 @@ namespace DDD.WebApi.Controllers
         {
             var contents = this._Repository.Search(title);
             var newsList = Mapper.Map<IList<Dtos.NewsList>>(contents);
-            var code = contents.Count() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotFound;
+            var code = contents.Count() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
             {
                 Code = (int)code,
@@ -111,7 +112,7 @@ namespace DDD.WebApi.Controllers
             var addClick = new Random().Next(1,10);
             var news = this._Repository.GetSingle(id);
             news.CmsClick += addClick;
-            var code = await this._Repository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
+            var code = await this._Repository.SaveAsync() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotModified;
             var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._Repository.GetSingle(id));
 
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
@@ -136,7 +137,7 @@ namespace DDD.WebApi.Controllers
             var addLikes = new Random().Next(1, 10);
             var news = this._Repository.GetSingle(id);
             news.Likes += addLikes;
-            var code = await this._Repository.SaveAsync() > 0 ? Enums.StatusCodeEnum.OK : Enums.StatusCodeEnum.NotModified;
+            var code = await this._Repository.SaveAsync() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotModified;
             var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._Repository.GetSingle(id));
 
             Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()

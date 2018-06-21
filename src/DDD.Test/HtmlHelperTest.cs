@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using DDD.Common;
 
 namespace DDD.Test
 {
@@ -18,7 +19,7 @@ namespace DDD.Test
             string encodeStr1 = originStr;
             string encodeStr2 = originStr;
 
-            string decodeStr1 = DDD.WebApi.Common.HtmlHelper.Decode(encodeStr1);
+            string decodeStr1 = HtmlHelper.Decode(encodeStr1);
             string decodeStr2 = System.Web.HttpUtility.HtmlDecode(encodeStr2);
 
             Assert.Equal(decodeStr1, decodeStr2);

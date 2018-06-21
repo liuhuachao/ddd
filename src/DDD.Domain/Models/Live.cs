@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DDD.Domain.Entities
+namespace DDD.Domain.Models
 {
     public partial class Live
     {

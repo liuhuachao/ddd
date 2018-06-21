@@ -66,6 +66,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DDD.Common\DDD.Common.csproj" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties Properties_4launchSettings_1json__JSONSchema="http://json.schemastore.org/project" /></VisualStudio></ProjectExtensions>
 
 </Project>

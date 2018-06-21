@@ -8,7 +8,7 @@ using System.Web.Http.Filters;
 using System.Threading;
 using System.Web.Http.Controllers;
 using DDD.WebApi.Dtos;
-using DDD.WebApi.Common;
+using DDD.Common;
 using DDD.WebApi.Enums;
 
 namespace DDD.WebApi.Filters

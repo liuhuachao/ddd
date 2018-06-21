@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DDD.WebApi.Dtos
+namespace DDD.Application.Dtos
 {
     public class ResultMsg
     {

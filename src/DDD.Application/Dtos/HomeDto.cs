@@ -2,46 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using DDD.WebApi.Filters;
+using DDD.Common;
 
-namespace DDD.WebApi.Dtos
+
+namespace DDD.Application.Dtos
 {
     /// <summary>
-    /// 资讯列表
+    /// 首页
     /// </summary>
-    public class NewsList
+    public class HomeList
     {
         private string _title;
-        private string _intro;
         private string _postTime;
-        private string _className;
 
         /// <summary>
         /// 标识
         /// </summary>
-        public int Id { get; set; }      
+        public int Id { get; set; }
         /// <summary>
         /// 标题
         /// </summary>
         public string Title
         {
-            get { return Common.HtmlHelper.Decode(_title); }
+            get { return HtmlHelper.Decode(_title); }
             set { _title = value; }
-        }
-        /// <summary>
-        /// 简介
-        /// </summary>
-        public string Intro
-        {
-            get { return Common.HtmlHelper.Decode(_intro); }
-            set { _intro = value; }
-        }
+        }        
         /// <summary>
         /// 封面图
         /// </summary>
         public string CoverImg { get; set; }
+        /// <summary>
+        /// 视频源Url
+        /// </summary>
+        public string SourceUrl { get; set; }
         /// <summary>
         /// 作者
         /// </summary>
@@ -54,7 +47,7 @@ namespace DDD.WebApi.Dtos
             get
             {
                 if (string.IsNullOrEmpty(_postTime) || !Common.TimeHelper.IsDate(_postTime))
-                    return "新鲜出炉";
+                    return "刚刚";
                 else
                     return Common.TimeHelper.GetTimeDiffUntil(Convert.ToDateTime(_postTime));
             }
@@ -64,38 +57,22 @@ namespace DDD.WebApi.Dtos
             }
         }
         /// <summary>
-        /// 栏目编码
-        /// </summary>
-        public string ClassCode { get; set; }
-        /// <summary>
         /// 栏目名称
         /// </summary>
-        public string ClassName
-        {
-            get { return Common.Utility.GetClassName(ClassCode); }
-            set { _className = value; }
-        }
+        public string ClassName { get; set; }
         /// <summary>
         /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
         /// </summary>
-        public int ShowType
-        {
-            get
-            {                
-                return string.IsNullOrEmpty(this.CoverImg) ? 2 : new Random().Next(0,2);
-            }
-            set { }
-        }
+        public int ShowType { get; set; }
     }
 
     /// <summary>
-    /// 资讯详情
-    /// </summary>    
-    public class NewsDetail
+    /// 详情
+    /// </summary>
+    public class HomeDetail
     {
         private string _title;
         private string _intro;
-        private string _shareLink = "http://m.chsgw.com/news/news_detail.aspx?id=";
         private string _content;
 
         /// <summary>
@@ -107,7 +84,7 @@ namespace DDD.WebApi.Dtos
         /// </summary>
         public string Title
         {
-            get { return Common.HtmlHelper.Decode(_title); }
+            get { return HtmlHelper.Decode(_title); }
             set { _title = value; }
         }
         /// <summary>
@@ -115,7 +92,7 @@ namespace DDD.WebApi.Dtos
         /// </summary>
         public string Intro
         {
-            get { return Common.HtmlHelper.Decode(_intro); }
+            get { return HtmlHelper.Decode(_intro); }
             set { _intro = value; }
         }
         /// <summary>
@@ -137,7 +114,7 @@ namespace DDD.WebApi.Dtos
         {
             get
             {
-                return Common.HtmlHelper.BuildNewsDetailHtml(_content);
+                return HtmlHelper.BuildNewsDetailHtml(_content);
             }
             set
             {
@@ -145,23 +122,72 @@ namespace DDD.WebApi.Dtos
             }
         }
         /// <summary>
+        /// 视频源Url
+        /// </summary>
+        public string SourceUrl { get; set; }
+        /// <summary>
+        /// 栏目名称
+        /// </summary>
+        public string ClassName { get; set; }
+        /// <summary>
+        /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
+        /// </summary>
+        public int? ShowType { get; set; }
+        /// <summary>
         /// 点击量
         /// </summary>
-        public int Clicks { get; set; }
+        public int? Clicks { get; set; }
         /// <summary>
-        /// 点赞数
+        /// 点赞量
         /// </summary>
-        public int Likes { get; set; }
+        public int? Likes { get; set; }
         /// <summary>
         /// 分享链接
         /// </summary>
-        public string ShareLink
+        public string ShareLink { get; set; }
+    }
+
+    /// <summary>
+    /// 搜索
+    /// </summary>
+    public class HomeSearch
+    {
+        private string _title;
+
+        /// <summary>
+        /// 标识
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// 标题
+        /// </summary>
+        public string Title
         {
-            get
-            {
-                return _shareLink + this.Id.ToString();
-            }
-            set { _shareLink = value; }
+            get { return HtmlHelper.Decode(_title); }
+            set { _title = value; }
         }
+        /// <summary>
+        /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
+        /// </summary>
+        public int? ShowType { get; set; }
+    }
+
+    /// <summary>
+    /// 热搜
+    /// </summary>
+    public class HotSearch
+    {
+        /// <summary>
+        /// 标识
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// 栏目名称
+        /// </summary>
+        public string ClassName { get; set; }
+        /// <summary>
+        /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
+        /// </summary>
+        public int? ShowType { get; set; }
     }
 }

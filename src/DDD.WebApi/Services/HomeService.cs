@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using DDD.WebApi.Repositories;
 using DDD.Application.Interfaces;
+using DDD.Application.Dtos;
 
 namespace DDD.WebApi.Services
 {
@@ -25,11 +26,11 @@ namespace DDD.WebApi.Services
             this._cacheSevice = cacheSevice;
         }
 
-        public IList<Dtos.HomeList> GetList(int pageIndex = 1, int pageSize = 8)
+        public IList<HomeList> GetList(int pageIndex = 1, int pageSize = 8)
         {
-            IList<Dtos.HomeList> homeList;
+            IList<HomeList> homeList;
             string storageKey = string.Format("home_list_{0}_{1}",pageIndex,pageSize);
-            homeList = this._cacheSevice.Get<List<Dtos.HomeList>>(storageKey);
+            homeList = this._cacheSevice.Get<List<HomeList>>(storageKey);
             if (homeList == null)
             {
                 homeList = this._repository.GetList(pageIndex, pageSize);
@@ -38,11 +39,11 @@ namespace DDD.WebApi.Services
             return homeList;
         }
 
-        public Dtos.HomeDetail GetDetail(int id, int type)
+        public HomeDetail GetDetail(int id, int type)
         {
-            Dtos.HomeDetail homeDetail;
+            HomeDetail homeDetail;
             string storageKey = string.Format("home_detail_{0}_{1}", id, type);
-            homeDetail = this._cacheSevice.Get<Dtos.HomeDetail>(storageKey);
+            homeDetail = this._cacheSevice.Get<HomeDetail>(storageKey);
             if (homeDetail == null)
             {
                 homeDetail = this._repository.GetDetail(id, type);
@@ -51,11 +52,11 @@ namespace DDD.WebApi.Services
             return homeDetail;
         }
 
-        public IList<Dtos.HomeList> GetMore(int id, int type)
+        public IList<HomeList> GetMore(int id, int type)
         {
-            IList<Dtos.HomeList> homeList;
+            IList<HomeList> homeList;
             string storageKey = string.Format("home_more_{0}_{1}", id, type);
-            homeList = this._cacheSevice.Get<IList<Dtos.HomeList>>(storageKey);
+            homeList = this._cacheSevice.Get<IList<HomeList>>(storageKey);
             if (homeList == null)
             {
                 homeList = this._repository.GetMore(id, type);
@@ -64,11 +65,11 @@ namespace DDD.WebApi.Services
             return homeList;
         }
 
-        public IList<Dtos.HomeSearch> Search(string title)
+        public IList<HomeSearch> Search(string title)
         {
-            IList<Dtos.HomeSearch> homeSearch;
+            IList<HomeSearch> homeSearch;
             string storageKey = string.Format("home_search_{0}", title);
-            homeSearch = this._cacheSevice.Get<List<Dtos.HomeSearch>>(storageKey);
+            homeSearch = this._cacheSevice.Get<List<HomeSearch>>(storageKey);
             if (homeSearch == null)
             {
                 homeSearch = this._repository.Search(title);
@@ -77,11 +78,11 @@ namespace DDD.WebApi.Services
             return homeSearch;
         }
 
-        public IList<Dtos.HotSearch> HotSearch(int limit = 10)
+        public IList<HotSearch> HotSearch(int limit = 10)
         {
-            IList<Dtos.HotSearch> hotSearch;
+            IList<HotSearch> hotSearch;
             string storageKey = string.Format("hot_search_{0}", limit);
-            hotSearch = this._cacheSevice.Get<List<Dtos.HotSearch>>(storageKey);
+            hotSearch = this._cacheSevice.Get<List<HotSearch>>(storageKey);
             if (hotSearch == null)
             {
                 hotSearch = this._repository.HotSearch(limit);

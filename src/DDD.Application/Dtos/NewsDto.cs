@@ -2,29 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DDD.WebApi.Filters;
+using System.ComponentModel.DataAnnotations;
+using DDD.Common;
 
-namespace DDD.WebApi.Dtos
+namespace DDD.Application.Dtos
 {
     /// <summary>
-    /// 视频列表
+    /// 资讯列表
     /// </summary>
-    public class VideoList
+    public class NewsList
     {
         private string _title;
         private string _intro;
-        private int _showType = 3;
+        private string _postTime;
+        private string _className;
 
         /// <summary>
         /// 标识
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get; set; }      
         /// <summary>
         /// 标题
         /// </summary>
         public string Title
         {
-            get { return Common.HtmlHelper.Decode(_title); }
+            get { return HtmlHelper.Decode(_title); }
             set { _title = value; }
         }
         /// <summary>
@@ -32,7 +34,7 @@ namespace DDD.WebApi.Dtos
         /// </summary>
         public string Intro
         {
-            get { return Common.HtmlHelper.Decode(_intro); }
+            get { return HtmlHelper.Decode(_intro); }
             set { _intro = value; }
         }
         /// <summary>
@@ -46,29 +48,54 @@ namespace DDD.WebApi.Dtos
         /// <summary>
         /// 发表时间
         /// </summary>
-        public string PostTime { get; set; }
+        public string PostTime
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_postTime) || !Common.TimeHelper.IsDate(_postTime))
+                    return "新鲜出炉";
+                else
+                    return Common.TimeHelper.GetTimeDiffUntil(Convert.ToDateTime(_postTime));
+            }
+            set
+            {
+                _postTime = value;
+            }
+        }
         /// <summary>
-        /// 视频源Url
+        /// 栏目编码
         /// </summary>
-        public string SourceUrl { get; set; }
+        public string ClassCode { get; set; }
+        /// <summary>
+        /// 栏目名称
+        /// </summary>
+        public string ClassName
+        {
+            get { return Common.Utility.GetClassName(ClassCode); }
+            set { _className = value; }
+        }
         /// <summary>
         /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
         /// </summary>
         public int ShowType
         {
-            get { return _showType; }
-            set { _showType = value; }
+            get
+            {                
+                return string.IsNullOrEmpty(this.CoverImg) ? 2 : new Random().Next(0,2);
+            }
+            set { }
         }
     }
 
     /// <summary>
-    /// 视频详情
-    /// </summary>
-    public class VideoDetail
+    /// 资讯详情
+    /// </summary>    
+    public class NewsDetail
     {
         private string _title;
         private string _intro;
-        private string _shareLink = "http://m.chsgw.com/vod/";
+        private string _shareLink = "http://m.chsgw.com/news/news_detail.aspx?id=";
+        private string _content;
 
         /// <summary>
         /// 标识
@@ -79,7 +106,7 @@ namespace DDD.WebApi.Dtos
         /// </summary>
         public string Title
         {
-            get { return Common.HtmlHelper.Decode(_title); }
+            get { return HtmlHelper.Decode(_title); }
             set { _title = value; }
         }
         /// <summary>
@@ -87,7 +114,7 @@ namespace DDD.WebApi.Dtos
         /// </summary>
         public string Intro
         {
-            get { return Common.HtmlHelper.Decode(_intro); }
+            get { return HtmlHelper.Decode(_intro); }
             set { _intro = value; }
         }
         /// <summary>
@@ -103,9 +130,19 @@ namespace DDD.WebApi.Dtos
         /// </summary>
         public string PostTime { get; set; }
         /// <summary>
-        /// 视频源Url
+        /// 文章内容
         /// </summary>
-        public string SourceUrl { get; set; }
+        public string Content
+        {
+            get
+            {
+                return HtmlHelper.BuildNewsDetailHtml(_content);
+            }
+            set
+            {
+                _content = value;
+            }
+        }
         /// <summary>
         /// 点击量
         /// </summary>
@@ -125,9 +162,5 @@ namespace DDD.WebApi.Dtos
             }
             set { _shareLink = value; }
         }
-        /// <summary>
-        /// 视频时长
-        /// </summary>
-        public string Duration { get; set; }
     }
 }

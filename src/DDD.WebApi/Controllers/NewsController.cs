@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DDD.WebApi.Dtos;
+using DDD.Application.Dtos;
 using DDD.WebApi.Filters;
 using DDD.WebApi.Repositories;
 using DDD.Common.Enums;
@@ -47,9 +47,9 @@ namespace DDD.WebApi.Controllers
         public IActionResult GetList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
             var contents = this._Repository.GetList(pageSize, pageSize * (pageIndex - 1), 0);
-            var newsList = Mapper.Map<IEnumerable<Dtos.NewsList>>(contents);
+            var newsList = Mapper.Map<IEnumerable<NewsList>>(contents);
             var code = contents.Count() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
@@ -68,9 +68,9 @@ namespace DDD.WebApi.Controllers
         public IActionResult GetDetail(int id)
         {
             var content = this._Repository.GetSingle(id);
-            var newsDetail = Mapper.Map<Dtos.NewsDetail>(content);
+            var newsDetail = Mapper.Map<NewsDetail>(content);
             var code = content != null ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
@@ -89,9 +89,9 @@ namespace DDD.WebApi.Controllers
         public IActionResult Search([FromQuery]string title)
         {
             var contents = this._Repository.Search(title);
-            var newsList = Mapper.Map<IList<Dtos.NewsList>>(contents);
+            var newsList = Mapper.Map<IList<NewsList>>(contents);
             var code = contents.Count() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
@@ -113,9 +113,9 @@ namespace DDD.WebApi.Controllers
             var news = this._Repository.GetSingle(id);
             news.CmsClick += addClick;
             var code = await this._Repository.SaveAsync() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotModified;
-            var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._Repository.GetSingle(id));
+            var newsDetail = Mapper.Map<NewsDetail>(this._Repository.GetSingle(id));
 
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
@@ -138,9 +138,9 @@ namespace DDD.WebApi.Controllers
             var news = this._Repository.GetSingle(id);
             news.Likes += addLikes;
             var code = await this._Repository.SaveAsync() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotModified;
-            var newsDetail = Mapper.Map<Dtos.NewsDetail>(this._Repository.GetSingle(id));
+            var newsDetail = Mapper.Map<NewsDetail>(this._Repository.GetSingle(id));
 
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),

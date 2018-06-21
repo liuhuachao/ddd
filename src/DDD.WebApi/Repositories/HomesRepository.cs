@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using DDD.WebApi.Models;
 using AutoMapper;
+using DDD.Application.Dtos;
 
 namespace DDD.WebApi.Repositories
 {
@@ -22,10 +23,10 @@ namespace DDD.WebApi.Repositories
             _logger = logger;
         }
 
-        public IList<Dtos.HomeList> GetList(int pageIndex = 1, int pageSize = 8)
+        public IList<HomeList> GetList(int pageIndex = 1, int pageSize = 8)
         {
             var _pageSize = pageSize > 100 ? 100 : pageSize;
-            IList<Dtos.HomeList> homeList;
+            IList<HomeList> homeList;
             try
             {
                 SqlParameter[] parameters = new SqlParameter[]
@@ -36,7 +37,7 @@ namespace DDD.WebApi.Repositories
                 };
                 parameters[2].Direction = ParameterDirection.Output;
 
-                homeList = this._context.Set<Dtos.HomeList>()
+                homeList = this._context.Set<HomeList>()
                     .FromSql("EXECUTE UP_App_GetHomeList @pageIndex,@pageSize,@totalCount OUTPUT", parameters).ToList();
             }
             catch (System.Data.SqlClient.SqlException ex)
@@ -47,9 +48,9 @@ namespace DDD.WebApi.Repositories
             return homeList;
         }
 
-        public Dtos.HomeDetail GetDetail(int id, int type)
+        public HomeDetail GetDetail(int id, int type)
         {
-            Dtos.HomeDetail detail;
+            HomeDetail detail;
             try
             {
                  SqlParameter[] parameters = new SqlParameter[]
@@ -58,7 +59,7 @@ namespace DDD.WebApi.Repositories
                     new SqlParameter("@showType",type),
                 };
                   
-                detail = this._context.Set<Dtos.HomeDetail>()
+                detail = this._context.Set<HomeDetail>()
                 .FromSql("EXECUTE UP_App_GetDetail @id,@showType",parameters)
                 .FirstOrDefault();
             }
@@ -70,9 +71,9 @@ namespace DDD.WebApi.Repositories
             return detail;
         }
 
-        public IList<Dtos.HomeList> GetMore(int id, int type)
+        public IList<HomeList> GetMore(int id, int type)
         {
-            IList<Dtos.HomeList> homeMore;
+            IList<HomeList> homeMore;
             try
             {
                 SqlParameter[] parameters = new SqlParameter[]
@@ -81,7 +82,7 @@ namespace DDD.WebApi.Repositories
                     new SqlParameter("@showType",type),
                };
 
-                homeMore = this._context.Set<Dtos.HomeList>()
+                homeMore = this._context.Set<HomeList>()
                 .FromSql("EXECUTE UP_App_GetMore @id,@showType", parameters)
                 .ToList();
             }
@@ -93,33 +94,33 @@ namespace DDD.WebApi.Repositories
             return homeMore;
         }
  
-        public IList<Dtos.HomeSearch> Search(string title)
+        public IList<HomeSearch> Search(string title)
         {
             var limit = 10;
 
-            IQueryable<Dtos.HomeSearch> news = this._context.CmsContents
+            IQueryable<HomeSearch> news = this._context.CmsContents
                 .Where(c => EF.Functions.Like(c.CmsTitle, "%" + title + "%"))
                 .OrderByDescending(x => x.CmsId)
                 .Take(limit / 2)
-                .Select(n => new Dtos.HomeSearch()
+                .Select(n => new HomeSearch()
                 {
                     Id = n.CmsId,
                     Title = n.CmsTitle,
                     ShowType = 2,
                 });
 
-            IQueryable<Dtos.HomeSearch> videos = this._context.VdVideo
+            IQueryable<HomeSearch> videos = this._context.VdVideo
                 .Where(item => EF.Functions.Like(item.Title, "%" + title + "%"))
                 .OrderByDescending(x => x.Id)
                 .Take(limit / 2)
-                .Select(v => new Dtos.HomeSearch()
+                .Select(v => new HomeSearch()
                 {
                     Id = v.Id,
                     Title = v.Title,
                     ShowType = 3,
                 });
 
-            IList<Dtos.HomeSearch> homeList = new List<Dtos.HomeSearch>();
+            IList<HomeSearch> homeList = new List<HomeSearch>();
 
             foreach (var item in news)
             {
@@ -133,13 +134,13 @@ namespace DDD.WebApi.Repositories
             return homeList;
         }
 
-        public IList<Dtos.HotSearch> HotSearch(int limit = 10)
+        public IList<HotSearch> HotSearch(int limit = 10)
         {
             var _limit = limit > 100 ? 100 : limit;
-            IList<Dtos.HotSearch> homeList;
+            IList<HotSearch> homeList;
             try
             {
-                homeList = this._context.Set<Dtos.HotSearch>()
+                homeList = this._context.Set<HotSearch>()
                 .FromSql("EXECUTE UP_App_GetHotSearch").ToList();
             }
             catch (System.Data.SqlClient.SqlException ex)

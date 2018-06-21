@@ -17,6 +17,7 @@ using DDD.WebApi.Repositories;
 using DDD.WebApi.Services;
 using DDD.Application.Interfaces;
 using DDD.Application.Services;
+using DDD.Application.Dtos;
 
 namespace DDD.WebApi
 {
@@ -130,7 +131,7 @@ namespace DDD.WebApi
             // 配置 Automapper
             AutoMapper.Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<CmsContents, Dtos.NewsList>()
+                cfg.CreateMap<CmsContents, NewsList>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.CmsId))
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.CmsKeys))
@@ -139,7 +140,7 @@ namespace DDD.WebApi
                 .ForMember(d => d.ClassCode, o => o.MapFrom(s => s.CmsCode))
                 ;
 
-                cfg.CreateMap<CmsContents, Dtos.NewsDetail>()
+                cfg.CreateMap<CmsContents, NewsDetail>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.CmsId))
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.CmsKeys))
@@ -150,13 +151,13 @@ namespace DDD.WebApi
                 .ForMember(d => d.Likes, o => o.MapFrom(s => s.Likes))
                 ;
 
-                cfg.CreateMap<VdVideo, Dtos.VideoList>()
+                cfg.CreateMap<VdVideo, VideoList>()
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.Info))
                 .ForMember(d => d.PostTime, o => o.MapFrom(s => s.UpdateTime))
                 .ForMember(d => d.SourceUrl, o => o.MapFrom(s => s.VideoSource))
                 ;
 
-                cfg.CreateMap<VdVideo, Dtos.VideoDetail>()
+                cfg.CreateMap<VdVideo, VideoDetail>()
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.Info))
                 .ForMember(d => d.PostTime, o => o.MapFrom(s => s.UpdateTime))
                 .ForMember(d => d.SourceUrl, o => o.MapFrom(s => s.VideoSource))

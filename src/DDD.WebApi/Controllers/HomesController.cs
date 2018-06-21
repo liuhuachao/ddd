@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DDD.WebApi.Dtos;
+using DDD.Application.Dtos;
 using DDD.WebApi.Repositories;
 using DDD.WebApi.Services;
 using DDD.Common.Enums;
@@ -46,7 +46,7 @@ namespace DDD.WebApi.Controllers
         {
             this._logger.LogInformation("获取列表开始");
             var code = StatusCodeEnum.OK;
-            IList<Dtos.HomeList> homeList = null;
+            IList<HomeList> homeList = null;
             if (!ModelState.IsValid || pageIndex <= 0 || pageSize <= 0)
             {
                 code = StatusCodeEnum.BadRequest;
@@ -57,7 +57,7 @@ namespace DDD.WebApi.Controllers
                 code = (homeList == null || homeList.Count <= 0) ? StatusCodeEnum.NotFound : code;
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = msg,
@@ -79,7 +79,7 @@ namespace DDD.WebApi.Controllers
         {
             this._logger.LogInformation("获取详情开始");
             var code = StatusCodeEnum.OK;
-            Dtos.HomeDetail detail = null;
+            HomeDetail detail = null;
             if (!ModelState.IsValid || id <= 0)
             {
                 code = StatusCodeEnum.BadRequest;
@@ -91,7 +91,7 @@ namespace DDD.WebApi.Controllers
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
 
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = msg,
@@ -113,7 +113,7 @@ namespace DDD.WebApi.Controllers
         {
             this._logger.LogInformation("获取更多精彩开始");
             var code = StatusCodeEnum.OK;
-            IList<Dtos.HomeList> homeMore = null;
+            IList<HomeList> homeMore = null;
             if (!ModelState.IsValid || id <= 0)
             {
                 code = StatusCodeEnum.BadRequest;
@@ -125,7 +125,7 @@ namespace DDD.WebApi.Controllers
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
 
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = msg,
@@ -146,7 +146,7 @@ namespace DDD.WebApi.Controllers
         {
             this._logger.LogInformation("搜索开始");
             StatusCodeEnum code;
-            IList<Dtos.HomeSearch> homeSearch = null;
+            IList<HomeSearch> homeSearch = null;
             if (string.IsNullOrEmpty(title))
             {
                 code = StatusCodeEnum.BadRequest;
@@ -168,7 +168,7 @@ namespace DDD.WebApi.Controllers
                 }
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = msg,
@@ -188,7 +188,7 @@ namespace DDD.WebApi.Controllers
         {
             this._logger.LogInformation("热搜开始");
             StatusCodeEnum code ;
-            IList<Dtos.HotSearch> hotSearch = null;
+            IList<HotSearch> hotSearch = null;
             hotSearch = this._homeService.HotSearch();
 
             if (hotSearch == null)
@@ -204,7 +204,7 @@ namespace DDD.WebApi.Controllers
                 code = StatusCodeEnum.OK;
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = msg,
@@ -241,7 +241,7 @@ namespace DDD.WebApi.Controllers
             }
             var msg = Common.EnumHelper.GetEnumDescription(code);
 
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = msg,

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using DDD.Application.Dtos;
 
 namespace DDD.WebApi.Models
 {
@@ -30,10 +31,10 @@ namespace DDD.WebApi.Models
         public virtual DbSet<VdVideoRecord> VdVideoRecord { get; set; }
         public virtual DbSet<VdVideoReview> VdVideoReview { get; set; }
 
-        public virtual DbSet<Dtos.HomeList> HomeList { get; set; }
-        public virtual DbSet<Dtos.HomeDetail> HomeDetail { get; set; }
-        public virtual DbSet<Dtos.HomeSearch> HomeSearch { get; set; }
-        public virtual DbSet<Dtos.HotSearch> HotSearch { get; set; }
+        public virtual DbSet<HomeList> HomeList { get; set; }
+        public virtual DbSet<HomeDetail> HomeDetail { get; set; }
+        public virtual DbSet<HomeSearch> HomeSearch { get; set; }
+        public virtual DbSet<HotSearch> HotSearch { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

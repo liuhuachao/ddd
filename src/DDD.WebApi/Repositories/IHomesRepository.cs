@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DDD.WebApi.Dtos;
+using DDD.Application.Dtos;
 
 namespace DDD.WebApi.Repositories
 {

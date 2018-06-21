@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DDD.WebApi.Dtos;
+using DDD.Application.Dtos;
 
 namespace DDD.WebApi.Services
 {

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DDD.WebApi.Filters;
 using DDD.WebApi.Repositories;
 using DDD.Common.Enums;
+using DDD.Application.Dtos;
 
 namespace DDD.WebApi.Controllers
 {
@@ -43,9 +44,9 @@ namespace DDD.WebApi.Controllers
         public IActionResult GetList([FromQuery]int pageSize = 10, [FromQuery]int pageIndex = 1, int ordertype = 0)
         {
             var videos = this._Repository.GetList(pageSize, pageSize * (pageIndex - 1), ordertype);
-            var videosList = Mapper.Map<IEnumerable<Dtos.VideoList>>(videos);
+            var videosList = Mapper.Map<IEnumerable<VideoList>>(videos);
             var code = videos.Count() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
@@ -63,9 +64,9 @@ namespace DDD.WebApi.Controllers
         public IActionResult GetDetail([FromQuery]int id)
         {
             var video = this._Repository.GetSingle(id);            
-            var videoDetail = Mapper.Map<Dtos.VideoDetail>(video);
+            var videoDetail = Mapper.Map<VideoDetail>(video);
             var code = video != null ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
@@ -83,9 +84,9 @@ namespace DDD.WebApi.Controllers
         public IActionResult Search([FromQuery]string title)
         {
             var videos = this._Repository.Search(title);
-            var videosList = Mapper.Map<IList<Dtos.VideoList>>(videos);
+            var videosList = Mapper.Map<IList<VideoList>>(videos);
             var code = videos.Count() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
@@ -106,9 +107,9 @@ namespace DDD.WebApi.Controllers
             var video = this._Repository.GetSingle(id);
             video.Hits += addClick;
             var code = await this._Repository.SaveAsync() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotModified;
-            var videoDetail = Mapper.Map<Dtos.VideoDetail>(this._Repository.GetSingle(id));
+            var videoDetail = Mapper.Map<VideoDetail>(this._Repository.GetSingle(id));
 
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),
@@ -130,9 +131,9 @@ namespace DDD.WebApi.Controllers
             var news = this._Repository.GetSingle(id);
             news.Likes += addLikes;
             var code = await this._Repository.SaveAsync() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotModified;
-            var videoDetail = Mapper.Map<Dtos.VideoDetail>(this._Repository.GetSingle(id));
+            var videoDetail = Mapper.Map<VideoDetail>(this._Repository.GetSingle(id));
 
-            Dtos.ResultMsg resultMsg = new Dtos.ResultMsg()
+            ResultMsg resultMsg = new ResultMsg()
             {
                 Code = (int)code,
                 Msg = Common.EnumHelper.GetEnumDescription(code),

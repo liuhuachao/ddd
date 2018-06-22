@@ -93,21 +93,6 @@ namespace DDD.Common
             var headStr = new StringBuilder();
             bodyStr = HtmlHelper.Decode(bodyStr);
             var bodySB = new StringBuilder(); 
-            var openAppStr = new StringBuilder();
-
-            openAppStr.Append("<div class='news_main'>");
-            openAppStr.Append("<div class='news-banner-container'>");
-            openAppStr.Append("<div class='news-banner-left'>");
-            openAppStr.Append("<div class='news-banner-logo'><img src='http://m.chsgw.com/app/img/logo.png' /></div>");
-            openAppStr.Append("<div class='news-banner-text'>");
-            openAppStr.Append("<p>尊贵赛鸽</p>");
-            openAppStr.Append("<p>有态度、有温度、有深度</p>");
-            openAppStr.Append("</div>");
-            openAppStr.Append("</div>");
-            openAppStr.Append("<div class='news-banner-right'>");
-            openAppStr.Append("<a href='#'>打开</a>");
-            openAppStr.Append("</div>");
-            openAppStr.Append("</div>");
 
             headStr.Append("<meta http-equiv='content-type' content='text/html; charset=utf-8' />");
             headStr.Append("<meta name='viewport' content='initial-scale=1.0,maximum-scale=1.0, user-scalable=no' />");
@@ -116,8 +101,7 @@ namespace DDD.Common
             cssStr.Append("<link rel='stylesheet' type='text/css' href='http://m.chsgw.com/app/css/news-detail.css' />");
             jsStr.Append("<script type='text/javascript' src='http://m.chsgw.com/app/js/pub.js'></script>");
 
-            //bodySB.Append(openAppStr);
-            bodySB.Append(string.Format("<div class='news-body'><div class='news-body_main'>{0}</div></div></div>", bodyStr));
+            bodySB.Append(string.Format("<div class='news_main'><div class='news-body'><div class='news-body_main'>{0}</div></div></div>", bodyStr));
             var returnStr = BuildHtml(title, cssStr.ToString(), jsStr.ToString(), headStr.ToString(), bodySB.ToString());
             return returnStr;
         }

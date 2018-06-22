@@ -8,33 +8,32 @@ using AutoMapper;
 
 namespace DDD.Application.Services
 {
-    public class NewsAppService : INewsAppService
+    public class VideosAppService : IVideosAppService
     {
-        private readonly ICmsContentsRepository _repositoty;
+        private readonly IVideosRepository _repositoty;
         private readonly ICacheService _cacheService;
 
-        public NewsAppService(ICmsContentsRepository repositoty, ICacheService cacheService)
+        public VideosAppService(IVideosRepository repositoty, ICacheService cacheService)
         {
             this._repositoty = repositoty;
             this._cacheService = cacheService;
         }
 
-        public NewsDetail GetDetail(int id)
+        public VideoDetail GetDetail(int id)
         {
-            NewsDetail detail;
-            string cacheKey = string.Format("news_detail_{0}",id);
-            detail = this._cacheService.Get<NewsDetail>(cacheKey);
+            VideoDetail detail;
+            string cacheKey = string.Format("video_detail_{0}", id);
+            detail = this._cacheService.Get<VideoDetail>(cacheKey);
             if (detail == null)
             {
                 var result = this._repositoty.GetDetail(id);
-                if(result != null)
+                if (result != null)
                 {
-                    detail = Mapper.Map<NewsDetail>(result);
+                    detail = Mapper.Map<VideoDetail>(result);
                     this._cacheService.Set(cacheKey, detail, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
                 }
             }
             return detail;
-        }       
-
+        }
     }
 }

@@ -5,23 +5,30 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DDD.Data;
 using DDD.Application.Dtos;
+using DDD.Application.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace DDD.WebApp.Controllers
 {
     public class VideosController : Controller
     {
-        private readonly PigeonsContext _pigeonContext;
+        private readonly IVideosAppService _appService;
+        private readonly ILogger<VideosController> _logger;
 
-        public VideosController(PigeonsContext pigeonContext)
+        public VideosController(IVideosAppService appService, ILogger<VideosController> logger)
         {
-            this._pigeonContext = pigeonContext;
+            this._appService = appService;
+            this._logger = logger;
         }
 
         public IActionResult Detail(int id)
         {
-            var video = this._pigeonContext.VdVideo.Find(id);
-            var videoDetail = AutoMapper.Mapper.Map<VideoDetail>(video);
-            return View(videoDetail);
+            var result = this._appService.GetDetail(id);
+            if (result == null)
+            {
+                return View("/Views/NotFound.cshtml");
+            }
+            return View(result);
         }
     }
 }

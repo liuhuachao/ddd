@@ -13,23 +13,23 @@ namespace DDD.WebApp.Controllers
 {
     public class NewsController : Controller
     {
-        private readonly INewsAppService _newsAppService;
+        private readonly INewsAppService _appService;
         private readonly ILogger<NewsController> _logger;
 
-        public NewsController(INewsAppService newsAppService, ILogger<NewsController> logger)
+        public NewsController(INewsAppService appService, ILogger<NewsController> logger)
         {
-            this._newsAppService = newsAppService;
+            this._appService = appService;
             this._logger = logger;
         }
 
         public IActionResult Detail(int id)
         {
-            var news = this._newsAppService.GetDetail(id);
-            if (news == null)
+            var result = this._appService.GetDetail(id);
+            if (result == null)
             {
-                return NotFound();
+                return View("/Views/NotFound.cshtml");
             }
-            return View(news);
+            return View(result);
         }
 
     }

@@ -27,7 +27,7 @@ namespace DDD.WebApp.Controllers
             var result = this._appService.GetDetail(id);
             if (result == null)
             {
-                return View("/Views/NotFound.cshtml");
+                return View("/Views/Shared/NotFound.cshtml");
             }
             return View(result);
         }

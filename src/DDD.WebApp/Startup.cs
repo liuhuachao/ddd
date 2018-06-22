@@ -1,33 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DDD.Application.Interfaces;
+using DDD.Application.Services;
+using DDD.Data;
+using DDD.Data.Repositories;
+using DDD.Domain.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using DDD.Domain;
-using DDD.Data;
-using DDD.Application.Interfaces;
-using DDD.Application.Services;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
-using DDD.Domain.Interfaces;
-using DDD.Data.Repositories;
 
 namespace DDD.WebApp
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
+        }        
 
         public void ConfigureServices(IServiceCollection services)
         {

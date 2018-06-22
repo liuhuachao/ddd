@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
+using DDD.Application.Dtos;
+using DDD.Common.Enums;
+using DDD.Domain.Interfaces;
+using DDD.WebApi.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DDD.WebApi.Filters;
-using DDD.Common.Enums;
-using DDD.Application.Dtos;
-using DDD.Domain.Interfaces;
-using DDD.Data.Repositories;
 
 namespace DDD.WebApi.Controllers
 {

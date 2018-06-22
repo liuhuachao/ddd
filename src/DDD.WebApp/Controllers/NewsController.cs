@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DDD.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
-using DDD.Data;
-using DDD.Application.Interfaces;
-using DDD.Application.Services;
 using Microsoft.Extensions.Logging;
 
 namespace DDD.WebApp.Controllers

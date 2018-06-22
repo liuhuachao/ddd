@@ -1,4 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DDD.Application.Dtos;
+using DDD.Application.Interfaces;
+using DDD.Application.Services;
+using DDD.Data;
+using DDD.Data.Repositories;
+using DDD.Domain.Entities;
+using DDD.Domain.Interfaces;
+using DDD.WebApi.Filters;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -11,27 +19,13 @@ using Microsoft.Net.Http.Headers;
 using NLog.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
-using DDD.WebApi.Filters;
-using DDD.Data;
-using DDD.Domain.Entities;
-using DDD.Application.Interfaces;
-using DDD.Application.Services;
-using DDD.Application.Dtos;
-using DDD.Domain.Interfaces;
-using DDD.Data.Repositories;
 
 namespace DDD.WebApi
 {
     public class Startup
     {
-        /// <summary>
-        /// Configuration
-        /// </summary>
         public static IConfiguration Configuration { get; private set; }
-        /// <summary>
-        /// Startup
-        /// </summary>
-        /// <param name="configuration"></param>
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -58,16 +52,16 @@ namespace DDD.WebApi
                 option.DefaultApiVersion = new ApiVersion(1, 0);
             });
 
-            // 配置 Repository            
-            services.AddScoped<IHomeAppService,HomeService>();
-            services.AddScoped<IHomesRepository, HomesRepository>();
-            services.AddScoped<ICmsContentsRepository, CmsContentsRepository>();
-            services.AddScoped<IVideosRepository,VideosRepository>();            
-
-            // 配置内存缓存
+            // 配置 应用层服务
             services.AddMemoryCache();
             services.AddScoped<ICacheService, MemoryCacheService>();
+            services.AddScoped<IHomeAppService, HomeService>();
 
+            // 配置 Repository           
+            services.AddScoped<IHomesRepository, HomesRepository>();
+            services.AddScoped<ICmsContentsRepository, CmsContentsRepository>();
+            services.AddScoped<IVideosRepository,VideosRepository>();           
+                       
             // 配置 PigeonsDbContext
             var isEncrypt = Configuration["IsEncrypt"];
             var pigeonsConnectionString = Configuration["ConnectionStrings:PigeonsDbConnectionString"];
@@ -91,7 +85,6 @@ namespace DDD.WebApi
                     }",
                 });
                 c.DocumentFilter<HiddenApiFilter>();
-
             var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "WebApi.xml");
                 c.IncludeXmlComments(xmlPath);
@@ -106,17 +99,6 @@ namespace DDD.WebApi
         /// <param name="loggerFactory"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // 配置 静态文件缓存时间
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                OnPrepareResponse = ctx =>
-                {
-                    const int durationInSeconds = 60 * 60 * 24;
-                    ctx.Context.Response.Headers[HeaderNames.CacheControl] =
-                        "public,max-age=" + durationInSeconds;
-                }
-            });
-
             // 配置 NLog
             loggerFactory.AddNLog();
 
@@ -128,6 +110,21 @@ namespace DDD.WebApi
             {
                 app.UseExceptionHandler();
             }
+
+            // 配置 静态文件
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    const int durationInSeconds = 60 * 60 * 24;
+                    ctx.Context.Response.Headers[HeaderNames.CacheControl] =
+                        "public,max-age=" + durationInSeconds;
+                }
+            });
+
+            app.UseMvc();
+
+            app.UseStatusCodePages();            
 
             // 配置 Automapper
             AutoMapper.Mapper.Initialize(cfg =>
@@ -168,15 +165,9 @@ namespace DDD.WebApi
                 ;
             });
 
-            app.UseStatusCodePages();
-
-            app.UseMvc();            
-
             #region 配置 swagger
-            // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.DocumentTitle = "API Document";

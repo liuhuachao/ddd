@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DDD.Application.Dtos;
+using DDD.Application.Interfaces;
+using DDD.Common.Enums;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DDD.Application.Dtos;
-using DDD.Common.Enums;
-using DDD.Application.Interfaces;
-using DDD.Data.Repositories;
 
 namespace DDD.WebApi.Controllers
 {

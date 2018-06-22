@@ -3,25 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using DDD.WebApi.Repositories;
 using DDD.Application.Interfaces;
 using DDD.Application.Dtos;
 
-namespace DDD.WebApi.Services
+namespace DDD.Application.Services
 {
     /// <summary>
     /// 首页服务类
     /// 增加缓存
     /// </summary>
-    public class HomeService : IHomeService
+    public class HomeService : IHomeAppService
     {
-        private readonly ILogger<HomeService> _logger;
         private readonly IHomesRepository _repository;
         private readonly ICacheService _cacheSevice;
 
-        public HomeService(ILogger<HomeService> logger,IHomesRepository repository, ICacheService cacheSevice)
+        public HomeService(IHomesRepository repository, ICacheService cacheSevice)
         {
-            this._logger = logger;
             this._repository = repository;
             this._cacheSevice = cacheSevice;
         }
@@ -34,7 +31,10 @@ namespace DDD.WebApi.Services
             if (homeList == null)
             {
                 homeList = this._repository.GetList(pageIndex, pageSize);
-                this._cacheSevice.Set(storageKey,homeList,TimeSpan.FromMinutes(1),TimeSpan.FromMinutes(1));
+                if (homeList != null)
+                {
+                    this._cacheSevice.Set(storageKey, homeList, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
+                }                
             }            
             return homeList;
         }
@@ -47,7 +47,10 @@ namespace DDD.WebApi.Services
             if (homeDetail == null)
             {
                 homeDetail = this._repository.GetDetail(id, type);
-                this._cacheSevice.Set(storageKey, homeDetail,TimeSpan.FromHours(1), TimeSpan.FromHours(1));
+                if(homeDetail != null)
+                {
+                    this._cacheSevice.Set(storageKey, homeDetail, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
+                }                
             }
             return homeDetail;
         }
@@ -60,7 +63,10 @@ namespace DDD.WebApi.Services
             if (homeList == null)
             {
                 homeList = this._repository.GetMore(id, type);
-                this._cacheSevice.Set(storageKey, homeList, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
+                if(homeList != null)
+                {
+                    this._cacheSevice.Set(storageKey, homeList, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
+                }                
             }
             return homeList;
         }
@@ -73,7 +79,10 @@ namespace DDD.WebApi.Services
             if (homeSearch == null)
             {
                 homeSearch = this._repository.Search(title);
-                this._cacheSevice.Set(storageKey, homeSearch,TimeSpan.FromHours(1),TimeSpan.FromHours(1));
+                if (homeSearch != null)
+                {
+                    this._cacheSevice.Set(storageKey, homeSearch, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
+                }                
             }
             return homeSearch;
         }
@@ -86,7 +95,10 @@ namespace DDD.WebApi.Services
             if (hotSearch == null)
             {
                 hotSearch = this._repository.HotSearch(limit);
-                this._cacheSevice.Set(storageKey, hotSearch,TimeSpan.FromDays(1), TimeSpan.FromDays(1));
+                if (hotSearch != null)
+                {
+                    this._cacheSevice.Set(storageKey, hotSearch, TimeSpan.FromDays(1), TimeSpan.FromDays(1));
+                }                
             }
             return hotSearch;
         }

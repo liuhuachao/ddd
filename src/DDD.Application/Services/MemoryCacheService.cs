@@ -51,13 +51,9 @@ namespace DDD.Application.Services
         /// <returns></returns>
         public bool Set(string key, object data)
         {
-            if (key == null)
+            if (key == null || data == null)
             {
                 throw new ArgumentNullException(nameof(key));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
             }
             this._memoryCache.Set(key,data);
             return Exists(key);
@@ -71,17 +67,13 @@ namespace DDD.Application.Services
         /// <param name="expiresSliding">滑动过期时长（如果在过期时间内有操作，则以当前时间点延长过期时间）</param>
         /// <param name="expiressAbsoulte">绝对过期时长</param>
         /// <returns></returns>
-        public bool Set(string key, object value, TimeSpan expiresSliding, TimeSpan expiressAbsoulte)
+        public bool Set(string key, object data, TimeSpan expiresSliding, TimeSpan expiressAbsoulte)
          {
-             if (key == null)
+             if (key == null || data == null)
              {
                  throw new ArgumentNullException(nameof(key));
              }
-             if (value == null)
-             {
-                 throw new ArgumentNullException(nameof(value));
-             }
-            this._memoryCache.Set(key, value,
+            this._memoryCache.Set(key, data,
                      new MemoryCacheEntryOptions()
                      .SetSlidingExpiration(expiresSliding)
                      .SetAbsoluteExpiration(expiressAbsoulte)

@@ -5,8 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DDD.Data;
 using DDD.Domain.Entities;
+using DDD.Domain.Interfaces;
 
-namespace DDD.WebApi.Repositories
+namespace DDD.Data.Repositories
 {
     public class VideosRepository : IVideosRepository
     {
@@ -17,7 +18,7 @@ namespace DDD.WebApi.Repositories
             _context = pigeonsContext;
         }
 
-        public VdVideo GetSingle(int Id)
+        public VdVideo GetDetail(int Id)
         {
             return _context.VdVideo.Find(Id);
         }

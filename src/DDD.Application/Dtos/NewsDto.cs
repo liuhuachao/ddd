@@ -14,6 +14,7 @@ namespace DDD.Application.Dtos
     {
         private string _title;
         private string _intro;
+        private string _author = "尊贵赛鸽";
         private string _postTime;
         private string _className;
 
@@ -44,7 +45,11 @@ namespace DDD.Application.Dtos
         /// <summary>
         /// 作者
         /// </summary>
-        public string Author { get; set; }
+        public string Author
+        {
+            get { return _author; }
+            set { _author = value; }
+        }
         /// <summary>
         /// 发表时间
         /// </summary>
@@ -94,8 +99,10 @@ namespace DDD.Application.Dtos
     {
         private string _title;
         private string _intro;
-        private string _shareLink = "http://m.chsgw.com/news/news_detail.aspx?id=";
+        private string _author = "尊贵赛鸽";
         private string _content;
+        private string _shareLink = "http://m.chsgw.com/news/news_detail.aspx?id=";
+        
 
         /// <summary>
         /// 标识
@@ -124,7 +131,11 @@ namespace DDD.Application.Dtos
         /// <summary>
         /// 作者
         /// </summary>
-        public string Author { get; set; }
+        public string Author
+        {
+            get { return _author; }
+            set { _author = value; }
+        }
         /// <summary>
         /// 发表时间
         /// </summary>
@@ -136,7 +147,7 @@ namespace DDD.Application.Dtos
         {
             get
             {
-                return HtmlHelper.BuildNewsDetailHtml(_content);
+                return HtmlHelper.Decode(_content);
             }
             set
             {

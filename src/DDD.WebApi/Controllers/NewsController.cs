@@ -7,8 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DDD.Application.Dtos;
 using DDD.WebApi.Filters;
-using DDD.WebApi.Repositories;
 using DDD.Common.Enums;
+using DDD.Domain.Interfaces;
+using DDD.Data.Repositories;
 
 namespace DDD.WebApi.Controllers
 {
@@ -67,7 +68,7 @@ namespace DDD.WebApi.Controllers
         [Route("{id}", Name = "GetDetail")]
         public IActionResult GetDetail(int id)
         {
-            var content = this._Repository.GetSingle(id);
+            var content = this._Repository.GetDetail(id);
             var newsDetail = Mapper.Map<NewsDetail>(content);
             var code = content != null ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
             ResultMsg resultMsg = new ResultMsg()
@@ -110,10 +111,10 @@ namespace DDD.WebApi.Controllers
         public async Task<IActionResult> UpdateClicks([FromQuery]int id)
         {
             var addClick = new Random().Next(1,10);
-            var news = this._Repository.GetSingle(id);
+            var news = this._Repository.GetDetail(id);
             news.CmsClick += addClick;
             var code = await this._Repository.SaveAsync() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotModified;
-            var newsDetail = Mapper.Map<NewsDetail>(this._Repository.GetSingle(id));
+            var newsDetail = Mapper.Map<NewsDetail>(this._Repository.GetDetail(id));
 
             ResultMsg resultMsg = new ResultMsg()
             {
@@ -135,10 +136,10 @@ namespace DDD.WebApi.Controllers
         public async Task<IActionResult> UpdateLikes([FromQuery]int id)
         {
             var addLikes = new Random().Next(1, 10);
-            var news = this._Repository.GetSingle(id);
+            var news = this._Repository.GetDetail(id);
             news.Likes += addLikes;
             var code = await this._Repository.SaveAsync() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotModified;
-            var newsDetail = Mapper.Map<NewsDetail>(this._Repository.GetSingle(id));
+            var newsDetail = Mapper.Map<NewsDetail>(this._Repository.GetDetail(id));
 
             ResultMsg resultMsg = new ResultMsg()
             {

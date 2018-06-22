@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using DDD.Application.Dtos;
 
-namespace DDD.WebApi.Services
+namespace DDD.Application.Interfaces
 {
-    public interface IHomeService
+    public interface IHomeAppService
     {
         HomeDetail GetDetail(int id, int type);
         IList<HomeList> GetMore(int id, int type);

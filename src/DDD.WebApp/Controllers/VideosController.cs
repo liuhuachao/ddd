@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DDD.Data;
 using Microsoft.AspNetCore.Mvc;
+using DDD.Data;
+using DDD.Application.Dtos;
 
 namespace DDD.WebApp.Controllers
 {
@@ -16,15 +17,10 @@ namespace DDD.WebApp.Controllers
             this._pigeonContext = pigeonContext;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult Detail(int id)
         {
             var video = this._pigeonContext.VdVideo.Find(id);
-            var videoDetail = AutoMapper.Mapper.Map<Models.VideoDetailViewModel>(video);
+            var videoDetail = AutoMapper.Mapper.Map<VideoDetail>(video);
             return View(videoDetail);
         }
     }

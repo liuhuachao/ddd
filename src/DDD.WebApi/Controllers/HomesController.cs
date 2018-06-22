@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DDD.Application.Dtos;
-using DDD.WebApi.Repositories;
-using DDD.WebApi.Services;
 using DDD.Common.Enums;
+using DDD.Application.Interfaces;
+using DDD.Data.Repositories;
 
 namespace DDD.WebApi.Controllers
 {
@@ -19,7 +19,7 @@ namespace DDD.WebApi.Controllers
     {
         private readonly ILogger<HomesController> _logger;
         private readonly IHomesRepository _Repository;
-        private readonly IHomeService _homeService;
+        private readonly IHomeAppService _homeService;
 
         /// <summary>
         /// 构造函数
@@ -27,7 +27,7 @@ namespace DDD.WebApi.Controllers
         /// <param name="logger">日志</param>
         /// <param name="Repository">仓储</param>
         /// <param name="homeService">缓存</param>
-        public HomesController(ILogger<HomesController> logger, IHomesRepository Repository, IHomeService homeService)
+        public HomesController(ILogger<HomesController> logger, IHomesRepository Repository, IHomeAppService homeService)
         {
             _logger = logger;
             _Repository = Repository;

@@ -10,8 +10,9 @@ using DDD.Data;
 using DDD.Domain.Entities;
 using AutoMapper;
 using DDD.Application.Dtos;
+using DDD.Application.Interfaces;
 
-namespace DDD.WebApi.Repositories
+namespace DDD.Data.Repositories
 {
     public class HomesRepository : IHomesRepository
     {

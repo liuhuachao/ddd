@@ -6,9 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DDD.WebApi.Filters;
-using DDD.WebApi.Repositories;
 using DDD.Common.Enums;
 using DDD.Application.Dtos;
+using DDD.Domain.Interfaces;
+using DDD.Data.Repositories;
 
 namespace DDD.WebApi.Controllers
 {
@@ -63,7 +64,7 @@ namespace DDD.WebApi.Controllers
         [HttpGet()]
         public IActionResult GetDetail([FromQuery]int id)
         {
-            var video = this._Repository.GetSingle(id);            
+            var video = this._Repository.GetDetail(id);            
             var videoDetail = Mapper.Map<VideoDetail>(video);
             var code = video != null ? StatusCodeEnum.OK : StatusCodeEnum.NotFound;
             ResultMsg resultMsg = new ResultMsg()
@@ -104,10 +105,10 @@ namespace DDD.WebApi.Controllers
         public async Task<IActionResult> UpdateClicks([FromQuery]int id)
         {
             var addClick = new Random().Next(1, 10);
-            var video = this._Repository.GetSingle(id);
+            var video = this._Repository.GetDetail(id);
             video.Hits += addClick;
             var code = await this._Repository.SaveAsync() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotModified;
-            var videoDetail = Mapper.Map<VideoDetail>(this._Repository.GetSingle(id));
+            var videoDetail = Mapper.Map<VideoDetail>(this._Repository.GetDetail(id));
 
             ResultMsg resultMsg = new ResultMsg()
             {
@@ -128,10 +129,10 @@ namespace DDD.WebApi.Controllers
         public async Task<IActionResult> UpdateLikes([FromQuery]int id)
         {
             var addLikes = new Random().Next(1, 10);
-            var news = this._Repository.GetSingle(id);
+            var news = this._Repository.GetDetail(id);
             news.Likes += addLikes;
             var code = await this._Repository.SaveAsync() > 0 ? StatusCodeEnum.OK : StatusCodeEnum.NotModified;
-            var videoDetail = Mapper.Map<VideoDetail>(this._Repository.GetSingle(id));
+            var videoDetail = Mapper.Map<VideoDetail>(this._Repository.GetDetail(id));
 
             ResultMsg resultMsg = new ResultMsg()
             {

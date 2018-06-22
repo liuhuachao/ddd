@@ -6,8 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using DDD.Data;
 using DDD.Domain.Entities;
+using DDD.Domain.Interfaces;
 
-namespace DDD.WebApi.Repositories
+namespace DDD.Data.Repositories
 {
     public class CmsContentsRepository : ICmsContentsRepository
     {
@@ -18,7 +19,7 @@ namespace DDD.WebApi.Repositories
             _context = pigeonsContext;
         }
 
-        public CmsContents GetSingle(int CmsId)
+        public CmsContents GetDetail(int CmsId)
         {
             return _context.CmsContents.Find(CmsId);
         }

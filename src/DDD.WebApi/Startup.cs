@@ -14,11 +14,11 @@ using System.IO;
 using DDD.WebApi.Filters;
 using DDD.Data;
 using DDD.Domain.Entities;
-using DDD.WebApi.Repositories;
-using DDD.WebApi.Services;
 using DDD.Application.Interfaces;
 using DDD.Application.Services;
 using DDD.Application.Dtos;
+using DDD.Domain.Interfaces;
+using DDD.Data.Repositories;
 
 namespace DDD.WebApi
 {
@@ -59,7 +59,7 @@ namespace DDD.WebApi
             });
 
             // 配置 Repository            
-            services.AddScoped<IHomeService,HomeService>();
+            services.AddScoped<IHomeAppService,HomeService>();
             services.AddScoped<IHomesRepository, HomesRepository>();
             services.AddScoped<ICmsContentsRepository, CmsContentsRepository>();
             services.AddScoped<IVideosRepository,VideosRepository>();            

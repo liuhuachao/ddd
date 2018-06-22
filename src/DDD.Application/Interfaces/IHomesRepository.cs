@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using DDD.Application.Dtos;
 
-namespace DDD.WebApi.Repositories
+namespace DDD.Application.Interfaces
 {
     public interface IHomesRepository
     {

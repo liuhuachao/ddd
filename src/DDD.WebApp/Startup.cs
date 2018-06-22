@@ -11,6 +11,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using DDD.Domain;
 using DDD.Data;
+using DDD.Application.Interfaces;
+using DDD.Application.Services;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using DDD.Domain.Interfaces;
+using DDD.Data.Repositories;
 
 namespace DDD.WebApp
 {
@@ -27,13 +33,26 @@ namespace DDD.WebApp
         {
             services.AddMvc();
 
+            // 配置 Repository            
+            services.AddScoped<ICmsContentsRepository, CmsContentsRepository>();
+            services.AddScoped<IVideosRepository, VideosRepository>();
+
+            services.AddScoped<INewsAppService,NewsAppService>();
+
+            // 配置内存缓存
+            services.AddMemoryCache();
+            services.AddScoped<ICacheService, MemoryCacheService>();
+
             // 配置 PigeonsDbContext
             var pigeonsConnectionString = Configuration["ConnectionStrings:PigeonsDbConnectionString"];
             services.AddDbContext<PigeonsContext>(options => options.UseSqlServer(pigeonsConnectionString, o => o.UseRowNumberForPaging()));
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) 
         {
+            // 配置 NLog
+            loggerFactory.AddNLog();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -45,7 +64,6 @@ namespace DDD.WebApp
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -56,7 +74,7 @@ namespace DDD.WebApp
             // 配置 Automapper
             AutoMapper.Mapper.Initialize(cfg =>
             {            
-                cfg.CreateMap<Domain.Entities.CmsContents, WebApp.Models.NewsDetailViewModel>()
+                cfg.CreateMap<Domain.Entities.CmsContents, Application.Dtos.NewsDetail>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.CmsId))
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.CmsTitle))
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.CmsKeys))
@@ -67,7 +85,7 @@ namespace DDD.WebApp
                 .ForMember(d => d.Likes, o => o.MapFrom(s => s.Likes))
                 ;
 
-                cfg.CreateMap<Domain.Entities.VdVideo, WebApp.Models.VideoDetailViewModel>()
+                cfg.CreateMap<Domain.Entities.VdVideo, Application.Dtos.VideoDetail>()
                 .ForMember(d => d.Intro, o => o.MapFrom(s => s.Info))
                 .ForMember(d => d.PostTime, o => o.MapFrom(s => s.Uptime))
                 .ForMember(d => d.SourceUrl, o => o.MapFrom(s => s.VideoSource))

@@ -3,30 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using DDD.Data;
 using AutoMapper;
+using DDD.Data;
+using DDD.Application.Interfaces;
+using DDD.Application.Services;
+using Microsoft.Extensions.Logging;
 
 namespace DDD.WebApp.Controllers
 {
     public class NewsController : Controller
     {
-        private readonly PigeonsContext _pigeonContext;
+        private readonly INewsAppService _newsAppService;
+        private readonly ILogger<NewsController> _logger;
 
-        public NewsController(PigeonsContext pigeonContext)
+        public NewsController(INewsAppService newsAppService, ILogger<NewsController> logger)
         {
-            this._pigeonContext = pigeonContext;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
+            this._newsAppService = newsAppService;
+            this._logger = logger;
         }
 
         public IActionResult Detail(int id)
         {
-            var contents = this._pigeonContext.CmsContents.Find(id);
-            var news = Mapper.Map<Models.NewsDetailViewModel>(contents);
+            var news = this._newsAppService.GetDetail(id);
+            if (news == null)
+            {
+                return NotFound();
+            }
             return View(news);
         }
+
     }
 }

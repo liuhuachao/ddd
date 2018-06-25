@@ -24,7 +24,7 @@ namespace DDD.Application.Dtos
         /// </summary>
         public string Title
         {
-            get { return HtmlHelper.Decode(_title); }
+            get { return HtmlHelper.TransformHtml(_title); }
             set { _title = value; }
         }
         /// <summary>
@@ -32,7 +32,7 @@ namespace DDD.Application.Dtos
         /// </summary>
         public string Intro
         {
-            get { return HtmlHelper.Decode(_intro); }
+            get { return HtmlHelper.TransformHtml(_intro); }
             set { _intro = value; }
         }
         /// <summary>
@@ -79,7 +79,7 @@ namespace DDD.Application.Dtos
         /// </summary>
         public string Title
         {
-            get { return HtmlHelper.Decode(_title); }
+            get { return HtmlHelper.TransformHtml(_title); }
             set { _title = value; }
         }
         /// <summary>
@@ -87,7 +87,7 @@ namespace DDD.Application.Dtos
         /// </summary>
         public string Intro
         {
-            get { return HtmlHelper.Decode(_intro); }
+            get { return HtmlHelper.TransformHtml(_intro); }
             set { _intro = value; }
         }
         /// <summary>

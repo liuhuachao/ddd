@@ -31,6 +31,7 @@ namespace DDD.WebApp
             services.AddScoped<IVideosRepository, VideosRepository>();
 
             services.AddScoped<INewsAppService,NewsAppService>();
+            services.AddScoped<IVideosAppService, VideosAppService>();
 
             // 配置内存缓存
             services.AddMemoryCache();

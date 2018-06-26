@@ -49,7 +49,7 @@ namespace DDD.Application.Services
                 homeDetail = this._repository.GetDetail(id, type);
                 if(homeDetail != null)
                 {
-                    this._cacheSevice.Set(storageKey, homeDetail, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
+                    this._cacheSevice.Set(storageKey, homeDetail, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
                 }                
             }
             return homeDetail;

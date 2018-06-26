@@ -45,11 +45,11 @@
 	margin-bottom: .45rem;
 }
 
-.news-body_main *
+.news-body_main
 {
-	font-size: .17rem;
-	line-height: .28rem;
+	font-size: .17rem;	
 	color: #666666;
+    line-height: .28rem;
 	margin-bottom: .25rem;
 }
 

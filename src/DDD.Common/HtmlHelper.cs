@@ -57,6 +57,7 @@ namespace DDD.Common
                 str = RemoveWhiteSpace(str);
                 str = RemoveSpecialTag(str);
                 str = RemoveA(str);
+                str = RemoveStyle(str);
             }
             return str;
         }
@@ -99,6 +100,21 @@ namespace DDD.Common
                 htmlStr = Regex.Replace(htmlStr, aBeginPattern, "", RegexOptions.IgnoreCase);
                 htmlStr = Regex.Replace(htmlStr, aEndPatten, "", RegexOptions.IgnoreCase);
             }            
+            return htmlStr;
+        }
+
+        /// <summary>
+        /// 过滤style样式
+        /// </summary>
+        /// <param name="htmlStr"></param>
+        /// <returns></returns>
+        public static string RemoveStyle(string htmlStr)
+        {
+            if (htmlStr != null && !string.IsNullOrEmpty(htmlStr))
+            {
+                string stylePattern = @"\s*style\s*=\s*('|"")[^'|^""]*('|"")";
+                htmlStr = Regex.Replace(htmlStr, stylePattern, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            }
             return htmlStr;
         }
 

@@ -54,10 +54,10 @@ namespace DDD.Common
             if (str != null && !string.IsNullOrEmpty(str))
             {
                 str = Decode(str);
-                str = RemoveWhiteSpace(str);
-                str = RemoveSpecialTag(str);
-                str = RemoveA(str);
                 str = RemoveStyle(str);
+                str = RemoveSpecialTag(str);
+                str = RemoveWhiteSpace(str);                
+                str = RemoveA(str);                
             }
             return str;
         }
@@ -132,6 +132,8 @@ namespace DDD.Common
                 sb = sb.Replace("\\", "");
                 sb = sb.Replace("''", "'");
 
+                sb = sb.Replace("<span>", "<p>");
+                sb = sb.Replace("</span>", "</p>");
                 htmlStr = sb.ToString().Trim();
             }
             return htmlStr;

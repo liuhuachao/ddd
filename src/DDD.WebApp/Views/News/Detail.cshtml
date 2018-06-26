@@ -25,7 +25,8 @@
                 </div>
             </div>
             <div class="news-banner-right">
-                <a href="#">打开</a>
+                @*<a href="zungui://saige">打开</a>*@
+                <a id="btnOpenApp">打开</a>
             </div>
         </div>
         <div class="news-body">
@@ -39,11 +40,18 @@
                 <p class="news-body-subtitle">@Model.Intro</p>
             </div>
             <div class="news-body_main">
-                @Html.Raw(@Model.Content)          
+                @Html.Raw(@Model.Content)
             </div>
         </div>
     </div>
     <script type="text/javascript" src="/js/pub.js"></script>
+    <script src="https://static.mlinks.cc/scripts/dist/mlink.min.js"></script>
+    <script>
+        new Mlink({
+            mlink: 'https://at8iok.mlinks.cc/AeXM',//短链地址
+            button: document.querySelector('a#btnOpenApp')
+        });
+    </script>
 </body>
 </html>
 

@@ -77,5 +77,18 @@ namespace DDD.Common
         {
             return DateTime.TryParse(dateT.ToString(),out DateTime dtValue);
         }
+
+        /// <summary>
+        /// 获取时间戳
+        /// </summary>
+        /// <returns></returns>
+        public static string GetTimestamp()
+        {
+            DateTime startTime = new DateTime(1970,1,1);
+            DateTime nowTime = DateTime.Now.ToUniversalTime();
+            TimeSpan ts = nowTime - startTime;
+            var timestamp = ts.TotalMilliseconds.ToString();
+            return timestamp;
+        }
     }
 }

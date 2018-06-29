@@ -26,23 +26,27 @@ if ($("head meta[name='description']").size() > 0) {
 $(document).ready(function () {
     if (is_weixn()) {
         $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "/weixin/JSSDKShare",
+            url: "/weixin/jssdkshare",
+            type: "GET",
+            dataType: "json",            
             data: {
-                action: "Share",
                 ShareURL: ShareURL
             },
+            timeout: 5000,
             success: function (result) {
                 if (result.success) {
-                    appId = result.appId;
-                    timestamp = result.timestamp;
-                    nonceStr = result.nonceStr;
-                    signature = result.signature;
+                    appId = result.data.appId;
+                    timestamp = result.data.timestamp;
+                    nonceStr = result.data.nonceStr;
+                    signature = result.data.signature;
                     jweixinShare();
                 }
             },
             error: function () {
+                console.log("错误");
+            },
+            complete: function () {
+                console.log('结束')
             }
         });
     }
@@ -66,7 +70,8 @@ function jweixinShare() {
     });
 
     wx.config({
-        debug: false,
+        //debug: false,
+        debug: true,
         appId: appId,
         timestamp: timestamp,
         nonceStr: nonceStr,

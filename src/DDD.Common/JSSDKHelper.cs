@@ -9,7 +9,58 @@ namespace DDD.Common
 {
     public class JSSDKHelper
     {
-        private static string[] strArray = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="appSecret"></param>
+        /// <param name="grantType"></param>
+        /// <returns></returns>
+        public static Dictionary<string,string> GetAccessToken(string appId,string appSecret,string grantType = "client_credential")
+        {
+            string send_url = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type={0}&appid={1}&secret={2}" , grantType,appId,appSecret);
+            string result = HttpHelper.HttpGet(send_url);
+            if (result.Contains("errcode"))
+            {
+                return null;
+            }
+            try
+            {
+                var dic = JsonHelper.JsonToDic(result);
+                if (dic.Count > 0)
+                {
+                    return dic;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 取得公众号jsapi_ticket
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<string, string> GetTicket(string access_token)
+        {
+            string send_url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + access_token + "&type=jsapi";
+            string result = HttpHelper.HttpGet(send_url);
+            try
+            {
+                var dic = JsonHelper.JsonToDic(result);
+                if (dic.Count > 0)
+                {
+                    return dic;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return null;
+        }
 
         /// <summary>
         /// 验证微信签名
@@ -99,10 +150,10 @@ namespace DDD.Common
             }
             return sb.ToString();
         }
-        public static string GetNonceStr(int length)
+        public static string GetNonceStr()
         {
-            var args = strArray;
-            return GetNonceStr(args,length);
+            var nonceStr = AESHelper.AESEncrypt(Guid.NewGuid().ToString());
+            return nonceStr;
         }
     }
 
@@ -111,31 +162,13 @@ namespace DDD.Common
     /// </summary>
     public class WeixinShare
     {
-        private string _signature;
-
-        [DisplayName("appId")]
         public string AppId { get; set; }
-        [DisplayName("noncestr")]
+        public string AppSecret { get; set; }
         public string NonceStr { get; set; }
-        [DisplayName("jsapi_ticket")]
         public string Ticket { get; set; }
-        [DisplayName("timestamp")]
         public string Timestamp { get; set; }
-        [DisplayName("url")]
         public string Url { get; set; }
-        [DisplayName("signature")]
-        public string Signature
-        {
-            get
-            {
-                string[] args = new string[] { this.NonceStr,this.Ticket,this.Timestamp,this.Timestamp,this.Url};
-                return JSSDKHelper.CreateSign(args);
-            }
-            set
-            {
-                _signature = value;
-            }
-        }
+        public string Signature { get; set; }
     }
 
 }

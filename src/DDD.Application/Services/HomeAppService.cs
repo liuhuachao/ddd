@@ -33,7 +33,7 @@ namespace DDD.Application.Services
                 homeList = this._repository.GetList(pageIndex, pageSize);
                 if (homeList != null)
                 {
-                    this._cacheSevice.Set(storageKey, homeList, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
+                    this._cacheSevice.Set(storageKey, homeList, TimeSpan.FromMinutes(30), TimeSpan.FromMinutes(30));
                 }                
             }            
             return homeList;
@@ -49,7 +49,7 @@ namespace DDD.Application.Services
                 homeDetail = this._repository.GetDetail(id, type);
                 if(homeDetail != null)
                 {
-                    this._cacheSevice.Set(storageKey, homeDetail, TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1));
+                    this._cacheSevice.Set(storageKey, homeDetail, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
                 }                
             }
             return homeDetail;

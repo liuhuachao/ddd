@@ -38,17 +38,20 @@ namespace DDD.Common
             return signature;
         }
 
-        public static string CreateJsSign(Dictionary<string,string> dic)
+        /// <summary>
+        /// 生成微信签名signature,js-sdk
+        /// </summary>
+        /// <param name="dic"></param>
+        /// <returns></returns>
+        public static string CreateSignForJsSdk(Dictionary<string,string> dic)
         {
-            dic.OrderBy(m => m.Key);
-            Dictionary<string, string> dic2 = new Dictionary<string, string>();
-            //foreach (var item in dic)
-            //{
-            //    dic.Add(,item.Key + "=" + item.Value);
-            //}
-
-
-            string signature = string.Join("&",dic.Keys);
+            dic = dic.OrderBy(d => d.Key).ToDictionary(k => k.Key,v => v.Value) ;
+            IList<string> list = new List<string>();
+            foreach (var item in dic)
+            {
+                list.Add(item.Key.ToLower() + "=" + item.Value);
+            }
+            string signature = string.Join("&",list);
             signature = Sha1(signature);
             signature = signature.ToLower();
             return signature;

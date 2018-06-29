@@ -28,7 +28,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "/ajax/jweixinShareHandler.ashx",
+            url: "/weixin/JSSDKShare",
             data: {
                 action: "Share",
                 ShareURL: ShareURL

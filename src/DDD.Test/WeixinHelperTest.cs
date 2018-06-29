@@ -14,8 +14,8 @@ namespace DDD.Test
             dic.Add("timestamp", "123456789");
             dic.Add("url", "http://m.chsgw.com/news/detail/200");
             dic.Add("noncestr", "abcd");            
-            string expectedStr = WeixinHelper.Sha1("noncestr=abcd&timestamp=123456789&url=http://m.chsgw.com/news/detail/200").ToLower();
-            string actualStr = WeixinHelper.CreateSignForJsSdk(dic);
+            string expectedStr = JSSDKHelper.Sha1("noncestr=abcd&timestamp=123456789&url=http://m.chsgw.com/news/detail/200").ToLower();
+            string actualStr = JSSDKHelper.CreateSignCommon(dic);
             Assert.Equal(expectedStr, actualStr);
         }
     }

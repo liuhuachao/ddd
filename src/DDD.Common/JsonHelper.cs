@@ -13,12 +13,18 @@ namespace DDD.Common
         {
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(t);
             return json;
-        }
+        }        
 
         public static T JsonToObject<T>(string json)
         {
             T t = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
             return t;
+        }
+
+        public static string DicToJson(Dictionary<string, string> t)
+        {
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(t);
+            return json;
         }
 
         public static Dictionary<string, string> JsonToDic(string json)

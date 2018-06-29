@@ -56,6 +56,8 @@ namespace DDD.WebApi
             services.AddMemoryCache();
             services.AddScoped<ICacheService, MemoryCacheService>();
             services.AddScoped<IHomeAppService, HomeService>();
+            services.AddScoped<INewsAppService, NewsAppService>();
+            services.AddScoped<IVideosAppService, VideosAppService>();
 
             // 配置 Repository           
             services.AddScoped<IHomesRepository, HomesRepository>();
@@ -122,7 +124,13 @@ namespace DDD.WebApi
                 }
             });
 
-            app.UseMvc();
+            //app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
 
             app.UseStatusCodePages();            
 

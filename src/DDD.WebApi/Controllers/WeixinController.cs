@@ -6,22 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using DDD.Common;
 using DDD.Common.Enums;
 using DDD.Application.Dtos;
+using Microsoft.Extensions.Logging;
+using DDD.WebApi.Filters;
 
-namespace DDD.WebApp.Controllers
+namespace DDD.WebApi.Controllers
 {
-    [Route("[Controller]/[Action]")]
+    [HiddenApi]
+    [Route("v1/[Controller]/[Action]")]
     public class WeixinController : Controller
     {
-        public IActionResult Index()
+        private readonly ILogger<HomesController> _logger;
+
+        public WeixinController(ILogger<HomesController> logger)
         {
-            return View();
+            this._logger = logger;
         }
 
         [HttpGet]
         public IActionResult JSSDKShare(string shareUrl)
         {
+            this._logger.LogInformation("获取微信分享js-sdk 开始");
+
             var code = StatusCodeEnum.OK;
             var msg = "success";
+            ResultMsg resultMsg = new ResultMsg();
 
             WeixinShare wx = new WeixinShare()
             {
@@ -32,14 +40,17 @@ namespace DDD.WebApp.Controllers
                 Url = shareUrl,
             };
 
+            
             var tokenDic = JSSDKHelper.GetAccessToken(wx.AppId,wx.AppSecret);
             if (tokenDic != null)
             {
                 var accessToken = tokenDic["access_token"];
+                this._logger.LogInformation(string.Format("获取微信分享js-sdk的accessToken为：{0}", accessToken.ToString()));
                 if (accessToken != null && !string.IsNullOrEmpty(accessToken))
-                {
+                {                    
                     var ticketDic = JSSDKHelper.GetTicket(accessToken);
-                    if (ticketDic != null && string.IsNullOrEmpty(ticketDic["ticket"]))
+                    this._logger.LogInformation(string.Format("获取微信分享js-sdk的jsapi_ticket为：{0}",JsonHelper.DicToJson(ticketDic)));
+                    if (ticketDic != null && !string.IsNullOrEmpty(ticketDic["ticket"]))
                     {
                         wx.Ticket = ticketDic["ticket"];
                         wx.Signature = JSSDKHelper.CreateSign(wx.Ticket, wx.NonceStr, wx.Timestamp, wx.Url);
@@ -56,23 +67,16 @@ namespace DDD.WebApp.Controllers
                     msg = "获取access_token出错！";
                 }
 
-                ResultMsg resultMsg = new ResultMsg()
+                resultMsg = new ResultMsg()
                 {
                     Code = (int)code,
                     Msg = msg,
                     Data = wx
-                };
-
-                return Json(resultMsg);
-
+                };                
             }
 
-            
-
-
-
-
-            return View();
+            this._logger.LogInformation("获取微信分享js-sdk 结束");
+            return Json(resultMsg);
         }
     }
 }

@@ -1,0 +1,74 @@
+﻿/* 
+    type:css样式文件
+    description:视频详情页css文件
+    author:liuhuachao
+    createdate:2018.06.13    
+    update:
+*/
+
+@charset "utf-8";
+
+.news-banner-container {
+	width: 100%;
+	height: .5rem;
+	position: fixed;
+	bottom: 0 ;
+	left: 0;
+	z-index: 9999999;
+	background: rgba(0, 0, 0, 0.7);
+}
+
+.vid_play {
+	position: fixed;
+	/*left: 0;*/
+	top: 0;
+	z-index: 99999;
+	height: 2.11rem;
+	width: 100%;
+	overflow-x: hidden;
+	background:#f0f0f0;
+	padding-bottom: .08rem;
+}
+
+.vid_play video {
+	width: 3.75rem;
+	height: 2.11rem;
+	border: 0 none;
+	background: #000;
+	z-index: 101;
+	overflow: hidden;
+	vertical-align: top;		
+}
+
+.vid_header {
+	padding: 0 .15rem;
+	overflow-x: hidden;
+	margin-top: 2.11rem;
+}
+
+.vid_header h1 {
+	font-size: .18rem;
+	line-height: .24rem;
+	padding-top: .175rem;
+	color: #333333;
+	padding-bottom: .13rem;
+}
+
+.vid_header p {
+	font-size: .11rem;
+	color: #999999;
+	margin-bottom: .175rem;
+}
+.vid_header p span {
+	margin-right: .075rem;
+}
+.vid_body{
+	padding: 0 .15rem;
+	
+}
+.vid_body p{
+	font-size: .15rem;
+	color: #666666;
+	margin-bottom: .1rem;
+	line-height: .24rem;
+}

@@ -1,0 +1,68 @@
+﻿/* 
+    type:css样式文件
+    description:资讯详情页css文件
+    author:liuhuachao
+    createdate:2018.06.13    
+    update:
+*/
+
+@charset "utf-8";
+
+.news-body {
+	overflow-x: hidden;
+	padding: 0 .15rem;
+}
+
+.news-body-header {
+	margin-top: .8rem;
+}
+
+.news-body-title {
+	font-size: .23rem;
+	font-weight: normal;
+	line-height: .36rem;
+	color: #333333;
+	margin-bottom: .4rem;
+}
+
+.news-body-aut {
+	font-size: .13rem;
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+	color: #999999;
+	overflow: hidden;
+	margin-bottom: .45rem;
+}
+
+.news-body-subtitle {
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+	color: #999999;
+	font-size: .16rem;
+	line-height: .28rem;
+	margin-bottom: .45rem;
+}
+
+.news-body_main *
+{
+	font-size: .17rem;	
+	color: #666666;
+    line-height: .28rem;
+	margin-bottom: .25rem;
+}
+
+.mod-play1er {
+	margin-bottom: .25rem;
+}
+
+.mod-play1er video {
+	width: 100%;
+	height: auto;
+	border: 0 none;
+	background: #000;
+	z-index: 101;
+	overflow: hidden;
+	vertical-align: top;
+}

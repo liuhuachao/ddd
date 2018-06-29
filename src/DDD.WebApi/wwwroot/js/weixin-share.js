@@ -14,19 +14,23 @@ var timestamp;
 var nonceStr;
 var signature;
 var ShareURL = window.location.href;
+var ShareImg = "http://m.chsgw.com/Public/Images/ShareIMG.png";
 var ShareTitle = "";
 if ($("head title").size() > 0) {
-    ShareTitle = $(document).attr("title").replace("-<%=m_SiteName%>", "");
+    ShareTitle = $(document).attr("title");
 }
-var ShareDesc = "";
+var ShareDesc = "尊贵赛鸽-有态度、有温度、有深度";
 if ($("head meta[name='description']").size() > 0) {
-    ShareDesc = $("head meta[name='description']").attr("content").replace(",<%=m_SiteDescription%>", "");
+    var Description = $("head meta[name='description']").attr("content");
+    if (Description != "") {
+        ShareDesc = Description;
+    }
 }
 
 $(document).ready(function () {
     if (is_weixn()) {
         $.ajax({
-            url: "https://api.chsgw.com/v1//weixin/jssdkshare",
+            url: "/v1//weixin/jssdkshare",
             type: "GET",
             dataType: "json",            
             data: {
@@ -70,8 +74,7 @@ function jweixinShare() {
     });
 
     wx.config({
-        //debug: false,
-        debug: true,
+        debug: false,
         appId: appId,
         timestamp: timestamp,
         nonceStr: nonceStr,
@@ -86,7 +89,7 @@ function jweixinShare() {
         wx.onMenuShareTimeline({
             title: ShareTitle,
             link: ShareURL,
-            imgUrl: '<%=ShareIMG%>',
+            imgUrl: ShareImg,
             success: function (res) {
             },
             cancel: function (res) {
@@ -98,7 +101,7 @@ function jweixinShare() {
             title: ShareTitle,
             desc: ShareDesc,
             link: ShareURL,
-            imgUrl: '<%=ShareIMG%>',
+            imgUrl: ShareImg,
             type: 'link',
             dataUrl: '',
             success: function () {
@@ -112,7 +115,7 @@ function jweixinShare() {
             title: ShareTitle,
             desc: ShareDesc,
             link: ShareURL,
-            imgUrl: '<%=ShareIMG%>',
+            imgUrl: ShareImg,
             success: function () {
             },
             cancel: function () {
@@ -124,7 +127,7 @@ function jweixinShare() {
             title: ShareTitle,
             desc: ShareDesc,
             link: ShareURL,
-            imgUrl: '<%=ShareIMG%>',
+            imgUrl: ShareImg,
             success: function () {
             },
             cancel: function () {

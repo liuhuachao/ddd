@@ -1,0 +1,112 @@
+﻿/* 
+    type:css样式文件
+    description:全局css样式文件
+    author:liuhuachao
+    createdate:2018.06.13    
+    update:
+
+*/
+
+@charset "utf-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: content-box;
+}
+
+body {
+	font-family: STHeiti, 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+	max-width: 750px;
+	margin: 0 auto;
+	background: #ffffff;
+}
+
+h1{
+
+}
+
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
+button,
+input,
+textarea {
+	font-family: STHeiti, 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+}
+
+img {
+	display: inline-block;
+	width: 100% !important;
+	height: auto !important;
+}
+
+/* 打开尊贵赛鸽App Banner Begin */
+.news-banner-container {
+	width: 100%;
+	height: .5rem;
+	position: fixed;
+	/*top: 0;*/
+	left: 0;
+	z-index: 9999999;
+	background: rgba(0, 0, 0, 0.7);
+}
+
+.news-banner-left {
+	float: left;
+	margin-top: .05rem;
+	margin-left: .15rem;
+}
+
+.news-banner-logo {
+	height: .4rem;
+	width: .4rem;
+	margin-right: .14rem;
+	float: left;
+}
+
+.news-banner-logo img {
+	vertical-align: top;
+}
+
+.news-banner-text {
+	float: left;
+}
+
+.news-banner-text p {
+	color: #FFFFFF;
+}
+
+.news-banner-text p:nth-child(1) {
+	font-size: .16rem;
+	line-height: .225rem;
+}
+
+.news-banner-text p:nth-child(2) {
+	font-size: .12rem;
+	line-height: .16rem;
+}
+
+.news-banner-right {
+	float: right;
+	margin-right: .15rem;
+	margin-top: .1rem;
+}
+
+.news-banner-right a {
+	display: block;
+	height: .3rem;
+	width: .5rem;
+	background: linear-gradient(90deg, #45f2ff 0, #3fc8f5 50%, #39a0ea 100%);
+	font-size: .15rem;
+	border-radius: 2px;
+	line-height: .3rem;
+	text-align: center;
+	color: #FFFFFF;
+}	
+/* 打开尊贵赛鸽App Banner end */

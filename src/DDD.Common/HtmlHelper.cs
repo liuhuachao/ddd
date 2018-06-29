@@ -132,8 +132,8 @@ namespace DDD.Common
                 sb = sb.Replace("\\", "");
                 sb = sb.Replace("''", "'");
 
-                sb = sb.Replace("<span>", "<p>");
-                sb = sb.Replace("</span>", "</p>");
+                sb = sb.Replace("<span>", "");
+                sb = sb.Replace("</span>", "");
                 htmlStr = sb.ToString().Trim();
             }
             return htmlStr;

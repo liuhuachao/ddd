@@ -23,10 +23,10 @@ namespace DDD.Application.Services
         public bool Exists(string key)
         {
             if (key == null)
-           {
+            {
                 throw new ArgumentNullException(nameof(key));
             }
-            return this._memoryCache.TryGetValue(key, out object cached);
+            return this._memoryCache.TryGetValue(key,out object cacheObj);
         }
 
         /// <summary>

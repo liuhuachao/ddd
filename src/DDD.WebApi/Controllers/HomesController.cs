@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DDD.WebApi.Filters;
 
 namespace DDD.WebApi.Controllers
 {
@@ -36,11 +37,11 @@ namespace DDD.WebApi.Controllers
         /// 获取列表
         /// </summary>
         /// <param name="pageIndex">第几页，默认为1</param>
-        /// <param name="pageSize">每页条数，默认为8</param>
+        /// <param name="pageSize">每页条数，默认为5</param>
         /// <returns></returns>
         [HttpGet]
         [Produces("application/json", Type = typeof(HomeList))]
-        public IActionResult GetList([FromQuery]int pageIndex = 1, [FromQuery]int pageSize = 8)
+        public IActionResult GetList([FromQuery]int pageIndex = 1, [FromQuery]int pageSize = 5)
         {
             this._logger.LogInformation("获取列表开始");
             var code = StatusCodeEnum.OK;
@@ -247,6 +248,37 @@ namespace DDD.WebApi.Controllers
             };
 
             this._logger.LogInformation("更新点赞量结束");
+            return Json(resultMsg);
+        }
+
+        /// <summary>
+        /// 删除首页列表和详情的缓存
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="showType"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HiddenApi]
+        public IActionResult RemoveCache([FromQuery]int id, [FromQuery]int showType)
+        {
+            this._logger.LogInformation("删除首页列表和详情缓存开始");
+            var code = StatusCodeEnum.OK;
+            if (!ModelState.IsValid || id <= 0)
+            {
+                code = StatusCodeEnum.BadRequest;
+            }
+            else
+            {
+                this._homeService.RemoveCache(id, showType);
+            }
+            var msg = Common.EnumHelper.GetEnumDescription(code);
+            ResultMsg resultMsg = new ResultMsg()
+            {
+                Code = (int)code,
+                Msg = msg,
+                Data = null
+            };
+            this._logger.LogInformation("删除首页列表和详情缓存结束");
             return Json(resultMsg);
         }
     }

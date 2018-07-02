@@ -25,7 +25,7 @@ namespace DDD.Data.Repositories
             _logger = logger;
         }
 
-        public IList<HomeList> GetList(int pageIndex = 1, int pageSize = 8)
+        public IList<HomeList> GetList(int pageIndex = 1, int pageSize = 5)
         {
             var _pageSize = pageSize > 100 ? 100 : pageSize;
             IList<HomeList> homeList;
@@ -55,6 +55,11 @@ namespace DDD.Data.Repositories
             HomeDetail detail;
             try
             {
+                if (!IsExist(id, type))
+                {
+                    return null;
+                }
+
                  SqlParameter[] parameters = new SqlParameter[]
                 {
                     new SqlParameter("@id",id),
@@ -136,7 +141,7 @@ namespace DDD.Data.Repositories
             return homeList;
         }
 
-        public IList<HotSearch> HotSearch(int limit = 10)
+        public IList<HotSearch> HotSearch(int limit = 8)
         {
             var _limit = limit > 100 ? 100 : limit;
             IList<HotSearch> homeList;

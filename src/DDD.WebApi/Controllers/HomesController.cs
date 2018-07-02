@@ -77,6 +77,7 @@ namespace DDD.WebApi.Controllers
         public IActionResult GetDetail([FromQuery]int id, [FromQuery]int showType)
         {
             this._logger.LogInformation("获取详情开始");
+            showType = (showType == 3) ? 3 : 0;
             var code = StatusCodeEnum.OK;
             HomeDetail detail = null;
             if (!ModelState.IsValid || id <= 0)
@@ -111,6 +112,7 @@ namespace DDD.WebApi.Controllers
         public IActionResult GetMore([FromQuery]int id, [FromQuery]int showType)
         {
             this._logger.LogInformation("获取更多精彩开始");
+            showType = (showType == 3) ? 3 : 0;
             var code = StatusCodeEnum.OK;
             IList<HomeList> homeMore = null;
             if (!ModelState.IsValid || id <= 0)
@@ -225,7 +227,6 @@ namespace DDD.WebApi.Controllers
         {
             this._logger.LogInformation("更新点赞量开始");
             StatusCodeEnum code = StatusCodeEnum.OK;
-
             if (!ModelState.IsValid || id <= 0 )
             {
                 code = StatusCodeEnum.BadRequest;
@@ -257,7 +258,7 @@ namespace DDD.WebApi.Controllers
         /// <param name="id"></param>
         /// <param name="showType"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpDelete]
         [HiddenApi]
         public IActionResult RemoveCache([FromQuery]int id, [FromQuery]int showType)
         {

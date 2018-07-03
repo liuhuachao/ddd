@@ -178,11 +178,11 @@ namespace DDD.Data.Repositories
         {
             if (showType == 3)
             {
-                return this._context.CmsContents.Any(x => x.CmsId == id);
+                return this._context.VdVideo.Any(x => x.Id == id);                
             }
             else
             {
-                return this._context.VdVideo.Any(x => x.Id == id);
+                return this._context.CmsContents.Any(x => x.CmsId == id);
             }
         }
 

@@ -27,8 +27,6 @@ namespace DDD.Test
             string actualStr = HtmlHelper.RemoveStyle(originStr);
             Assert.Equal(expectedStr, actualStr);
         }
-
-
     }
 }
 

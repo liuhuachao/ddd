@@ -32,7 +32,7 @@ namespace DDD.Application.Services
                 homeList = this._repository.GetList(pageIndex, pageSize);
                 if (homeList != null)
                 {
-                    this._cacheSevice.Set(cacheKey, homeList, TimeSpan.FromMinutes(30), TimeSpan.FromMinutes(30));
+                    this._cacheSevice.Set(cacheKey, homeList);
                 }
             }
             else
@@ -52,7 +52,7 @@ namespace DDD.Application.Services
                 homeDetail = this._repository.GetDetail(id, type);
                 if(homeDetail != null)
                 {
-                    this._cacheSevice.Set(cacheKey, homeDetail, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
+                    this._cacheSevice.Set(cacheKey, homeDetail);
                 }                
             }
             return homeDetail;
@@ -115,6 +115,8 @@ namespace DDD.Application.Services
         {
             string cacheKey2 = string.Format("home_list_{0}_{1}", 1, 5);
             string cacheKey1 = string.Format("home_detail_{0}_{1}", id, type);
+            string newsORVideo = (type == 3) ? "video" : "news";
+            string cacheKey3 = string.Format("{0}_detail_{1}", newsORVideo, id);
 
             if (ExistCache(cacheKey1))
             {
@@ -124,7 +126,11 @@ namespace DDD.Application.Services
             {
                 this._cacheSevice.Remove(cacheKey2);
             }
-            return !ExistCache(cacheKey1)&&!ExistCache(cacheKey2);
+            if (ExistCache(cacheKey3))
+            {
+                this._cacheSevice.Remove(cacheKey3);
+            }
+            return !ExistCache(cacheKey1)&&!ExistCache(cacheKey2) && !ExistCache(cacheKey3);
         }
 
     }

@@ -30,7 +30,7 @@ namespace DDD.Application.Services
                 if(result != null)
                 {
                     detail = Mapper.Map<NewsDetail>(result);
-                    this._cacheService.Set(cacheKey, detail, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
+                    this._cacheService.Set(cacheKey, detail);
                 }
             }
             return detail;

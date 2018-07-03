@@ -57,16 +57,14 @@ namespace DDD.WebApi
             // 配置 应用层服务
             services.AddMemoryCache();
 
-            //services.AddScoped<ICacheService, MemoryCacheService>();
-
-            bool isUseRedis = false;
-            // 配置缓存
+            // 配置 内存或Redis缓存
+            bool isUseRedis = false;            
             if (isUseRedis)
             {
                 services.AddSingleton(typeof(ICacheService), new RedisCacheService(new RedisCacheOptions
                 {
                     Configuration = "127.0.0.1:6379",
-                    InstanceName = "testDb"
+                    InstanceName = "RedisDb"
                 }, 0));
             }
             else

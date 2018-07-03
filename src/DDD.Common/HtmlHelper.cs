@@ -37,7 +37,7 @@ namespace DDD.Common
                 sb = sb.Replace("&lt;", "<");
                 sb = sb.Replace("&gt;", ">");
                 sb = sb.Replace("&nbsp;", " ");
-                sb = sb.Replace("&quot;", "'");
+                sb = sb.Replace("&quot;", "\"");
 
                 str = sb.ToString().Trim();
             }         
@@ -112,8 +112,11 @@ namespace DDD.Common
         {
             if (htmlStr != null && !string.IsNullOrEmpty(htmlStr))
             {
-                string stylePattern = @"\s*style\s*=\s*('|"")[^'|^""]*('|"")";
-                htmlStr = Regex.Replace(htmlStr, stylePattern, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                string stylePattern1 = "\\s*style\\s*=\\s*'[^']*'";
+                string stylePattern2 = "\\s*style\\s*=\\s*\"[^\"]*\"";
+                
+                htmlStr = Regex.Replace(htmlStr, stylePattern1, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                htmlStr = Regex.Replace(htmlStr, stylePattern2, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             }
             return htmlStr;
         }

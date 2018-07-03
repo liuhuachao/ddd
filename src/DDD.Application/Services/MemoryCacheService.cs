@@ -8,11 +8,11 @@ namespace DDD.Application.Services
 {
     public class MemoryCacheService : ICacheService
     {
-        private readonly IMemoryCache _memoryCache;
+        private readonly IMemoryCache _cache;
 
-        public MemoryCacheService(IMemoryCache memoryCache)
+        public MemoryCacheService(IMemoryCache cache)
         {
-            this._memoryCache = memoryCache;
+            this._cache = cache;
         }
 
         /// <summary>
@@ -26,11 +26,25 @@ namespace DDD.Application.Services
             {
                 throw new ArgumentNullException(nameof(key));
             }
-            return this._memoryCache.TryGetValue(key,out object cacheObj);
+            return this._cache.TryGetValue(key,out object cacheObj);
         }
 
         /// <summary>
-        /// 获取缓存
+        /// 获取缓存（object）
+        /// </summary>
+        /// <param name="key">缓存Key</param>
+        /// <returns></returns>
+        public object Get(string key)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            return _cache.Get(key);
+        }
+
+        /// <summary>
+        /// 获取缓存（泛型）
         /// </summary>
         /// <param name="key">缓存Key</param>
         /// <returns></returns>
@@ -40,8 +54,8 @@ namespace DDD.Application.Services
              {
                   throw new ArgumentNullException(nameof(key));
              }
-            return this._memoryCache.Get(key) as T;
-        }
+            return this._cache.Get(key) as T;
+        }         
 
         /// <summary>
         /// 添加缓存
@@ -55,7 +69,7 @@ namespace DDD.Application.Services
             {
                 throw new ArgumentNullException(nameof(key));
             }
-            this._memoryCache.Set(key,data);
+            this._cache.Set(key,data);
             return Exists(key);
         }
 
@@ -68,17 +82,17 @@ namespace DDD.Application.Services
         /// <param name="expiressAbsoulte">绝对过期时长</param>
         /// <returns></returns>
         public bool Set(string key, object data, TimeSpan expiresSliding, TimeSpan expiressAbsoulte)
-         {
-             if (key == null || data == null)
-             {
-                 throw new ArgumentNullException(nameof(key));
-             }
-            this._memoryCache.Set(key, data,
-                     new MemoryCacheEntryOptions()
-                     .SetSlidingExpiration(expiresSliding)
-                     .SetAbsoluteExpiration(expiressAbsoulte)
-                     ); 
-             return Exists(key);
+        {
+            if (key == null || data == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            this._cache.Set(key, data,
+                    new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(expiresSliding)
+                    .SetAbsoluteExpiration(expiressAbsoulte)                    
+                    ); 
+            return Exists(key);
         }
 
         /// <summary>
@@ -92,7 +106,7 @@ namespace DDD.Application.Services
             {
                 throw new ArgumentNullException(nameof(key));
             }
-            this._memoryCache.Remove(key);
+            this._cache.Remove(key);
             return !Exists(key);
         }
 
@@ -107,7 +121,7 @@ namespace DDD.Application.Services
                 throw new ArgumentNullException(nameof(keys));
             }
 
-            keys.ToList().ForEach(item => this._memoryCache.Remove(item));
+            keys.ToList().ForEach(item => this._cache.Remove(item));
         }
 
         /// <summary>
@@ -115,8 +129,8 @@ namespace DDD.Application.Services
         /// </summary>
         public void Dispose()
         {
-            if (this._memoryCache != null)
-                this._memoryCache.Dispose();
+            if (this._cache != null)
+                this._cache.Dispose();
             GC.SuppressFinalize(this);
         }
     }

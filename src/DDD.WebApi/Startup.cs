@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -54,7 +56,29 @@ namespace DDD.WebApi
 
             // 配置 应用层服务
             services.AddMemoryCache();
-            services.AddScoped<ICacheService, MemoryCacheService>();
+
+            //services.AddScoped<ICacheService, MemoryCacheService>();
+
+            bool isUseRedis = false;
+            // 配置缓存
+            if (isUseRedis)
+            {
+                services.AddSingleton(typeof(ICacheService), new RedisCacheService(new RedisCacheOptions
+                {
+                    Configuration = "127.0.0.1:6379",
+                    InstanceName = "testDb"
+                }, 0));
+            }
+            else
+            {
+                services.AddSingleton<IMemoryCache>(factory =>
+                {
+                    var cache = new MemoryCache(new MemoryCacheOptions());
+                    return cache;
+                });
+                services.AddSingleton<ICacheService, MemoryCacheService>();
+            }
+
             services.AddScoped<IHomeAppService, HomeService>();
             services.AddScoped<INewsAppService, NewsAppService>();
             services.AddScoped<IVideosAppService, VideosAppService>();

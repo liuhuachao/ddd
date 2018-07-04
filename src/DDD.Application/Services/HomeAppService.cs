@@ -133,6 +133,7 @@ namespace DDD.Application.Services
             string cacheKey1 = string.Format("home_detail_{0}_{1}", id, type);
             string cacheKey2 = string.Format("{0}_detail_{1}", (type == 3) ? "video" : "news", id);
             string cacheKey3 = string.Format("home_list_{0}_{1}", 1, 5);
+            string cacheKey4 = string.Format("home_more_{0}_{1}", id, type);
 
             if (ExistCache(cacheKey1))
             {
@@ -175,7 +176,18 @@ namespace DDD.Application.Services
                     }
                 }
             }
-            return !ExistCache(cacheKey1) && !ExistCache(cacheKey2) && !ExistCache(cacheKey3);
+            if (ExistCache(cacheKey4))
+            {
+                if (this._cacheSevice.Remove(cacheKey4))
+                {
+                    var homeMore = this._repository.GetMore(id, type);
+                    if (homeMore != null)
+                    {
+                        this._cacheSevice.Set(cacheKey4, homeMore);
+                    }
+                }
+            }
+            return !ExistCache(cacheKey1) && !ExistCache(cacheKey2) && !ExistCache(cacheKey3) && !ExistCache(cacheKey4);
         }
     }
 }

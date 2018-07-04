@@ -58,7 +58,7 @@ namespace DDD.WebApi
             services.AddMemoryCache();
 
             // 配置 内存或Redis缓存
-            bool isUseRedis = false;            
+            bool isUseRedis = true;            
             if (isUseRedis)
             {
                 services.AddSingleton(typeof(ICacheService), new RedisCacheService(new RedisCacheOptions

@@ -57,10 +57,15 @@ namespace DDD.Application.Dtos
         {
             get
             {
-                if (string.IsNullOrEmpty(_postTime) || !Common.TimeHelper.IsDate(_postTime))
-                    return "新鲜出炉";
-                else
+                if (!string.IsNullOrEmpty(_postTime) && Common.TimeHelper.IsDate(_postTime))
+                {
                     return Common.TimeHelper.GetTimeDiffUntil(Convert.ToDateTime(_postTime));
+                }
+                else if (string.IsNullOrEmpty(_postTime))
+                {
+                    return "刚刚";
+                }
+                else return _postTime;
             }
             set
             {
@@ -101,7 +106,7 @@ namespace DDD.Application.Dtos
         private string _intro;
         private string _author = "尊贵赛鸽";
         private string _content;
-        private string _shareLink = "http://m.chsgw.com/news/news_detail.aspx?id=";
+        private string _shareLink = "http://api.chsgw.com/news/detail/";
         
 
         /// <summary>

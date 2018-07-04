@@ -46,10 +46,15 @@ namespace DDD.Application.Dtos
         {
             get
             {
-                if (string.IsNullOrEmpty(_postTime) || !Common.TimeHelper.IsDate(_postTime))
-                    return "刚刚";
-                else
+                if (!string.IsNullOrEmpty(_postTime) && Common.TimeHelper.IsDate(_postTime))
+                {
                     return Common.TimeHelper.GetTimeDiffUntil(Convert.ToDateTime(_postTime));
+                }
+                else if (string.IsNullOrEmpty(_postTime))
+                {
+                    return "刚刚";
+                }
+                else return _postTime;                    
             }
             set
             {

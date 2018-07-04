@@ -13,6 +13,8 @@ namespace DDD.Application.Dtos
     {
         private string _title;
         private string _intro;
+        private string _author = "尊贵赛鸽";
+        private string _postTime;
         private int _showType = 3;
 
         /// <summary>
@@ -42,11 +44,34 @@ namespace DDD.Application.Dtos
         /// <summary>
         /// 作者
         /// </summary>
-        public string Author { get; set; }
+        public string Author
+        {
+            get { return _author; }
+            set { _author = value; }
+        }
         /// <summary>
         /// 发表时间
         /// </summary>
-        public string PostTime { get; set; }
+        public string PostTime
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_postTime) && Common.TimeHelper.IsDate(_postTime))
+                {
+                    return Common.TimeHelper.GetTimeDiffUntil(Convert.ToDateTime(_postTime));
+                }
+                else if (string.IsNullOrEmpty(_postTime))
+                {
+                    return "刚刚";
+                }
+                else return _postTime;
+            }
+            set
+            {
+                _postTime = value;
+            }
+        }
+
         /// <summary>
         /// 视频源Url
         /// </summary>
@@ -68,7 +93,7 @@ namespace DDD.Application.Dtos
     {
         private string _title;
         private string _intro;
-        private string _shareLink = "http://m.chsgw.com/vod/";
+        private string _shareLink = "http://api.chsgw.com/video/detail/";
 
         /// <summary>
         /// 标识

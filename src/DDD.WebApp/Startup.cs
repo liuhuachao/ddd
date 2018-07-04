@@ -26,12 +26,16 @@ namespace DDD.WebApp
         {
             services.AddMvc();
 
-            // 配置 Repository            
+            // 配置 AppService
+            services.AddScoped<IHomeAppService, HomeService>();
+            services.AddScoped<INewsAppService, NewsAppService>();
+            services.AddScoped<IVideosAppService, VideosAppService>();
+
+            // 配置 Repository           
+            services.AddScoped<IHomesRepository, HomesRepository>();
             services.AddScoped<ICmsContentsRepository, CmsContentsRepository>();
             services.AddScoped<IVideosRepository, VideosRepository>();
 
-            services.AddScoped<INewsAppService,NewsAppService>();
-            services.AddScoped<IVideosAppService, VideosAppService>();
 
             // 配置内存缓存
             services.AddMemoryCache();

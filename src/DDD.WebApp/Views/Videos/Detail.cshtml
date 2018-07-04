@@ -1,58 +1,87 @@
-﻿
-@model DDD.Application.Dtos.VideoDetail
-
+﻿@using DDD.Application.Dtos;
+@using DDD.WebApp.Models;
+@model VideoDetailViewModel;
 @{
     Layout = null;
 }
 
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>@Model.Title -尊贵赛鸽</title>
-    <link rel="shortcut icon" type="image/x-icon" href="http://image.chsgw.com/favicon.ico" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/css/global.css">
-    <link rel="stylesheet" type="text/css" href="/css/video-detail.css">
-</head>
-<body>
-    <div class="news-banner-container">
-        <div class="news-banner-left">
-            <div class="news-banner-logo">
-                <img src="/images/logo.png" />
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="description" content="@Model.VideoDetail.Intro" />
+        <title>@Model.VideoDetail.Title</title>
+        <link rel="shortcut icon" type="image/x-icon" href="http://image.chsgw.com/favicon.ico" media="screen" />
+        <link rel="stylesheet" type="text/css" href="/css/global.css">
+        <link rel="stylesheet" type="text/css" href="/css/video-detail.css">
+    </head>
+    <body>
+        <div class="news-banner-container">
+            <div class="news-banner-left">
+                <div class="news-banner-logo">
+                    <img src="/images/logo.png" />
+                </div>
+                <div class="news-banner-text">
+                    <p>尊贵赛鸽</p>
+                    <p>有态度、有温度、有深度</p>
+                </div>
             </div>
-            <div class="news-banner-text">
-                <p>尊贵赛鸽</p>
-                <p>有态度、有温度、有深度</p>
+            <div class="news-banner-right">
+                <a id="btnOpenApp">打开</a>
             </div>
         </div>
-        <div class="news-banner-right">
-            <a id="btnOpenApp">打开</a>
+        <div class="vid_play">
+            <video src="@Model.VideoDetail.SourceUrl" controls="controls" autoplay="autoplay" loop="loop" webkit-playsinline="true" playsinline="true"></video>
         </div>
-    </div>
-    <div class="vid_play">
-        <video src="@Model.SourceUrl" controls="controls" autoplay="autoplay" loop="loop" webkit-playsinline="true" playsinline="true"></video>
-    </div>
-    <div class="vid_header">
-        <h1>@Model.Title</h1>
-        <p><span>@Model.PostTime</span><span>@Model.Clicks 次播放</span></p>
-    </div>
-    <div class="vid_body">
-        <p><strong>视频简介</strong></p>
-        <p>
-            @Model.Intro
-        </p>
-    </div>
-    <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="/js/weixin-share.js"></script>
-    <script type="text/javascript" src="/js/pub.js"></script>
-    <script src="https://static.mlinks.cc/scripts/dist/mlink.min.js"></script>
-    <script>
-        new Mlink({
-            mlink: 'https://at8iok.mlinks.cc/AeXM',//短链地址
-            button: document.querySelector('a#btnOpenApp')
-        });
-    </script>
-</body>
-</html>
+        <div class="vid_header">
+            <h1>@Model.VideoDetail.Title</h1>
+            <p><span>@Model.VideoDetail.PostTime</span><span>@Model.VideoDetail.Clicks 次播放</span></p>
+        </div>
+        @if (!string.IsNullOrEmpty(@Model.VideoDetail.Intro))
+        {
+            <div class="vid_body">
+                <p><strong>视频简介</strong></p>
+                <p>
+                    @Model.VideoDetail.Intro
+                </p>
+            </div>
+        }
 
+        @if (@Model.VideoDetailMore.Count > 0)
+        {
+            <div class="fenge_line">
+                <p>更多精彩内容</p>
+            </div>
+            <div class="more_news">
+                @foreach (var item in Model.VideoDetailMore)
+                {
+                    <article class="news_card card_type_one">
+                        <a href="/videos/detail/@item.Id">
+                            <div class="news-pic"><img src="@item.CoverImg" alt="@item.Title"><i class="video-tag"></i></div>
+                            <div class="news-info">
+                                <h3 class="title">@item.Title</h3>
+                                <div class="detail">
+                                    <span class="pubtime">@item.PostTime</span>
+                                    <span class="pub-type">@item.ClassName</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                }
+            </div>
+        }
+
+        <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+        <script type="text/javascript" src="/js/weixin-share.js"></script>
+        <script type="text/javascript" src="/js/pub.js"></script>
+        <script src="https://static.mlinks.cc/scripts/dist/mlink.min.js"></script>
+        <script>
+            new Mlink({
+                mlink: 'https://at8iok.mlinks.cc/AeXM',
+                button: document.querySelector('a#btnOpenApp')
+            });
+        </script>
+    </body>
+</html>

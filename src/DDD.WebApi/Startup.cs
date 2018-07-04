@@ -52,7 +52,7 @@ namespace DDD.WebApi
             {
                 options.AddPolicy("AllowSpecificOrigin", builder =>
                 {
-                    builder.WithOrigins("http://ecs.chsgw.com:88", "http://app.chsgw.com");
+                    builder.WithOrigins("http://app.chsgw.com", "http://192.168.1.128:88");
                 });
             });
 

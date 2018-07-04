@@ -105,5 +105,42 @@ namespace DDD.Application.Services
             keys.ToList().ForEach(item => Remove(GetKeyForRedis(item)));
         }
 
+        public bool Replace(string key, object value)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            key = GetKeyForRedis(key);
+            if (Exists(key))
+            {
+                if (!Remove(key))
+                    return false;
+            }                
+            return Set(key, value);
+        }
+
+        public bool Replace(string key, object value, TimeSpan expiresSliding, TimeSpan expiressAbsoulte)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            key = GetKeyForRedis(key);
+            if (Exists(key))
+            {
+                if (!Remove(key))
+                    return false;
+            }
+            return Set(key, value,expiresSliding,expiressAbsoulte);
+        }
+
+        public void Dispose()
+        {
+            if (_connection != null)
+                _connection.Dispose();
+            GC.SuppressFinalize(this);
+        }
+
     }
 }

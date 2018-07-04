@@ -9,8 +9,10 @@ namespace DDD.Application.Interfaces
         object Get(string key);
         T Get<T>(string key) where T : class;
         bool Set(string key, object data);
-        bool Set(string key, object value, TimeSpan expiresSliding, TimeSpan expiressAbsoulte);
+        bool Set(string key, object data, TimeSpan expiresSliding, TimeSpan expiressAbsoulte);
         bool Remove(string key);
         void RemoveAll(IEnumerable<string> keys);
+        bool Replace(string key, object data);
+        bool Replace(string key, object data, TimeSpan expiresSliding, TimeSpan expiressAbsoulte);
     }
 }

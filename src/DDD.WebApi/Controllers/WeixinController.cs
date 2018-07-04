@@ -8,6 +8,7 @@ using DDD.Common.Enums;
 using DDD.Application.Dtos;
 using Microsoft.Extensions.Logging;
 using DDD.WebApi.Filters;
+using Microsoft.AspNetCore.Cors;
 
 namespace DDD.WebApi.Controllers
 {
@@ -23,6 +24,7 @@ namespace DDD.WebApi.Controllers
         }
 
         [HttpGet]
+        [EnableCors("AllowSpecificOrigin")]
         public IActionResult JSSDKShare(string shareUrl)
         {
             this._logger.LogInformation("获取微信分享js-sdk 开始");

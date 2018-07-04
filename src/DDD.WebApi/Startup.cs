@@ -47,6 +47,15 @@ namespace DDD.WebApi
              })
             ;
 
+            // 配置 跨域Cors
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", builder =>
+                {
+                    builder.WithOrigins("http://ecs.chsgw.com:88", "http://app.chsgw.com");
+                });
+            });
+
             //api版本控制
             services.AddApiVersioning(option => {
                 option.ReportApiVersions = true;

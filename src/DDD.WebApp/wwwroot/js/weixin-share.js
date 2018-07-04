@@ -26,7 +26,7 @@ if ($("head meta[name='description']").size() > 0) {
 $(document).ready(function () {
     if (is_weixn()) {
         $.ajax({
-            url: "https://api.chsgw.com/v1//weixin/jssdkshare",
+            url: "https://api.chsgw.com/v1//weixin/jssdkshare",            
             type: "GET",
             dataType: "json",            
             data: {

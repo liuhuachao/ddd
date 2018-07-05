@@ -32,7 +32,9 @@
             </div>
         </div>
         <div class="vid_play">
-            <video src="@Model.VideoDetail.SourceUrl" controls="controls" autoplay="autoplay" loop="loop" webkit-playsinline="true" playsinline="true"></video>
+            <video poster="@Model.VideoDetail.CoverImg" controls="controls" loop="loop" webkit-playsinline="true" playsinline="true">
+                <source src="@Model.VideoDetail.SourceUrl" type="video/mp4">
+            </video>
         </div>
         <div class="vid_header">
             <h1>@Model.VideoDetail.Title</h1>

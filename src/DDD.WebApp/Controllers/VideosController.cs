@@ -23,18 +23,24 @@ namespace DDD.WebApp.Controllers
         {
             this._logger.LogInformation(string.Format("获取视频详情页开始,id:{0}", id));
             var detail = this._appService.GetDetail(id);
-            var more = this._homeService.GetMore(id, 0);
-            var result = new Models.VideoDetailViewModel()
+            var more = this._homeService.GetMore(id, 3);            
+            if (detail == null)
             {
-                VideoDetail = detail,
-                VideoDetailMore = more
-            };
-            if (result == null)
-            {
+                this._logger.LogInformation("获取视频详情页出错：404");
                 return View("/Views/Shared/NotFound.cshtml");
             }
-            this._logger.LogInformation("获取视频详情页结束");
-            return View(result);
+            else
+            {
+                var result = new Models.VideoDetailViewModel()
+                {
+                    VideoDetail = detail,
+                    VideoDetailMore = more
+                };
+                this._logger.LogInformation("获取视频详情页结束");
+                return View(result);
+            }
+            
+            
         }
     }
 }

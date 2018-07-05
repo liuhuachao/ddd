@@ -22,18 +22,24 @@ namespace DDD.WebApp.Controllers
         {
             this._logger.LogInformation(string.Format("获取文章详情页开始,id:{0}", id));
             var newsDetail = this._appService.GetDetail(id);
-            var newsMore = this._homeService.GetMore(id,0);
-            var result = new Models.NewsDetailViewModel()
+            var newsMore = this._homeService.GetMore(id,0);           
+            if (newsDetail == null)
             {
-                NewsDetail = newsDetail,
-                NewsDetailMore = newsMore
-            };
-            if (result == null)
-            {
+                this._logger.LogInformation("获取文章详情页错误：404");
                 return View("/Views/Shared/NotFound.cshtml");
             }
-            this._logger.LogInformation("获取文章详情页结束");
-            return View(result);
+            else
+            {
+                var result = new Models.NewsDetailViewModel()
+                {
+                    NewsDetail = newsDetail,
+                    NewsDetailMore = newsMore
+                };
+                this._logger.LogInformation("获取文章详情页结束");
+                return View(result);
+            }
+            
+            
         }
 
     }

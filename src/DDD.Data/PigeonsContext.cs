@@ -297,7 +297,7 @@ namespace DDD.Data
                     .HasForeignKey(d => d.CmsCid)
                     .HasConstraintName("R_CMS_Contents_CmsCID");
 
-                entity.HasQueryFilter(d => (d.Attribs == 2 || d.Attribs == 9) && (d.CmsCode.Equals("010101")||d.CmsCode.Equals("010105")));
+                entity.HasQueryFilter(d => (d.Attribs == 2 || d.Attribs == 9) && (d.CmsCode.Equals("010101")||d.CmsCode.Equals("010105") || d.CmsCode.Equals("010106")));
             });
 
             modelBuilder.Entity<CmsContribution>(entity =>

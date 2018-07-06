@@ -6,6 +6,8 @@ using DDD.Domain.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -36,10 +38,25 @@ namespace DDD.WebApp
             services.AddScoped<ICmsContentsRepository, CmsContentsRepository>();
             services.AddScoped<IVideosRepository, VideosRepository>();
 
-
-            // 配置内存缓存
-            services.AddMemoryCache();
-            services.AddScoped<ICacheService, MemoryCacheService>();
+            // 配置 内存或Redis缓存
+            bool isUseRedis = true;
+            if (isUseRedis)
+            {
+                services.AddSingleton(typeof(ICacheService), new RedisCacheService(new RedisCacheOptions
+                {
+                    Configuration = "127.0.0.1:6379",
+                    InstanceName = "RedisDb"
+                }, 0));
+            }
+            else
+            {
+                services.AddSingleton<IMemoryCache>(factory =>
+                {
+                    var cache = new MemoryCache(new MemoryCacheOptions());
+                    return cache;
+                });
+                services.AddSingleton<ICacheService, MemoryCacheService>();
+            }
 
             // 配置 PigeonsDbContext
             var pigeonsConnectionString = Configuration["ConnectionStrings:PigeonsDbConnectionString"];

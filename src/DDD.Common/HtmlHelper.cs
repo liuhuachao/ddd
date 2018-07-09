@@ -256,9 +256,9 @@ namespace DDD.Common
             headStr.Append("<meta http-equiv='content-type' content='text/html; charset=utf-8' />");
             headStr.Append("<meta name='viewport' content='initial-scale=1.0,maximum-scale=1.0, user-scalable=no' />");
             headStr.Append("<link rel='shortcut icon' type='image/x-icon' href='http://image.chsgw.com/favicon.ico' media='screen' />");
-            cssStr.Append("<link rel='stylesheet' type='text/css' href='http://m.chsgw.com/app/css/global.css' />");
-            cssStr.Append("<link rel='stylesheet' type='text/css' href='http://m.chsgw.com/app/css/news-detail.css' />");
-            jsStr.Append("<script type='text/javascript' src='http://m.chsgw.com/app/js/pub.js'></script>");
+            cssStr.Append("<link rel='stylesheet' type='text/css' href='http://app.chsgw.com/css/global.css' />");
+            cssStr.Append("<link rel='stylesheet' type='text/css' href='http://app.chsgw.com/css/news-detail.css' />");
+            jsStr.Append("<script type='text/javascript' src='http://app.chsgw.com/js/pub.js'></script>");
 
             bodySB.Append(string.Format("<div class='news_main'><div class='news-body'><div class='news-body_main'>{0}</div></div></div>", bodyStr));
             var returnStr = BuildHtml(title, cssStr.ToString(), jsStr.ToString(), headStr.ToString(), bodySB.ToString());

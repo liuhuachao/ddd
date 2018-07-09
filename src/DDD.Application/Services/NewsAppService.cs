@@ -5,6 +5,7 @@ using DDD.Application.Dtos;
 using DDD.Application.Interfaces;
 using DDD.Domain.Interfaces;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace DDD.Application.Services
 {
@@ -34,7 +35,17 @@ namespace DDD.Application.Services
                 }
             }
             return detail;
-        }       
+        }
+
+        public async Task<int> UpdateClicks(int id, int showType)
+        {
+            return await _repositoty.SaveAsync();
+        }
+
+        public async Task<int> UpdateLikes(int id, int showType)
+        {
+            return await _repositoty.SaveAsync();
+        }
 
     }
 }

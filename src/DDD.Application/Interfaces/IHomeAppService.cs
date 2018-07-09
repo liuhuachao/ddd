@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DDD.Application.Dtos;
 
 namespace DDD.Application.Interfaces
@@ -11,5 +12,7 @@ namespace DDD.Application.Interfaces
         IList<HotSearch> HotSearch(int limit = 8);
         IList<HomeSearch> Search(string title);
         bool RemoveCache(int id,int type);
+        Task<int> UpdateClicks(int id, int type);
+        Task<int> UpdateLikes(int id, int type);
     }
 }

@@ -25,6 +25,18 @@ namespace DDD.Data.Repositories
             _logger = logger;
         }
 
+        public bool IsExist(int id, int showType)
+        {
+            if (showType == 3)
+            {
+                return this._context.VdVideo.Any(x => x.Id == id);
+            }
+            else
+            {
+                return this._context.CmsContents.Any(x => x.CmsId == id);
+            }
+        }
+
         public IList<HomeList> GetList(int pageIndex = 1, int pageSize = 5)
         {
             var _pageSize = pageSize > 100 ? 100 : pageSize;
@@ -158,6 +170,22 @@ namespace DDD.Data.Repositories
             return homeList;
         }
 
+        public async Task<int> UpdateClicks(int id, int showType)
+        {
+            var addClicks = new Random().Next(1, 10);
+            dynamic model = null;
+            if (showType == 3)
+            {
+                model = this._context.VdVideo.Find(id);
+            }
+            else
+            {
+                model = this._context.CmsContents.Find(id);
+            }
+            model.Clicks += addClicks;
+            return await _context.SaveChangesAsync();
+        }
+
         public async Task<int> UpdateLikes(int id,int showType)
         {
             var addLikes = new Random().Next(1, 10);
@@ -172,18 +200,6 @@ namespace DDD.Data.Repositories
             }
             model.Likes += addLikes;
             return await _context.SaveChangesAsync();
-        }
-
-        public bool IsExist(int id, int showType)
-        {
-            if (showType == 3)
-            {
-                return this._context.VdVideo.Any(x => x.Id == id);                
-            }
-            else
-            {
-                return this._context.CmsContents.Any(x => x.CmsId == id);
-            }
         }
 
     }

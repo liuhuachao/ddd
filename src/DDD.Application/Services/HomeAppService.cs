@@ -189,5 +189,15 @@ namespace DDD.Application.Services
             }
             return !ExistCache(cacheKey1) && !ExistCache(cacheKey2) && !ExistCache(cacheKey3) && !ExistCache(cacheKey4);
         }
+
+        public async Task<int> UpdateClicks(int id, int showType)
+        {
+            return await this._repository.UpdateClicks(id,showType);
+        }
+
+        public async Task<int> UpdateLikes(int id, int showType)
+        {
+            return await this._repository.UpdateLikes(id, showType);
+        }
     }
 }

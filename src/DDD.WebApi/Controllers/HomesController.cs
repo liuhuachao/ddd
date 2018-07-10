@@ -41,10 +41,10 @@ namespace DDD.WebApi.Controllers
         /// <returns></returns>
         [HttpGet]
         [Produces("application/json", Type = typeof(HomeList))]
-        public IActionResult GetList([FromQuery]int pageIndex = 1, [FromQuery]int pageSize = 5)
+        public IActionResult GetList([FromQuery]int pageIndex = 1, [FromQuery]int pageSize = 10)
         {
             this._logger.LogInformation("获取列表开始");
-            pageSize = (pageIndex == 1) ? 5 : 10;
+            pageSize = 10;
             var code = StatusCodeEnum.OK;
             IList<HomeList> homeList = null;
             if (!ModelState.IsValid || pageIndex <= 0 || pageSize <= 0)

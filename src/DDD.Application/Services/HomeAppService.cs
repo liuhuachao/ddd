@@ -27,7 +27,7 @@ namespace DDD.Application.Services
             this._videoRepository = videoRepository;
         }
 
-        public IList<HomeList> GetList(int pageIndex = 1, int pageSize = 5)
+        public IList<HomeList> GetList(int pageIndex = 1, int pageSize = 10)
         {
             IList<HomeList> homeList;
             string cacheKey = string.Format("home_list_{0}_{1}",pageIndex,pageSize);
@@ -132,7 +132,7 @@ namespace DDD.Application.Services
         {
             string cacheKey1 = string.Format("home_detail_{0}_{1}", id, type);
             string cacheKey2 = string.Format("{0}_detail_{1}", (type == 3) ? "video" : "news", id);
-            string cacheKey3 = string.Format("home_list_{0}_{1}", 1, 5);
+            string cacheKey3 = string.Format("home_list_{0}_{1}", 1, 10);
             string cacheKey4 = string.Format("home_more_{0}_{1}", id, type);
 
             if (ExistCache(cacheKey1))
@@ -169,7 +169,7 @@ namespace DDD.Application.Services
             {
                 if (this._cacheSevice.Remove(cacheKey3))
                 {
-                    var homeList = this._repository.GetList(1, 5);
+                    var homeList = this._repository.GetList(1, 10);
                     if (homeList != null)
                     {
                         this._cacheSevice.Set(cacheKey3, homeList);

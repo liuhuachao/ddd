@@ -37,7 +37,7 @@ namespace DDD.Data.Repositories
             }
         }
 
-        public IList<HomeList> GetList(int pageIndex = 1, int pageSize = 5)
+        public IList<HomeList> GetList(int pageIndex = 1, int pageSize = 10)
         {
             var _pageSize = pageSize > 100 ? 100 : pageSize;
             IList<HomeList> homeList;

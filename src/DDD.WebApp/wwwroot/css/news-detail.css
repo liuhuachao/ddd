@@ -171,3 +171,41 @@
     color: #333333;
 }
 /*更多精彩 end*/
+
+/*表格样式 begin*/
+.mod-table {
+    height: auto;
+    overflow-x: scroll;
+}
+
+.mod-table table {
+    border-collapse: collapse;
+    border: 1px solid #aaa;
+    width: 100%;
+    border-spacing: 0;
+    font-size: .13rem;
+    table-layout: auto;
+}
+
+.mod-table table tr {
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+}
+
+.mod-table table th {
+    font-weight: bold;
+    background: #f0f0f0;
+    color: #333;
+}
+
+.mod-table table th,
+.mod-table table td {
+    padding: .06rem .13rem;
+    border: 1px solid #ddd;
+    min-width: .8rem;
+}
+
+.news-body_main table tr:nth-child(2n) {
+    background: #f0f0f0;
+}
+/*表格样式 end*/

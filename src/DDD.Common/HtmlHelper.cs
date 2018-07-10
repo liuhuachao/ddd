@@ -57,7 +57,8 @@ namespace DDD.Common
                 str = RemoveStyle(str);
                 str = RemoveSpecialTag(str);
                 str = RemoveWhiteSpace(str);                
-                str = RemoveA(str);                
+                str = RemoveA(str);
+                str = ReplaceTable(str);
             }
             return str;
         }
@@ -114,9 +115,29 @@ namespace DDD.Common
             {
                 string stylePattern1 = "\\s*style\\s*=\\s*'[^']*'";
                 string stylePattern2 = "\\s*style\\s*=\\s*\"[^\"]*\"";
-                
+                string stylePattern3 = "\\s*class\\s*=\\s*'[^']*'";
+                string stylePattern4 = "\\s*class\\s*=\\s*\"[^\"]*\"";
+
                 htmlStr = Regex.Replace(htmlStr, stylePattern1, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
                 htmlStr = Regex.Replace(htmlStr, stylePattern2, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                htmlStr = Regex.Replace(htmlStr, stylePattern3, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                htmlStr = Regex.Replace(htmlStr, stylePattern4, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            }
+            return htmlStr;
+        }
+
+        public static string ReplaceTable(string htmlStr)
+        {
+            if (htmlStr != null && !string.IsNullOrEmpty(htmlStr))
+            {
+                string reg = "<table[^>]*>[\\s\\S]*?</table>";
+                string matchVale = string.Empty;
+
+                foreach (Match m in Regex.Matches(htmlStr.ToLower(), reg))
+                {
+                    matchVale = "<div class='mod-table'>" + m.Value + "</div>";
+                    htmlStr = htmlStr.ToLower().Replace(m.Value, matchVale);
+                }
             }
             return htmlStr;
         }

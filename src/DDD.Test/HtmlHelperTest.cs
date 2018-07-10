@@ -36,6 +36,15 @@ namespace DDD.Test
             string actualStr = HtmlHelper.TransformHtml(originStr);
             Assert.Equal(expectedStr, actualStr);
         }
+
+        [Fact]
+        public void TestReplaceTable()
+        {
+            string originStr = "<table class=\"tableClass1\" style=\"width: 821.35pt; \"><tbody><tr><td>1</td><td>2</td></tr></tbody></table><table class=\"tableClass2\"><tbody><tr><td>3</td><td>4</td></tr></tbody></table>";
+            string expectedStr = "<div class='mod-table'><table class=\"tableClass1\" style=\"width: 821.35pt; \"><tbody><tr><td>1</td><td>2</td></tr></tbody></table></div><div class='mod-table'><table class=\"tableClass2\"><tbody><tr><td>3</td><td>4</td></tr></tbody></table></div>";
+            string actualStr = HtmlHelper.ReplaceTable(originStr);
+            Assert.Equal(expectedStr.ToLower(), actualStr.ToLower());
+        }
     }
 }
 

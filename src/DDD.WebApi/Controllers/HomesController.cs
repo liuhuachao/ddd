@@ -143,6 +143,7 @@ namespace DDD.WebApi.Controllers
         /// <param name="title">标题</param>
         /// <returns></returns>        
         [HttpGet]
+        [Route("/v1/homes/search")]
         [Route("/v1/videos/search")]
         [Produces("application/json", Type = typeof(HomeSearch))]
         public IActionResult Search([FromQuery]string title)

@@ -209,3 +209,21 @@
     background: #f0f0f0;
 }
 /*表格样式 end*/
+
+/*文章正文视频、音频 begin*/
+.news_detail_video {
+    display: block;
+    margin: 0 auto;
+    width: 640px;
+    height: 360px;
+    max-width: 100%;
+    max-height: 56vw;
+}
+
+.news_detail_audio { 
+    width: 100px;
+    height: 100px;
+    max-width: 100%;
+    max-height: 56vw;
+}
+/*文章正文视频 end*/

@@ -114,14 +114,14 @@ namespace DDD.Common
             if (htmlStr != null && !string.IsNullOrEmpty(htmlStr))
             {
                 string stylePattern1 = "\\s*style\\s*=\\s*'[^']*'";
-                string stylePattern2 = "\\s*style\\s*=\\s*\"[^\"]*\"";
-                string stylePattern3 = "\\s*class\\s*=\\s*'[^']*'";
-                string stylePattern4 = "\\s*class\\s*=\\s*\"[^\"]*\"";
-
+                string stylePattern2 = "\\s*style\\s*=\\s*\"[^\"]*\"";               
                 htmlStr = Regex.Replace(htmlStr, stylePattern1, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
                 htmlStr = Regex.Replace(htmlStr, stylePattern2, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                htmlStr = Regex.Replace(htmlStr, stylePattern3, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                htmlStr = Regex.Replace(htmlStr, stylePattern4, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+                //string stylePattern3 = "\\s*class\\s*=\\s*'[^']*'";
+                //string stylePattern4 = "\\s*class\\s*=\\s*\"[^\"]*\"";
+                //htmlStr = Regex.Replace(htmlStr, stylePattern3, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                //htmlStr = Regex.Replace(htmlStr, stylePattern4, "", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             }
             return htmlStr;
         }

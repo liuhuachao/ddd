@@ -54,13 +54,9 @@ namespace DDD.Application.Dtos
         {
             get
             {
-                if (!string.IsNullOrEmpty(_postTime) && Common.TimeHelper.IsDate(_postTime))
+                if (!string.IsNullOrEmpty(_postTime) && Common.TimeHelper.IsDate(_postTime) && _postTime.Length > 10)
                 {
                     return Common.TimeHelper.GetTimeDiffUntil(Convert.ToDateTime(_postTime));
-                }
-                else if (string.IsNullOrEmpty(_postTime))
-                {
-                    return "刚刚";
                 }
                 else return _postTime;                    
             }
@@ -72,8 +68,7 @@ namespace DDD.Application.Dtos
         /// <summary>
         /// 具体发表时间
         /// </summary>
-        public string PostTime2 { get; set; }
-       
+        public string PostTime2 { get; set; }       
         /// <summary>
         /// 栏目名称
         /// </summary>

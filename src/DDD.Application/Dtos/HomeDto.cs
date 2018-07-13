@@ -70,6 +70,11 @@ namespace DDD.Application.Dtos
             }
         }
         /// <summary>
+        /// 具体发表时间
+        /// </summary>
+        public string PostTime2 { get; set; }
+       
+        /// <summary>
         /// 栏目名称
         /// </summary>
         public string ClassName { get; set; }
@@ -77,6 +82,10 @@ namespace DDD.Application.Dtos
         /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
         /// </summary>
         public int ShowType { get; set; }
+        /// <summary>
+        /// 点击量
+        /// </summary>
+        public int? Clicks { get; set; }
     }
 
     /// <summary>

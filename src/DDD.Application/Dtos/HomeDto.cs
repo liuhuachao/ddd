@@ -13,6 +13,7 @@ namespace DDD.Application.Dtos
     public class HomeList
     {
         private string _title;
+        private string _intro;
         private string _postTime;
 
         /// <summary>
@@ -26,7 +27,15 @@ namespace DDD.Application.Dtos
         {
             get { return HtmlHelper.TransformHtml(_title); }
             set { _title = value; }
-        }        
+        }
+        /// <summary>
+        /// 简介
+        /// </summary>
+        public string Intro
+        {
+            get { return HtmlHelper.Decode(_intro); }
+            set { _intro = value; }
+        }
         /// <summary>
         /// 封面图
         /// </summary>

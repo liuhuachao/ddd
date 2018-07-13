@@ -118,9 +118,11 @@ namespace DDD.WebApi
                     }",
                 });
                 c.DocumentFilter<HiddenApiFilter>();
-            var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "WebApi.xml");
-                c.IncludeXmlComments(xmlPath);
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath1 = Path.Combine(basePath, "WebApi.xml");
+                var xmlPath2 = Path.Combine(basePath, "DDD.Application.xml");
+                c.IncludeXmlComments(xmlPath1);
+                c.IncludeXmlComments(xmlPath2);
             });
         }
 

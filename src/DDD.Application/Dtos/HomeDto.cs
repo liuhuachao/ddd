@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using DDD.Common;
 
-
 namespace DDD.Application.Dtos
 {
     /// <summary>

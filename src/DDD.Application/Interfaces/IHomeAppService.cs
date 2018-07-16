@@ -9,8 +9,8 @@ namespace DDD.Application.Interfaces
         HomeDetail GetDetail(int id, int type);
         IList<HomeList> GetMore(int id, int type);
         IList<HomeList> GetList(int pageIndex = 1, int pageSize = 10);
-        IList<HotSearch> HotSearch(int limit = 8);
-        IList<HomeSearch> Search(string title);
+        IList<HomeList> HotSearch(int limit = 8);
+        IList<HomeList> Search(string title);
         bool RemoveCache(int id,int type);
         Task<int> UpdateClicks(int id, int type);
         Task<int> UpdateLikes(int id, int type);

@@ -78,11 +78,11 @@ namespace DDD.Application.Services
             return homeList;
         }
 
-        public IList<HomeSearch> Search(string title)
+        public IList<HomeList> Search(string title)
         {
-            IList<HomeSearch> homeSearch;
+            IList<HomeList> homeSearch;
             string cacheKey = string.Format("home_search_{0}", title);
-            homeSearch = this._cacheSevice.Get<List<HomeSearch>>(cacheKey);
+            homeSearch = this._cacheSevice.Get<List<HomeList>>(cacheKey);
             if (homeSearch == null)
             {
                 homeSearch = this._repository.Search(title);
@@ -94,11 +94,11 @@ namespace DDD.Application.Services
             return homeSearch;
         }
 
-        public IList<HotSearch> HotSearch(int limit = 8)
+        public IList<HomeList> HotSearch(int limit = 8)
         {
-            IList<HotSearch> hotSearch;
+            IList<HomeList> hotSearch;
             string cacheKey = string.Format("hot_search_{0}", limit);
-            hotSearch = this._cacheSevice.Get<List<HotSearch>>(cacheKey);
+            hotSearch = this._cacheSevice.Get<List<HomeList>>(cacheKey);
             if (hotSearch == null)
             {
                 hotSearch = this._repository.HotSearch(limit);

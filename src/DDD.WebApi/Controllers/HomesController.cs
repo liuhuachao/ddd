@@ -145,12 +145,12 @@ namespace DDD.WebApi.Controllers
         [HttpGet]
         [Route("/v1/homes/search")]
         [Route("/v1/videos/search")]
-        [Produces("application/json", Type = typeof(HomeSearch))]
+        [Produces("application/json", Type = typeof(HomeList))]
         public IActionResult Search([FromQuery]string title)
         {
             this._logger.LogInformation("搜索开始");
             StatusCodeEnum code;
-            IList<HomeSearch> homeSearch = null;
+            IList<HomeList> homeSearch = null;
             if (string.IsNullOrEmpty(title))
             {
                 code = StatusCodeEnum.BadRequest;
@@ -187,12 +187,12 @@ namespace DDD.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]         
-        [Produces("application/json", Type = typeof(HotSearch))]
+        [Produces("application/json", Type = typeof(HomeList))]
         public IActionResult HotSearch()
         {
             this._logger.LogInformation("热搜开始");
             StatusCodeEnum code ;
-            IList<HotSearch> hotSearch = null;
+            IList<HomeList> hotSearch = null;
             hotSearch = this._homeService.HotSearch();
 
             if (hotSearch == null)

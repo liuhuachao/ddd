@@ -142,7 +142,6 @@ namespace DDD.Application.Dtos
         /// 分享链接
         /// </summary>
         public string ShareLink { get; set; }
-
         /// <summary>
         /// 视频时长
         /// </summary>

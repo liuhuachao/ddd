@@ -163,48 +163,4 @@ namespace DDD.Application.Dtos
         /// </summary>
         public string ShareLink { get; set; }
     }
-
-    /// <summary>
-    /// 搜索
-    /// </summary>
-    public class HomeSearch
-    {
-        private string _title;
-
-        /// <summary>
-        /// 标识
-        /// </summary>
-        public int Id { get; set; }
-        /// <summary>
-        /// 标题
-        /// </summary>
-        public string Title
-        {
-            get { return HtmlHelper.TransformHtml(_title); }
-            set { _title = value; }
-        }
-        /// <summary>
-        /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
-        /// </summary>
-        public int? ShowType { get; set; }
-    }
-
-    /// <summary>
-    /// 热搜
-    /// </summary>
-    public class HotSearch
-    {
-        /// <summary>
-        /// 标识
-        /// </summary>
-        public int Id { get; set; }
-        /// <summary>
-        /// 栏目名称
-        /// </summary>
-        public string ClassName { get; set; }
-        /// <summary>
-        /// 显示类型，可选值为：0/1/2/3，0表示上图+下文，1表示左图+右文，2表示无图纯文，3表示视频
-        /// </summary>
-        public int? ShowType { get; set; }
-    }
 }

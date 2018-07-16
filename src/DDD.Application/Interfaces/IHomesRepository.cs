@@ -9,9 +9,9 @@ namespace DDD.Application.Interfaces
         IList<HomeList> GetList(int pageIndex = 1, int pageSize = 10);
         HomeDetail GetDetail(int id, int type);
         IList<HomeList> GetMore(int id, int type);
-        IList<HotSearch> HotSearch(int limit = 10);
+        IList<HomeList> HotSearch(int limit = 10);
         bool IsExist(int id, int showType);
-        IList<HomeSearch> Search(string title);        
+        IList<HomeList> Search(string title);        
         Task<int> UpdateClicks(int id, int showType);
         Task<int> UpdateLikes(int id, int showType);
     }

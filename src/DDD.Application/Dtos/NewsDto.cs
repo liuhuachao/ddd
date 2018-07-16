@@ -106,7 +106,6 @@ namespace DDD.Application.Dtos
         private string _intro;
         private string _author = "尊贵赛鸽";
         private string _content;
-        
 
         /// <summary>
         /// 标识

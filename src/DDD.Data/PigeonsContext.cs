@@ -34,8 +34,6 @@ namespace DDD.Data
 
         public virtual DbSet<HomeList> HomeList { get; set; }
         public virtual DbSet<HomeDetail> HomeDetail { get; set; }
-        public virtual DbSet<HomeSearch> HomeSearch { get; set; }
-        public virtual DbSet<HotSearch> HotSearch { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

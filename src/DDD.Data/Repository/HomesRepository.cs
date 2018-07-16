@@ -113,33 +113,49 @@ namespace DDD.Data.Repositories
             return homeMore;
         }
  
-        public IList<HomeSearch> Search(string title)
+        public IList<HomeList> Search(string title)
         {
             var limit = 10;
 
-            IQueryable<HomeSearch> news = this._context.CmsContents
+            IQueryable<HomeList> news = this._context.CmsContents
                 .Where(c => EF.Functions.Like(c.CmsTitle, "%" + title + "%"))
                 .OrderByDescending(x => x.CmsId)
                 .Take(limit / 2)
-                .Select(n => new HomeSearch()
+                .Select(n => new HomeList()
                 {
                     Id = n.CmsId,
                     Title = n.CmsTitle,
-                    ShowType = 2,
+                    Intro = n.CmsKeys,
+                    CoverImg = n.CmsPhotos,
+                    SourceUrl = null,
+                    Author = n.CmsAuthor,
+                    PostTime = Convert.ToDateTime(n.OprateDate).ToString("yyyy-MM-dd HH:mm:ss"),
+                    PostTime2 = Convert.ToDateTime(n.OprateDate).ToString("yyyy-MM-dd HH:mm:ss"),
+                    ClassName = "",
+                    ShowType = 0,
+                    Clicks = n.CmsStats
                 });
 
-            IQueryable<HomeSearch> videos = this._context.VdVideo
+            IQueryable<HomeList> videos = this._context.VdVideo
                 .Where(item => EF.Functions.Like(item.Title, "%" + title + "%"))
                 .OrderByDescending(x => x.Id)
                 .Take(limit / 2)
-                .Select(v => new HomeSearch()
+                .Select(v => new HomeList()
                 {
                     Id = v.Id,
                     Title = v.Title,
+                    Intro = v.Info,
+                    CoverImg = v.CoverImg,
+                    SourceUrl = v.VideoSource,
+                    Author = "",
+                    PostTime = Convert.ToDateTime(v.Uptime).ToString("yyyy-MM-dd HH:mm:ss"),
+                    PostTime2 = Convert.ToDateTime(v.Uptime).ToString("yyyy-MM-dd HH:mm:ss"),
+                    ClassName = "",                   
                     ShowType = 3,
+                    Clicks = v.Hits
                 });
 
-            IList<HomeSearch> homeList = new List<HomeSearch>();
+            IList<HomeList> homeList = new List<HomeList>();
 
             foreach (var item in news)
             {
@@ -153,13 +169,13 @@ namespace DDD.Data.Repositories
             return homeList;
         }
 
-        public IList<HotSearch> HotSearch(int limit = 8)
+        public IList<HomeList> HotSearch(int limit = 8)
         {
             var _limit = limit > 100 ? 100 : limit;
-            IList<HotSearch> homeList;
+            IList<HomeList> homeList;
             try
             {
-                homeList = this._context.Set<HotSearch>()
+                homeList = this._context.Set<HomeList>()
                 .FromSql("EXECUTE UP_App_GetHotSearch").ToList();
             }
             catch (System.Data.SqlClient.SqlException ex)

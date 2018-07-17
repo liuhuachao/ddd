@@ -36,7 +36,7 @@ namespace DDD.Application.Services
                 homeList = this._repository.GetList(pageIndex, pageSize);
                 if (homeList != null)
                 {
-                    this._cacheSevice.Set(cacheKey, homeList);
+                    this._cacheSevice.Set(cacheKey, homeList, TimeSpan.FromDays(1), TimeSpan.FromDays(1));
                 }
             }
             else
@@ -72,7 +72,7 @@ namespace DDD.Application.Services
                 homeList = this._repository.GetMore(id, type);
                 if(homeList != null)
                 {
-                    this._cacheSevice.Set(cacheKey, homeList, TimeSpan.FromHours(1), TimeSpan.FromHours(1));
+                    this._cacheSevice.Set(cacheKey, homeList, TimeSpan.FromDays(1), TimeSpan.FromDays(1));
                 }                
             }
             return homeList;

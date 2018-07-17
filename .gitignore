@@ -21,6 +21,7 @@ bld/
 
 # Visual Studio cache/options directory
 .vs/
+.svn/
 
 # Visual Studio cache files
 # files ending in .cache can be ignored

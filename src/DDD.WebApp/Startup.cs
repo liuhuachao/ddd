@@ -39,13 +39,14 @@ namespace DDD.WebApp
             services.AddScoped<IVideosRepository, VideosRepository>();
 
             // 配置 内存或Redis缓存
-            bool isUseRedis = true;
-            if (isUseRedis)
+
+            var isUseRedis = Configuration["CacheProvider:IsUseRedis"];
+            if (isUseRedis == "true")
             {
                 services.AddSingleton(typeof(ICacheService), new RedisCacheService(new RedisCacheOptions
                 {
-                    Configuration = "127.0.0.1:6379",
-                    InstanceName = "RedisDb"
+                    Configuration = Configuration["CacheProvider:ConnectionString"],
+                    InstanceName = Configuration["CacheProvider:InstanceName"],
                 }, 0));
             }
             else

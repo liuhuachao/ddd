@@ -9,8 +9,9 @@
 @charset "utf-8";
 
 .news-body {
-	overflow-x: hidden;
-	padding: 0 .15rem;
+    overflow-x: hidden;
+    /*padding: 0 .15rem;*/
+    padding: 0;
 }
 
 .news-body-header {

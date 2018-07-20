@@ -117,7 +117,7 @@ namespace DDD.Application.Services
 
         public bool RemoveCache(int id,int type)
         {           
-            for (int i = 2; i <= 20; i++)
+            for (int i = 2; i <= 50; i++)
             {
                 string cacheKey3 = string.Format("home_list_{0}_{1}", i, 10);
                 if (ExistCache(cacheKey3))

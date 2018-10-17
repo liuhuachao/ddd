@@ -11,17 +11,18 @@ namespace DDD.Test
     public class RestSharpTest
     {
         [Fact]
-        public async Task TestHttpDelete()
+        public async Task TestHttpGet()
         {
-            string expectedStr = "";
+            string expectedStr = "200";
             string actualStr = "";
 
-            var client = new RestClient("http://192.168.1.128:88");
-            var request = new RestRequest("/v1/homes/RemoveCache", Method.DELETE);
-            request.AddParameter("id", 300);
-            request.AddParameter("showType", 0);
+            var client = new RestClient("http://api.chsgw.com/");
+            var request = new RestRequest("v1/Homes/GetDetail", Method.GET);
 
-            var response = await client.ExecuteTaskAsync<ResultMsg>(request);
+            request.AddParameter("id", 300);
+            request.AddParameter("showType", 3);
+
+            IRestResponse<ResultMsg> response = await client.ExecuteTaskAsync<ResultMsg>(request);
             actualStr = response.Data.Code.ToString();
 
             Assert.Equal(expectedStr, actualStr);

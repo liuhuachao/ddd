@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Linq;
 
 namespace DDD.WebApi.Filters
 {
@@ -17,7 +17,7 @@ namespace DDD.WebApi.Filters
         {
             foreach (ApiDescription apiDescription in context.ApiDescriptions)
             {
-                if (new OperationFilterContext(apiDescription, null).ControllerActionDescriptor.GetControllerAndActionAttributes(true).OfType<HiddenApiAttribute>().Count() == 0)
+                if (apiDescription.ControllerAttributes().OfType<HiddenApiAttribute>().Count() == 0 || apiDescription.ActionAttributes().OfType<HiddenApiAttribute>().Count() == 0)
                 {
                     continue;
                 }

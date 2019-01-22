@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace DDD.WebApi.Controllers
 {
-    [HiddenApi]
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("v1/[Controller]/[Action]")]
     public class WeixinController : Controller
     {

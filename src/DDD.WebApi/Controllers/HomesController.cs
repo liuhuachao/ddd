@@ -262,7 +262,7 @@ namespace DDD.WebApi.Controllers
         /// <param name="showType"></param>
         /// <returns></returns>
         [HttpDelete]
-        [HiddenApi]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult RemoveCache([FromQuery]int id, [FromQuery]int showType)
         {
             this._logger.LogInformation("删除首页列表和详情缓存开始");

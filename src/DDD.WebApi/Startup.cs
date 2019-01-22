@@ -116,7 +116,6 @@ namespace DDD.WebApi
                     'data': { }
                     }",
                 });
-                c.DocumentFilter<HiddenApiFilter>();
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath1 = Path.Combine(basePath, "WebApi.xml");
                 var xmlPath2 = Path.Combine(basePath, "DDD.Application.xml");
@@ -142,7 +141,8 @@ namespace DDD.WebApi
             }
             else
             {
-                app.UseExceptionHandler();
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
             // 配置 静态文件

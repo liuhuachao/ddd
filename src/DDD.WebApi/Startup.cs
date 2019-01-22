@@ -5,7 +5,6 @@ using DDD.Data;
 using DDD.Data.Repositories;
 using DDD.Domain.Entities;
 using DDD.Domain.Interfaces;
-using DDD.WebApi.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

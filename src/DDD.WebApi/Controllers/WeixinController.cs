@@ -7,7 +7,6 @@ using DDD.Common;
 using DDD.Common.Enums;
 using DDD.Application.Dtos;
 using Microsoft.Extensions.Logging;
-using DDD.WebApi.Filters;
 using Microsoft.AspNetCore.Cors;
 
 namespace DDD.WebApi.Controllers

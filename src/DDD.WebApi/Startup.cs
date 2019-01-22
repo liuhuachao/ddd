@@ -96,10 +96,9 @@ namespace DDD.WebApi
             services.AddScoped<IVideosRepository,VideosRepository>();           
                        
             // 配置 PigeonsDbContext
-            var isEncrypt = Configuration["IsEncrypt"];
+            var isEncrypt = Configuration["ConnectionStrings:IsEncrypt"];
             var pigeonsConnectionString = Configuration["ConnectionStrings:PigeonsDbConnectionString"];
             pigeonsConnectionString = isEncrypt == "true" ? Common.AESHelper.AESDecrypt(pigeonsConnectionString) : pigeonsConnectionString;
-            //services.AddDbContext<PigeonsContext>(o => o.UseSqlServer(pigeonsConnectionString);
             // 解决 EF core 生成的分页语法SQL 2008不支持的问题
             services.AddDbContext<PigeonsContext>(options => options.UseSqlServer(pigeonsConnectionString, o => o.UseRowNumberForPaging()));
 
